@@ -31,18 +31,24 @@ if (module.hot) {
 //   }
 // };
 
-const controlRenderArtwork = async function () {
+const controlRenderArtwork = async function (renderImage, latest = true) {
   // @renderImage = html node to be converted to image
   try {
-    const renderImage = document.querySelector('.render-artwork');
     // a1) Load artwork and have Model to save userImg
     // a1) current IMG becomes state.userImg
     await model.loadArtwork(renderImage);
 
     // a3) use current IMG to render
-    artworkView.artworkRender(model.state.user.userIMG);
+    artworkView.artworkRender(model.log.data.img);
   } catch (err) {
-    console.error(`${err} - admin 22`);
+    console.error(`${err} - admin 2`);
+  }
+};
+
+const renderLatestArtwork = async function () {
+  try {
+  } catch (err) {
+    console.error(`${err} - admin 3`);
   }
 };
 

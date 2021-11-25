@@ -1,25 +1,34 @@
 import html2canvas from 'html2canvas';
 export const artworks = [];
 
-export const state = {
+export const log = {
   id: '',
-  user: {
+  data: {
     name: '',
     statement: '',
-    userIMG: '',
-    userResizeIMG: '',
+    img: '',
   },
-  curImg: '',
+  index: '',
 };
+
+// export const latestArtwork = async function () {};
 
 // a2) load artwork and save it to state
 export const loadArtwork = async function (renderImage) {
   try {
     const img = await html2canvas(renderImage);
-    state.user.userIMG = img;
+    logArtwork(img);
   } catch (err) {
     console.error(`${err} - admin`);
   }
+};
+
+const logArtwork = function (img) {
+  log.data.img = img;
+  log.id = 'aaang';
+  log.data.name = 'aaang!!';
+  artworks.push(log);
+  console.log(artworks);
 };
 
 //////////////////////
