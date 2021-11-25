@@ -1,6 +1,7 @@
 import html2canvas from 'html2canvas';
 
 const renderDatas = [];
+const images = [];
 
 export const state = {
   artworks: [],
@@ -20,7 +21,8 @@ export const loadArtwork = async function (renderImage) {
   }
 };
 
-const logArtwork = function (img) {
+export const logArtwork = function () {
+  const imgURL = getImageURL();
   // updates current user
   const index = state.artworks.length + 1;
   const log = {
@@ -28,12 +30,19 @@ const logArtwork = function (img) {
     statement: 'This is total bullshit!',
     index: index,
     id: 123123,
-    img: img,
+    imgURL: imgURL,
   };
-
   // newely generated log gets added to archive
+  state.artworks.push(log);
+  console.log(state.artworks);
+  saveToStorage();
+};
 
-  // saveToStorage();
+export const getImageURL = function () {
+  const canvas = document.querySelector('.result-canvas');
+  let image = new Image();
+  const imgURL = (image.src = canvas.toDataURL('image/png'));
+  return imgURL;
 };
 
 // const loadLatest = async function () {
@@ -46,23 +55,19 @@ const logArtwork = function (img) {
 //   }
 // };
 
-// const saveToStorage = function () {
-//   localStorage.setItem('artworks', JSON.stringify(state.artworks));
+const saveToStorage = function () {
+  localStorage.setItem('artworks', JSON.stringify(state.artworks));
+};
+const getFromStorage = function () {
+  const storage = localStorage.getItem('artworks');
+  if (storage) {
+    state.artworks = JSON.parse(storage);
+  }
+};
 
-//   localStorage.setItem('data', JSON.stringify(renderDatas));
-// };
-// const getFromStorage = function () {
-//   const storage = localStorage.getItem('artworks');
-//   if (storage) {
-//     state.artworks = JSON.parse(storage);
-//   }
+const init = function () {
+  getFromStorage();
+};
 
-//   JSON.parse(localStorage.getItem('data'));
-// };
-
-// const init = function () {
-//   getFromStorage();
-// };
-
-// init();
+init();
 // loadLatest();

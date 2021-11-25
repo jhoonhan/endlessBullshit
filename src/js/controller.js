@@ -39,11 +39,15 @@ const controlRenderArtwork = async function (renderImage, secondImage) {
 
     await model.loadArtwork(renderImage);
     // a3) use current IMG to render
-    artworkView.artworkRender(model.state.img);
+    artworkView.artworkRender(model.state.img, 'first');
 
     // second loop starts
+    const resultCanvas = document.querySelector('.result-canvas');
     await model.loadArtwork(secondImage);
-    artworkView.artworkRender(model.state.img);
+    artworkView.artworkRender(model.state.img, 'second', resultCanvas);
+
+    // fire image converter
+    model.logArtwork();
   } catch (err) {
     console.error(`${err} - admin 2`);
   }
@@ -63,14 +67,3 @@ init();
 
 // const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 // console.log(arr.length);
-
-// const convertCanvasToImage = function () {
-//   const canvvas = document.querySelector('.artwork-canvas');
-//   let image = new Image();
-//   image.src = canvvas.toDataURL('image/png');
-//   console.log(image.src);
-//   return image;
-// };
-
-// let pnGImage = convertCanvasToImage();
-// document.querySelector('.footer').appendChild(pnGImage);
