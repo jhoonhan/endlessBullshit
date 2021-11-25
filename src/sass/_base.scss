@@ -12,4 +12,217 @@ body {
   font-family: 'Nunito Sans', sans-serif;
   font-weight: 400;
   line-height: 1.6;
+  overflow-x: hidden;
+}
+textarea {
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+.container {
+  //   background-color: rded;
+  max-width: 100vw;
+  min-height: 100vh;
+  max-height: 100vh;
+
+  display: grid;
+  grid-template-rows: 1fr;
+
+  // JS
+  grid-template-columns: 0.5fr 3fr 3fr 0fr;
+
+  column-gap: 5rem;
+
+  align-content: center;
+  justify-content: center;
+  align-items: stretch;
+  justify-items: stretch;
+}
+.column {
+  height: 100vh;
+  display: grid;
+  align-content: center;
+}
+.column--1 {
+  // background-color: aqua;
+}
+.column--2 {
+  // background-color: blue;
+}
+.column--3 {
+  // background-color: purple;
+}
+.column--4 {
+  // background-color: yellow;
+}
+
+.container-artwork {
+  aspect-ratio: 1 / 1;
+  border: 0rem solid white;
+  background-color: white;
+  position: relative;
+  box-sizing: border-box;
+}
+.container-outer {
+  // box-shadow: rgb(189, 189, 189) 1px 2px 10px;
+  box-sizing: border-box;
+  padding: 6rem;
+  background-image: url(../img/outerShadow.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+.container-previous-work {
+  @extend .container-artwork;
+  box-shadow: black 0px 0px 2px;
+}
+.reduce-box {
+  width: 70%;
+  height: 70%;
+}
+
+.inner-shadow {
+  background-image: url(../img/innerShadow.png);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.conatiner-artwork--inner {
+  background-color: white;
+  width: 100%;
+  height: 100%;
+}
+
+.matte-board {
+  box-sizing: border-box;
+  padding: 15%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.artwork {
+  background-image: url(../img/comedian.jpg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 100%;
+  height: 100%;
+}
+.previous-title {
+  content: 'Comedian, aaang';
+  // border: 1px solid purple;
+  right: 15%;
+  bottom: calc(13% + 0.5rem);
+  align-self: flex-end;
+  // border: 1px solid blue;
+  margin-bottom: -1.75rem;
+}
+.container-artwork .bullshit-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: 90%;
+  background-image: url('../img/bullshitLayer.png');
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.sub-grid {
+  // background-color: pink;
+  display: grid;
+  width: 100%;
+  max-height: 100vh;
+  align-content: center;
+}
+
+.sub-grid--1 {
+  // background-color: pink;
+  grid-template-rows: 1fr auto;
+
+  row-gap: 1rem;
+}
+
+.sub-grid--2 {
+  // background-color: #ccc;
+
+  // grid-template-rows: 1fr 16px;
+  justify-content: stretch;
+
+  row-gap: 0rem;
+}
+
+.sub-grid--2 .cell {
+  max-width: 70%;
+  margin-left: 5rem;
+}
+.sub-grid--2 .cell--1 {
+  row-gap: 0;
+}
+
+.artwork-tag {
+  text-align: right;
+  margin-top: -2.5%;
+  margin-right: 2%;
+}
+
+.artwork-subtitle {
+  text-align: right;
+  margin-bottom: 1rem;
+}
+
+.artwork-title {
+  font-size: 2rem;
+  font-style: italic;
+}
+
+.cell {
+}
+
+.cell--1 {
+  // background-color: rosybrown;
+}
+.cell--2 {
+  // background-color: r;
+}
+.form .cell--4 {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  row-gap: 0.5rem;
+  column-gap: 1rem;
+}
+
+.generate-form {
+  // background-color: d;
+  display: flex;
+  flex-direction: column;
+  row-gap: 2rem;
+  margin-top: 2rem;
+  box-sizing: border-box;
+}
+.generate-form .form-label {
+  font-size: 1.6rem;
+}
+.generate-form .checkbox-label {
+  font-size: 1rem;
+}
+.input--artiststatement {
+  // background-color: red;
+}
+
+.dummy {
+  position: absolute;
+  width: 100vw;
+  opacity: 1;
+  left: -100vw;
+}
+.test {
+  max-width: 70vw;
+  width: 50vw;
+}
+
+.opacity {
+  opacity: 0.1;
 }

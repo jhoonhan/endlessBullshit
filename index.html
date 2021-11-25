@@ -12,12 +12,134 @@
     <script type="module" defer src="src/js/controller.js"></script>
   </head>
   <body>
-    <div class="container">
-      <header class="header"><p>aang</p></header>
-
+    <!-- <div class="introduction el el--1">
+      <h1>introduction</h1>
+    </div> -->
+    <!-- <header class="header el el--1">
       <nav class="nav">hamburger</nav>
-      <main class="main">main</main>
-      <footer class="footer">footer</footer>
+    </header> -->
+    <div class="container">
+      <div class="column column--1"></div>
+
+      <div class="column column--2">
+        <div class="sub-grid sub-grid--1">
+          <div class="cell cell--1">
+            <div class="container-outer">
+              <div class="container-artwork outer-shadow">
+                <div class="conatiner-artwork--inner inner-shadow">
+                      <div class="matte-board">
+                        <div class="artwork">asd</div>
+                        <div class="previous-title">
+                        <span><i>Comedian</i>, Maurizio Cattelan, 2019</span>
+                      </div>
+                    </div>
+                <div class="bullshit-text">this is bullshit</div>
+              </div>
+            </div>
+            </div>
+            
+          </div>
+          <div class="cell cell--2 artwork-tag">
+            <h3><i>Endless Bullshit</i>, Junghoon Han, 2021</h3>
+          </div>
+        </div>
+      </div>
+
+      <main class="main column column--3">
+        <div class="sub-grid sub-grid--2">
+          <div class="cell cell--1 artwork-title">
+            <h1>Endless Bullshit</h1>
+          </div>
+          <!-- <div class="description">
+            <div class="cell cell--2 artwork-subtitle">
+              <h3>by Junghoon Han</h3>
+            </div>
+            <div class="cell cell--3 artwork-description">
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. A vero,
+                distinctio animi praesentium, nesciunt enim quis velit, repellat
+                incidunt illum iste? Quisquam numquam ad accusamus dolorum amet
+                veniam praesentium reiciendis. Lorem ipsum dolor, sit amet
+                consectetur adipisicing elit. Omnis amet qui reiciendis dicta
+                blanditiis mollitia saepe harum sint a tempore. Ratione modi
+                vitae amet accusamus, ullam vel corrupti in facilis! Lorem ipsum
+                dolor sit amet consectetur adipisicing elit. Reiciendis dolorum
+                sunt amet distinctio cumque beatae numquam eos quidem. Quo iure
+                quia quidem doloremque consequuntur, fuga alias natus ipsum
+                nobis enim! Lorem ipsum, dolor sit amet consectetur adipisicing
+                elit. At, magnam ea ab libero nesciunt blanditiis rerum iste
+                officia molestias numquam consequatur laborum molestiae
+                provident aut iusto? Doloremque quidem nemo numquam. Lorem ipsum
+                dolor sit amet consectetur adipisicing elit. Suscipit impedit
+                eum aliquid beatae? Debitis, minima aspernatur. Nulla quae,
+                suscipit, maiores similique aliquam ad repellat culpa hic
+                explicabo enim accusamus fuga.
+              </p>
+            </div>
+            <div class="cell cell--4">
+              <button class="btn--bullshit">
+                This is bullshit
+              </button>
+            </div>
+          </div> -->
+          <div class="form">
+            <form class="generate-form">
+              <div class="cell cell--2">
+                <label class="form-label">Your Name :</label>
+                <input class="form-name input--artist-name" value="Junghoon Han" type="text"></input>
+              </div>
+              <div class="cell cell--3">
+                <label class="form-label">Your Statement :</label>
+                <textarea class="form-artiststatement input--artiststatement" type="text"></textarea>
+              </div>
+
+              <div class="cell cell--4">
+                <input class="form-checkbox ownership" type="checkbox"></input>
+                <label class="checkbox-label" for="ownership">by checking this box, you agree that all the rights and ownership on your generated artwork and participation remain to the original artist.</label>
+                <input class="form-checkbox ofage" type="checkbox"></input>
+                <label class="checkbox-label" for="ofage">by checking this box, you are 18 and older.</label>
+              </div>
+            </form>
+            <div class="cell cell--5">
+              <button class="btn--submit">Create Artwork</button>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <div class="column column--4"></div>
     </div>
+
+    <div class="container-outer dummy">
+      <div class="container-artwork outer-shadow render-artwork">
+        <div class="conatiner-artwork--inner inner-shadow">
+              <div class="matte-board">
+                <div class="artwork">asd</div>
+                <div class="previous-title">
+                <span><i>Comedian</i>, Maurizio Cattelan, 2019</span>
+              </div>
+            </div>
+        <div class="bullshit-text">this is bullshit</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-outer test">
+      <div class="container-artwork outer-shadow">
+        <div class="conatiner-artwork--inner inner-shadow ">
+              <div class="matte-board">
+                <canvas class="artwork-canvas" width= "1000" height="1000">
+                </canvas>
+                <div class="previous-title">
+                <span><i>Comedian</i>, Maurizio Cattelan, 2019</span>
+              </div>
+            </div>
+        <div class="bullshit-text">this is bullshit</div>
+        </div>
+      </div>
+    </div>
+
+   
+    <footer class="footer">footer</footer>
   </body>
 </html>

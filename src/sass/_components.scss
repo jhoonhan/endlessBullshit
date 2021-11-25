@@ -1,3 +1,101 @@
 p {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
+}
+%btn {
+  background-color: transparent;
+  border-radius: 0rem;
+  border: 1px solid #666;
+  // text-transform: lowercase;
+  color: black;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: red;
+  }
+  &:focus {
+    outline: none;
+  }
+}
+.btn--large {
+  @extend %btn;
+
+  padding: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  width: 100%;
+  justify-content: center;
+}
+
+%input {
+  box-sizing: border-box;
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 0rem;
+
+  &:hover {
+    border: 1px solid red;
+  }
+  &:focus {
+    border: 1px solid red;
+    outline: none;
+  }
+}
+.btn--bullshit {
+  @extend .btn--large;
+  margin-top: 4rem;
+}
+
+.btn--submit {
+  @extend .btn--large;
+  margin-top: 2rem;
+}
+
+.form-input {
+  @extend %input;
+  display: block;
+}
+.form-name {
+  @extend .form-input;
+  width: 100%;
+}
+.form-artiststatement {
+  @extend .form-input;
+  width: 100%;
+  line-height: 1.6rem;
+  height: 30rem;
+}
+
+%checkbox {
+  border: 1px solid black;
+  outline: none;
+  appearance: none;
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+}
+.form-checkbox {
+  @extend %checkbox;
+
+  &:hover {
+    border: 1px solid red;
+  }
+
+  &:active {
+    background-color: red;
+    border: 1px solid red;
+  }
+
+  &:checked {
+    background-color: red;
+    border: 1px solid red;
+    text-align: center;
+  }
+  &:checked::after {
+    content: 'X';
+    line-height: 2rem;
+    color: white;
+  }
 }
