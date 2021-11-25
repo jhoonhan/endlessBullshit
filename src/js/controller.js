@@ -31,15 +31,19 @@ if (module.hot) {
 //   }
 // };
 
-const controlRenderArtwork = async function (renderImage, latest = true) {
+const controlRenderArtwork = async function (
+  renderImage,
+  canvas,
+  latest = true
+) {
   // @renderImage = html node to be converted to image
   try {
     // a1) Load artwork and have Model to save userImg
     // a1) current IMG becomes state.userImg
-    await model.loadArtwork(renderImage);
+    await model.loadArtwork(renderImage, canvas);
 
     // a3) use current IMG to render
-    artworkView.artworkRender(model.log.data.img);
+    artworkView.artworkRender(model.state.img, model.state.renderData);
   } catch (err) {
     console.error(`${err} - admin 2`);
   }
@@ -56,3 +60,17 @@ const init = function () {
   artworkView.addHandlerRender(controlRenderArtwork);
 };
 init();
+
+// const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+// console.log(arr.length);
+
+// const convertCanvasToImage = function () {
+//   const canvvas = document.querySelector('.artwork-canvas');
+//   let image = new Image();
+//   image.src = canvvas.toDataURL('image/png');
+//   console.log(image.src);
+//   return image;
+// };
+
+// let pnGImage = convertCanvasToImage();
+// document.querySelector('.footer').appendChild(pnGImage);
