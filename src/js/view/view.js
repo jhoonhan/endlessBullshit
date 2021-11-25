@@ -10,13 +10,13 @@ export default class View {
     return renderedData;
   }
 
-  artworkRender(image, renderData) {
+  artworkRender(image) {
     // a4) render sequence fired
     this._image = image;
     this._canvas.width = 1000;
     this._canvas.height = 1000;
     this._canvas.style.opacity = 0.5;
-
+    const renderData = this._canvas.getContext('2d');
     renderData.drawImage(image, 0, 0, 1001, 1001);
   }
 

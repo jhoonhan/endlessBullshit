@@ -31,19 +31,19 @@ if (module.hot) {
 //   }
 // };
 
-const controlRenderArtwork = async function (
-  renderImage,
-  canvas,
-  latest = true
-) {
+const controlRenderArtwork = async function (renderImage, secondImage) {
   // @renderImage = html node to be converted to image
   try {
     // a1) Load artwork and have Model to save userImg
     // a1) current IMG becomes state.userImg
-    await model.loadArtwork(renderImage, canvas);
 
+    await model.loadArtwork(renderImage);
     // a3) use current IMG to render
-    artworkView.artworkRender(model.state.img, model.state.renderData);
+    artworkView.artworkRender(model.state.img);
+
+    // second loop starts
+    await model.loadArtwork(secondImage);
+    artworkView.artworkRender(model.state.img);
   } catch (err) {
     console.error(`${err} - admin 2`);
   }
