@@ -42,18 +42,6 @@ textarea {
   display: grid;
   align-content: center;
 }
-.column--1 {
-  // background-color: aqua;
-}
-.column--2 {
-  // background-color: blue;
-}
-.column--3 {
-  // background-color: purple;
-}
-.column--4 {
-  // background-color: yellow;
-}
 
 .container-artwork {
   aspect-ratio: 1 / 1;
@@ -177,15 +165,6 @@ textarea {
   font-style: italic;
 }
 
-.cell {
-}
-
-.cell--1 {
-  // background-color: rosybrown;
-}
-.cell--2 {
-  // background-color: r;
-}
 .form .cell--4 {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -207,9 +186,6 @@ textarea {
 }
 .generate-form .checkbox-label {
   font-size: 1rem;
-}
-.input--artiststatement {
-  // background-color: red;
 }
 
 .dummy {
