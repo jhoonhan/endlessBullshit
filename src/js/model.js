@@ -1,12 +1,11 @@
 import html2canvas from 'html2canvas';
 
-const renderDatas = [];
-const images = [];
+const { v4: uuidv4 } = require('uuid');
 
 export const state = {
   artworks: [],
   img: '',
-  renderData: '',
+  curImgURL: '',
 };
 
 // export const latestArtwork = async function () {};
@@ -29,7 +28,7 @@ export const logArtwork = function () {
     name: 'Joe Han',
     statement: 'This is total bullshit!',
     index: index,
-    id: 123123,
+    id: uuidv4(),
     imgURL: imgURL,
   };
   // newely generated log gets added to archive
@@ -45,15 +44,13 @@ export const getImageURL = function () {
   return imgURL;
 };
 
-// const loadLatest = async function () {
-//   try {
-//     console.log(state.artworks);
-//     const test = state.artworks.slice(-1);
-//     console.log(test[0]);
-//   } catch (err) {
-//     console.error(`${err} - admin 4`);
-//   }
-// };
+const loadLatest = function () {
+  console.log(state.artworks);
+  // Selects the latest artwork
+  const [artwork] = state.artworks.slice(-1);
+  // Sets its to current image.
+  state.curImgURL = artwork.imgURL;
+};
 
 const saveToStorage = function () {
   localStorage.setItem('artworks', JSON.stringify(state.artworks));
@@ -70,4 +67,3 @@ const init = function () {
 };
 
 init();
-// loadLatest();

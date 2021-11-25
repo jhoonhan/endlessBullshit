@@ -88,7 +88,7 @@ textarea {
   flex-direction: column;
 }
 
-.artwork {
+.artwork-dummy {
   background-image: url(../img/comedian.jpg);
   background-position: center center;
   background-repeat: no-repeat;
@@ -96,6 +96,16 @@ textarea {
   width: 100%;
   height: 100%;
 }
+
+.artwork {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 100%;
+  height: 100%;
+  background-color: yellow;
+}
+
 .previous-title {
   content: 'Comedian, aaang';
   // border: 1px solid purple;

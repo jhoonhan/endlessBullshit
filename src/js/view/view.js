@@ -19,4 +19,9 @@ export default class View {
     const renderData = canvas.getContext('2d');
     renderData.drawImage(image, 0, 0, 1000, 1000);
   }
+
+  artworkLatest(imgURL) {
+    // change background style of...
+    this._artwork.style.backgroundImage = `url(${imgURL})`;
+  }
 }

@@ -53,16 +53,16 @@ const controlRenderArtwork = async function (renderImage, secondImage) {
   }
 };
 
-const renderLatestArtwork = async function () {
-  try {
-  } catch (err) {
-    console.error(`${err} - admin 3`);
-  }
+const renderLatestArtwork = function (imgURL) {
+  model.loadLatest();
+  artworkView.artworkLatest(model.state.curImgURL);
 };
 
 const init = function () {
   artworkView.addHandlerRender(controlRenderArtwork);
+  artworkView.addHandlerLatest(renderLatestArtwork);
 };
+
 init();
 
 // const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
