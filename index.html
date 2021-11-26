@@ -24,11 +24,9 @@
       <div class="column column--2">
         <div class="sub-grid sub-grid--1">
           <div class="cell cell--1">
-            <div class="container-outer">
-              <div class="container-artwork outer-shadow">
-                <div class="conatiner-artwork--inner">
-                  <div class="artwork"></div>
-              </div>
+            <div class="container-outer outer-shadow">
+              <div class="container-artwork">
+                <div class="artwork"></div>
             </div>
             </div>
             
@@ -76,21 +74,21 @@
               </button>
             </div>
           </div> -->
-            <form class="generate-form">
+            <form class="form-artwork">
               <div class="cell cell--2">
-                <label class="form-label">Your Name :</label>
-                <input name="name" class="form-name" value="Junghoon Han" required type="text"></input>
+                <label class="label-form">Your Name :</label>
+                <input name="name" class="input-form" value="Junghoon Han"  type="text"></input>
               </div>
               <div class="cell cell--3">
-                <label class="form-label">Your Statement :</label>
-                <textarea name="statement" class="form-artiststatement" required type="text"></textarea>
+                <label class="label-form">Your Statement :</label>
+                <textarea name="statement" class="input-form-textarea"  type="text"></textarea>
               </div>
 
-              <div class="cell cell--4">
-                <input name="ownership" class="form-checkbox" required type="checkbox"></input>
-                <label class="checkbox-label" for="ownership">by checking this box, you agree that all the rights and ownership on your generated artwork and participation remain to the original artist.</label>
-                <input name="ofage" class="form-checkbox" required type="checkbox"></input>
-                <label class="checkbox-label" for="ofage">by checking this box, you are 18 and older.</label>
+              <div class="cell cell--4 form-checkbox">
+                <input name="ownership" class="checkbox"  type="checkbox"></input>
+                <label class="label-checkbox" for="ownership">by checking this box, you agree that all the rights and ownership on your generated artwork and participation remain to the original artist.</label>
+                <input name="ofage" class="checkbox"  type="checkbox"></input>
+                <label class="label-checkbox" for="ofage">by checking this box, you are 18 and older.</label>
               </div>
               
               <button class="btn--submit">Create Artwork</button>
@@ -100,39 +98,27 @@
         </div>
       </main>
 
-      <div class="column column--4"></div>
-    </div>
-
-    <div class="container-outer render-element-hide">
-      <div class="container-artwork outer-shadow render-artwork">
-        <div class="conatiner-artwork--inner inner-shadow">
-              <!-- <div class="matte-board">
-                
-                <div class="previous-title">
-                <span><i>Comedian</i>, Maurizio Cattelan, 2019</span>
-              </div>
-            </div> -->
-            <div class="artwork-dummy"></div>
-        </div>
+      <div class="column column--4">
+        <!---->
       </div>
     </div>
 
-    <div class="container-outer render-box render-element-hide">
-      <div class="container-artwork outer-shadow ">
-        <div class="conatiner-artwork--inner inner-shadow second-image">
-              <div class="matte-board ">
-                <canvas class="artwork-canvas " width= "1000" height="1000">
-                </canvas>
-                <div class="previous-title">
-                <span><i>This is Bullshit</i>, Maurizio Cattelan, 2019</span>
-              </div>
+    <div class="render-box render-element-hide">
+      <div class="render-inner-box">
+        <div class="render-artwork inner-shadow">
+          <div class="render-origial-image">
+            <div class="render-text-title">
+              <span><i>This is Bullshit</i>, Maurizio Cattelan, 2019</span>
             </div>
-        <div class="bullshit-text"></div>
-        </div>
+          </div>
+          <div class="render-text-overlay"></div>
+      </div>
+        <canvas class="render-receiver" width= "2000" height="2000">
+        </canvas>
       </div>
     </div>
 
-   
-    <footer class="footer"><canvas class="result-canvas render-element-hide" width= "1000" height="1000"></footer>
+
+    <footer class="footer"></footer>
   </body>
 </html>

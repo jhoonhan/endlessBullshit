@@ -28,6 +28,16 @@ p {
   width: 100%;
   justify-content: center;
 }
+.btn--bullshit {
+  @extend .btn--large;
+  margin-top: 4rem;
+}
+
+.btn--submit {
+  @extend .btn--large;
+  margin-top: 2rem;
+  width: 70%;
+}
 
 %input {
   box-sizing: border-box;
@@ -43,42 +53,24 @@ p {
     outline: none;
   }
 }
-.btn--bullshit {
-  @extend .btn--large;
-  margin-top: 4rem;
-}
-
-.btn--submit {
-  @extend .btn--large;
-  margin-top: 2rem;
-  width: 70%;
-}
-
-.form-input {
+.input-form {
   @extend %input;
-  display: block;
-}
-.form-name {
-  @extend .form-input;
   width: 100%;
 }
-.form-artiststatement {
-  @extend .form-input;
+.input-form-textarea {
+  @extend %input;
   width: 100%;
   line-height: 1.6rem;
   height: 30rem;
 }
 
-%checkbox {
+.checkbox {
   border: 1px solid black;
   outline: none;
   appearance: none;
   width: 2rem;
   height: 2rem;
   cursor: pointer;
-}
-.form-checkbox {
-  @extend %checkbox;
 
   &:hover {
     border: 1px solid red;
@@ -99,4 +91,16 @@ p {
     line-height: 2rem;
     color: white;
   }
+}
+
+%label {
+  color: black;
+}
+.label-form {
+  @extend %label;
+  font-size: 1.6rem;
+}
+.label-checkbox {
+  @extend %label;
+  font-size: 1rem;
 }

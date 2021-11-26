@@ -10,7 +10,7 @@ export const state = {
 
 // export const latestArtwork = async function () {};
 
-// a2) load artwork and save it to state
+// takes dummy and convert it to canvas
 export const loadArtwork = async function (renderImage) {
   try {
     const img = await html2canvas(renderImage);

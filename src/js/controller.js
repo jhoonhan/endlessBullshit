@@ -31,20 +31,23 @@ if (module.hot) {
 const controlGenerateArtwork = async function (renderImage, secondImage) {
   // @renderImage = html node to be converted to image
   try {
-    // a1) Load artwork and have Model to save userImg
-    // a1) current IMG becomes state.userImg
+    // reduce dummy to fit in the center with 70%
+    console.log(`reduced f`);
+    artworkView.artworkReducer('add');
 
+    //
     await model.loadArtwork(renderImage);
-    // a3) use current IMG to render
-    artworkView.artworkRender(model.state.img, 'first');
 
-    // second loop starts
-    const resultCanvas = document.querySelector('.result-canvas');
-    await model.loadArtwork(secondImage);
-    artworkView.artworkRender(model.state.img, 'second', resultCanvas);
+    // a3) use current IMG to render
+    artworkView.artworkRender(model.state.img);
+
+    // rolls back reducer
+    artworkView.artworkReducer('remove');
+
     // Get input data rendered imgURL
     const inputData = artworkView.artworkInputData();
     const imgURL = artworkView.artworkImgURL();
+
     // Save the data
     model.logArtwork(inputData, imgURL);
   } catch (err) {
