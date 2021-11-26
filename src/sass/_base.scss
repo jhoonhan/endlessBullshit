@@ -200,23 +200,16 @@ textarea {
   font-size: 1rem;
 }
 
-.dummy {
-  position: absolute;
-  width: 100vw;
-  left: -100vw;
-}
-
 .opacity {
   opacity: 0.1;
 }
 
-.result-canvas {
-  position: absolute;
-  left: -100vw;
-}
 .render-box {
   max-width: 100vw;
   width: 100vw;
-  position: absolute;
-  left: -100vw;
 }
+
+// .render-element-hide {
+//   position: absolute;
+//   left: -100vw;
+// }
