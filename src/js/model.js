@@ -20,13 +20,12 @@ export const loadArtwork = async function (renderImage) {
   }
 };
 
-export const logArtwork = function () {
-  const imgURL = getImageURL();
-  // updates current user
+export const logArtwork = function (inputData, imgURL) {
+  // save new log
   const index = state.artworks.length + 1;
   const log = {
-    name: 'Joe Han',
-    statement: 'This is total bullshit!',
+    name: inputData.name,
+    statement: inputData.statement,
     index: index,
     id: uuidv4(),
     imgURL: imgURL,
@@ -35,13 +34,6 @@ export const logArtwork = function () {
   state.artworks.push(log);
   console.log(state.artworks);
   saveToStorage();
-};
-
-export const getImageURL = function () {
-  const canvas = document.querySelector('.result-canvas');
-  let image = new Image();
-  const imgURL = (image.src = canvas.toDataURL('image/png', 1.0));
-  return imgURL;
 };
 
 export const loadLatest = function () {

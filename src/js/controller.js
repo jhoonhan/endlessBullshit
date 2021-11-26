@@ -28,7 +28,7 @@ if (module.hot) {
 //   }
 // };
 
-const controlRenderArtwork = async function (renderImage, secondImage) {
+const controlGenerateArtwork = async function (renderImage, secondImage) {
   // @renderImage = html node to be converted to image
   try {
     // a1) Load artwork and have Model to save userImg
@@ -42,9 +42,11 @@ const controlRenderArtwork = async function (renderImage, secondImage) {
     const resultCanvas = document.querySelector('.result-canvas');
     await model.loadArtwork(secondImage);
     artworkView.artworkRender(model.state.img, 'second', resultCanvas);
-
-    // fire image converter
-    model.logArtwork();
+    // Get input data rendered imgURL
+    const inputData = artworkView.artworkInputData();
+    const imgURL = artworkView.artworkImgURL();
+    // Save the data
+    model.logArtwork(inputData, imgURL);
   } catch (err) {
     console.error(`${err} - admin 2`);
   }
@@ -56,7 +58,7 @@ const renderLatestArtwork = function () {
 };
 
 const init = function () {
-  artworkView.addHandlerRender(controlRenderArtwork);
+  artworkView.addHandlerGenerateArtwork(controlGenerateArtwork);
   artworkView.addHandlerLatest(renderLatestArtwork);
   console.log(model.state.artworks);
 };

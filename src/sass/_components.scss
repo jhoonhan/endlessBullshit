@@ -51,6 +51,7 @@ p {
 .btn--submit {
   @extend .btn--large;
   margin-top: 2rem;
+  width: 70%;
 }
 
 .form-input {
