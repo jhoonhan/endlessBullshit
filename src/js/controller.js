@@ -1,10 +1,7 @@
 import * as model from './model.js';
 import artworkView from './view/artworkView.js';
-import html2canvas from 'html2canvas';
 
 const artworkContainer = document.querySelector('.render-artwork');
-
-const { default: html2canvas } = require('html2canvas');
 
 // const aang = document.querySelector('.aang');
 if (module.hot) {
@@ -53,7 +50,7 @@ const controlRenderArtwork = async function (renderImage, secondImage) {
   }
 };
 
-const renderLatestArtwork = function (imgURL) {
+const renderLatestArtwork = function () {
   model.loadLatest();
   artworkView.artworkLatest(model.state.curImgURL);
 };
@@ -61,9 +58,7 @@ const renderLatestArtwork = function (imgURL) {
 const init = function () {
   artworkView.addHandlerRender(controlRenderArtwork);
   artworkView.addHandlerLatest(renderLatestArtwork);
+  console.log(model.state.artworks);
 };
 
 init();
-
-// const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-// console.log(arr.length);

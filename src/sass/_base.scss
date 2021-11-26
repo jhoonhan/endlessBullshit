@@ -103,11 +103,11 @@ textarea {
   background-size: contain;
   width: 100%;
   height: 100%;
-  background-color: yellow;
+  background-color: white;
 }
 
 .previous-title {
-  content: 'Comedian, aaang';
+  font-size: 3rem;
   // border: 1px solid purple;
   right: 15%;
   bottom: calc(13% + 0.5rem);
@@ -201,12 +201,11 @@ textarea {
 .dummy {
   position: absolute;
   width: 100vw;
-  opacity: 1;
   left: -100vw;
 }
-.test {
-  max-width: 70vw;
-  width: 50vw;
+.renderBox {
+  max-width: 100vw;
+  width: 100vw;
 }
 
 .opacity {

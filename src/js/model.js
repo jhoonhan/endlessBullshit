@@ -40,16 +40,16 @@ export const logArtwork = function () {
 export const getImageURL = function () {
   const canvas = document.querySelector('.result-canvas');
   let image = new Image();
-  const imgURL = (image.src = canvas.toDataURL('image/png'));
+  const imgURL = (image.src = canvas.toDataURL('image/png', 1.0));
   return imgURL;
 };
 
-const loadLatest = function () {
-  console.log(state.artworks);
+export const loadLatest = function () {
+  if (state.artworks.length < 1) return;
   // Selects the latest artwork
-  const [artwork] = state.artworks.slice(-1);
+  const [log] = state.artworks.slice(-1);
   // Sets its to current image.
-  state.curImgURL = artwork.imgURL;
+  state.curImgURL = log.imgURL;
 };
 
 const saveToStorage = function () {

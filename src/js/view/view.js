@@ -15,7 +15,7 @@ export default class View {
     this._image = image;
     canvas.width = 1000;
     canvas.height = 1000;
-    if (run === 'first') canvas.style.opacity = 0.5;
+    if (run === 'first') canvas.style.opacity = 0.6;
     const renderData = canvas.getContext('2d');
     renderData.drawImage(image, 0, 0, 1000, 1000);
   }
@@ -23,5 +23,6 @@ export default class View {
   artworkLatest(imgURL) {
     // change background style of...
     this._artwork.style.backgroundImage = `url(${imgURL})`;
+    this._artworkDummy.style.backgroundImage = `url(${imgURL})`;
   }
 }

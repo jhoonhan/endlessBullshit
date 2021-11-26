@@ -6,6 +6,7 @@ class ArtworkView extends View {
   _renderImage = document.querySelector('.render-artwork');
   _secondImage = document.querySelector('.second-image');
   _artwork = document.querySelector('.artwork');
+  _artworkDummy = document.querySelector('.artwork-dummy');
 
   addHandlerRender(handler) {
     this._trigger.addEventListener(
@@ -17,9 +18,10 @@ class ArtworkView extends View {
     );
   }
 
-  addHandlerLatest(handler, imgURL) {
-    this._artwork;
-    handler(imgURL);
+  addHandlerLatest(handler) {
+    window.addEventListener('load', function () {
+      handler();
+    });
   }
 }
 
