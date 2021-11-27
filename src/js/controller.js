@@ -1,5 +1,7 @@
+import latestWorkView from './view/latestWorkView.js';
 import * as model from './model.js';
 import artworkView from './view/artworkView.js';
+import latestWorkView from './view/latestWorkView.js';
 
 const artworkContainer = document.querySelector('.render-artwork');
 
@@ -35,13 +37,6 @@ const controlGenerateArtwork = async function (renderImage) {
     artworkView.artworkReducer('add');
     //
     await model.loadArtwork(renderImage);
-    // previous log data to artwork title for render
-    console.log([model.state.current.name, model.state.current.date]);
-    const dataLatestTitle = artworkView.addLatestTitle([
-      model.state.current.name,
-      model.state.current.date,
-    ]);
-    artworkView.insertHTML(dataLatestTitle);
 
     // use current IMG to render
     artworkView.artworkRender(model.state.current.img);
@@ -62,13 +57,17 @@ const controlGenerateArtwork = async function (renderImage) {
 
 const controlLatestArtwork = function () {
   model.loadLatest();
-  artworkView.artworkLatest(model.state.current.imgURL);
-
-  console.log(model.state.current.name);
+  latestWorkView.artworkLatest(model.state.current.imgURL);
+  // previous log data to artwork title for render
+  latestWorkView.addTitles([
+    model.state.current.name,
+    model.state.current.title,
+    model.state.current.date,
+  ]);
 };
 
 const init = function () {
-  artworkView.addHandlerLatest(controlLatestArtwork);
+  latestWorkView.addHandlerLatest(controlLatestArtwork);
   artworkView.addHandlerGenerateArtwork(controlGenerateArtwork);
   console.log(model.state.artworks);
 };

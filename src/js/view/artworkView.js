@@ -7,7 +7,8 @@ class ArtworkView extends View {
   _renderImage = document.querySelector('.render-artwork');
   _renderOriginalImage = document.querySelector('.render-origial-image');
   _artwork = document.querySelector('.artwork');
-  _latestName = document.querySelector('.render-text-title');
+  _renderTitle = document.querySelector('.render-text-title');
+  _latestTitle = document.querySelector('.artwork-tag');
 
   locationHTML;
 
@@ -24,12 +25,6 @@ class ArtworkView extends View {
       config.RENDERQUALITY,
       config.RENDERQUALITY
     );
-  }
-
-  artworkLatest(imgURL) {
-    // change background style of...
-    this._artwork.style.backgroundImage = `url(${imgURL})`;
-    this._renderOriginalImage.style.backgroundImage = `url(${imgURL})`;
   }
 
   artworkInputData() {
@@ -74,22 +69,6 @@ class ArtworkView extends View {
     window.addEventListener('load', function () {
       handler();
     });
-  }
-
-  addLatestTitle(data) {
-    const locationHTML = this._latestName;
-    const dataHTML = this._generateMarkup(data);
-    return [dataHTML, locationHTML];
-  }
-
-  _generateMarkup(data) {
-    const [name, date] = data;
-    const year = '2222000011';
-    return `
-      <span>
-        <i>This is Bullshit</i>, ${name}, ${year}
-      </span>
-    `;
   }
 }
 
