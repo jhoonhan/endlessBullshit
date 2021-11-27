@@ -46,11 +46,17 @@ const controlGenerateArtwork = async function (renderImage) {
     renderView.artworkReducer('remove');
 
     // Get input data rendered imgURL
-    const inputData = renderView.artworkInputData();
+    const inputData = descriptionView.artworkInputData();
     const imgURL = renderView.artworkImgURL();
 
     // Save the data
     model.logArtwork(inputData, imgURL);
+
+    // hide form
+    descriptionView.toggleWindow();
+
+    // Refresh
+    controlLatestArtwork();
   } catch (err) {
     console.error(`${err} - admin 2`);
   }
@@ -76,7 +82,6 @@ const controlLatestArtwork = function () {
 const init = function () {
   latestWorkView.addHandlerLatest(controlLatestArtwork);
   renderView.addHandlerGenerateArtwork(controlGenerateArtwork);
-  console.log(model.state.artworks);
 };
 
 init();

@@ -28,9 +28,10 @@ p {
   width: 100%;
   justify-content: center;
 }
-.btn--bullshit {
+.btn--hide-description {
   @extend .btn--large;
-  margin-top: 4rem;
+  margin-top: 2rem;
+  width: 70%;
 }
 
 .btn--submit {

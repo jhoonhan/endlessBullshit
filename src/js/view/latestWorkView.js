@@ -5,7 +5,6 @@ class LatestWorkView extends View {
   _artwork = document.querySelector('.artwork');
   _renderTitle = document.querySelector('.render-text-title');
   _latestTitle = document.querySelector('.artwork-tag');
-
   _renderOriginalImage = document.querySelector('.render-origial-image');
 
   addHandlerLatest(handler) {

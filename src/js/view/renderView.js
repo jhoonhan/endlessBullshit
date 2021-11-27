@@ -2,13 +2,20 @@ import * as config from '../config.js';
 import View from './View.js';
 
 class RenderView extends View {
-  _trigger = document.querySelector('.form-artwork');
   _renderReceiver = document.querySelector('.render-receiver');
   _renderImage = document.querySelector('.render-artwork');
   _renderOriginalImage = document.querySelector('.render-origial-image');
+  _form = document.querySelector('.form-artwork');
 
-  locationHTML;
-
+  addHandlerGenerateArtwork(handler) {
+    this._form.addEventListener(
+      'submit',
+      function (e) {
+        e.preventDefault();
+        handler(this._renderImage);
+      }.bind(this)
+    );
+  }
   artworkRender(image) {
     // a4) render sequence fired
     this._image = image;
@@ -23,13 +30,6 @@ class RenderView extends View {
       config.RENDERQUALITY
     );
   }
-
-  artworkInputData() {
-    const inputDataArr = [...new FormData(this._trigger)];
-    const inputData = Object.fromEntries(inputDataArr);
-    return inputData;
-  }
-
   artworkImgURL() {
     const image = new Image();
     const imgURL = (image.src = this._renderReceiver.toDataURL(
@@ -38,28 +38,16 @@ class RenderView extends View {
     ));
     return imgURL;
   }
-
   artworkReducer(type) {
     // Adds CSS values to renderImage to be conveted to canvas
     if (type === 'add') {
       this._renderOriginalImage.classList.add('render-reduce');
       this._renderOriginalImage.style.opacity = config.OPACITY;
     }
-
     if (type === 'remove') {
       this._renderOriginalImage.classList.remove('render-reduce');
       this._renderOriginalImage.style.opacity = 1;
     }
-  }
-
-  addHandlerGenerateArtwork(handler) {
-    this._trigger.addEventListener(
-      'submit',
-      function (e) {
-        e.preventDefault();
-        handler(this._renderImage);
-      }.bind(this)
-    );
   }
 }
 
