@@ -1,14 +1,11 @@
 import * as config from '../config.js';
 import View from './View.js';
 
-class ArtworkView extends View {
+class RenderView extends View {
   _trigger = document.querySelector('.form-artwork');
   _renderReceiver = document.querySelector('.render-receiver');
   _renderImage = document.querySelector('.render-artwork');
   _renderOriginalImage = document.querySelector('.render-origial-image');
-  _artwork = document.querySelector('.artwork');
-  _renderTitle = document.querySelector('.render-text-title');
-  _latestTitle = document.querySelector('.artwork-tag');
 
   locationHTML;
 
@@ -64,12 +61,6 @@ class ArtworkView extends View {
       }.bind(this)
     );
   }
-
-  addHandlerLatest(handler) {
-    window.addEventListener('load', function () {
-      handler();
-    });
-  }
 }
 
-export default new ArtworkView();
+export default new RenderView();

@@ -1,7 +1,8 @@
 import latestWorkView from './view/latestWorkView.js';
 import * as model from './model.js';
-import artworkView from './view/artworkView.js';
+import renderView from './view/renderView.js';
 import latestWorkView from './view/latestWorkView.js';
+import descriptionView from './view/descriptionView.js';
 
 const artworkContainer = document.querySelector('.render-artwork');
 
@@ -34,19 +35,19 @@ const controlGenerateArtwork = async function (renderImage) {
   // @renderImage = html node to be converted to image
   try {
     // reduce dummy to fit in the center with 70%
-    artworkView.artworkReducer('add');
+    renderView.artworkReducer('add');
     //
     await model.loadArtwork(renderImage);
 
     // use current IMG to render
-    artworkView.artworkRender(model.state.current.img);
+    renderView.artworkRender(model.state.current.img);
 
     // rolls back reducer
-    artworkView.artworkReducer('remove');
+    renderView.artworkReducer('remove');
 
     // Get input data rendered imgURL
-    const inputData = artworkView.artworkInputData();
-    const imgURL = artworkView.artworkImgURL();
+    const inputData = renderView.artworkInputData();
+    const imgURL = renderView.artworkImgURL();
 
     // Save the data
     model.logArtwork(inputData, imgURL);
@@ -58,17 +59,23 @@ const controlGenerateArtwork = async function (renderImage) {
 const controlLatestArtwork = function () {
   model.loadLatest();
   latestWorkView.artworkLatest(model.state.current.imgURL);
-  // previous log data to artwork title for render
+  // latest log data to artwork title for render
   latestWorkView.addTitles([
     model.state.current.name,
     model.state.current.title,
     model.state.current.date,
   ]);
+  // load latest log data to description
+  descriptionView.addDescription([
+    model.state.current.name,
+    model.state.current.date,
+    model.state.current.statement,
+  ]);
 };
 
 const init = function () {
   latestWorkView.addHandlerLatest(controlLatestArtwork);
-  artworkView.addHandlerGenerateArtwork(controlGenerateArtwork);
+  renderView.addHandlerGenerateArtwork(controlGenerateArtwork);
   console.log(model.state.artworks);
 };
 

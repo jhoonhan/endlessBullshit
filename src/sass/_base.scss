@@ -115,7 +115,7 @@ textarea {
   font-style: italic;
 }
 
-.artworkPage .form-checkbox {
+.form-checkbox {
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: center;
@@ -123,7 +123,7 @@ textarea {
   column-gap: 1rem;
 }
 
-.artworkPage .form-artwork {
+.form-artwork {
   display: flex;
   flex-direction: column;
   row-gap: 2rem;
@@ -206,4 +206,7 @@ textarea {
 .render-element-hide {
   left: -100vw;
   top: -100vh;
+}
+.hidden {
+  display: none;
 }
