@@ -1,4 +1,5 @@
 import * as model from './model.js';
+import * as config from './config.js';
 import artworkView from './view/artworkView.js';
 
 const artworkContainer = document.querySelector('.render-artwork');
@@ -28,11 +29,10 @@ if (module.hot) {
 //   }
 // };
 
-const controlGenerateArtwork = async function (renderImage, secondImage) {
+const controlGenerateArtwork = async function (renderImage) {
   // @renderImage = html node to be converted to image
   try {
     // reduce dummy to fit in the center with 70%
-    console.log(`reduced f`);
     artworkView.artworkReducer('add');
 
     //
@@ -55,14 +55,14 @@ const controlGenerateArtwork = async function (renderImage, secondImage) {
   }
 };
 
-const renderLatestArtwork = function () {
+const controlLatestArtwork = function () {
   model.loadLatest();
   artworkView.artworkLatest(model.state.curImgURL);
 };
 
 const init = function () {
   artworkView.addHandlerGenerateArtwork(controlGenerateArtwork);
-  artworkView.addHandlerLatest(renderLatestArtwork);
+  artworkView.addHandlerLatest(controlLatestArtwork);
   console.log(model.state.artworks);
 };
 

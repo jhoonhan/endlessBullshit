@@ -19,7 +19,6 @@ textarea {
 }
 
 .container {
-  //   background-color: rded;
   max-width: 100vw;
   min-height: 100vh;
   max-height: 100vh;
@@ -46,7 +45,6 @@ textarea {
 .container-artwork {
   aspect-ratio: 1 / 1;
   border: 0rem solid white;
-  background-color: white;
   position: relative;
   box-sizing: border-box;
 }
@@ -72,7 +70,6 @@ textarea {
 }
 
 .sub-grid {
-  // background-color: pink;
   display: grid;
   width: 100%;
   max-height: 100vh;
@@ -80,15 +77,12 @@ textarea {
 }
 
 .sub-grid--1 {
-  // background-color: pink;
   grid-template-rows: 1fr auto;
 
   row-gap: 1rem;
 }
 
 .sub-grid--2 {
-  // background-color: #ccc;
-
   // grid-template-rows: 1fr 16px;
   justify-content: stretch;
 
@@ -130,17 +124,11 @@ textarea {
 }
 
 .artworkPage .form-artwork {
-  // background-color: d;
   display: flex;
   flex-direction: column;
   row-gap: 2rem;
   margin-top: 2rem;
   box-sizing: border-box;
-}
-
-.render-element-hide {
-  left: -100vw;
-  top: -100vh;
 }
 
 .artwork {
@@ -149,7 +137,6 @@ textarea {
   background-size: contain;
   width: 100%;
   height: 100%;
-  background-color: white;
 }
 
 .render-origial-image {
@@ -179,7 +166,6 @@ textarea {
   position: relative;
 }
 .render-artwork {
-  background-color: white;
   width: 100%;
   height: 100%;
 
@@ -209,9 +195,25 @@ textarea {
 }
 
 .render-text-title {
+  position: absolute;
   font-size: 3rem;
+  line-height: 3rem;
   right: 15%;
-  bottom: calc(13% + 0.5rem);
-  align-self: flex-end;
-  margin-bottom: -1.75rem;
+  bottom: calc(15% - 4rem);
+}
+
+.render-inner-shadow {
+  width: 100%;
+  height: 100%;
+}
+
+// .render-element-hide {
+//   left: -100vw;
+//   top: -100vh;
+// }
+
+//cibalshakeitya
+
+.test {
+  background-image: url(../img/comedian.jpg);
 }

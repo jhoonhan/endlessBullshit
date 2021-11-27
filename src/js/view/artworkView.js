@@ -1,14 +1,14 @@
 import View from './view.js';
 
 class ArtworkView extends View {
-  _trigger = document.querySelector('.generate-form');
+  _trigger = document.querySelector('.form-artwork');
 
   _renderReceiver = document.querySelector('.render-receiver');
 
   _renderImage = document.querySelector('.render-artwork');
+
   _renderOriginalImage = document.querySelector('.render-origial-image');
 
-  _secondImage = document.querySelector('.second-image');
   _artwork = document.querySelector('.artwork');
 
   artworkRender(image) {
@@ -22,6 +22,9 @@ class ArtworkView extends View {
 
   artworkLatest(imgURL) {
     // change background style of...
+    // this._artwork.style.backgroundImage = `url(${imgURL})`;
+    // this._renderOriginalImage.style.backgroundImage = `url(${imgURL})`;
+
     this._artwork.style.backgroundImage = `url(${imgURL})`;
     this._renderOriginalImage.style.backgroundImage = `url(${imgURL})`;
   }
@@ -55,7 +58,7 @@ class ArtworkView extends View {
       'submit',
       function (e) {
         e.preventDefault();
-        handler(this._renderImage, this._secondImage);
+        handler(this._renderImage);
       }.bind(this)
     );
   }
