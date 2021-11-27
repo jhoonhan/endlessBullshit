@@ -35,9 +35,16 @@ const controlGenerateArtwork = async function (renderImage) {
     artworkView.artworkReducer('add');
     //
     await model.loadArtwork(renderImage);
+    // previous log data to artwork title for render
+    console.log([model.state.current.name, model.state.current.date]);
+    const dataLatestTitle = artworkView.addLatestTitle([
+      model.state.current.name,
+      model.state.current.date,
+    ]);
+    artworkView.insertHTML(dataLatestTitle);
 
-    // a3) use current IMG to render
-    artworkView.artworkRender(model.state.img);
+    // use current IMG to render
+    artworkView.artworkRender(model.state.current.img);
 
     // rolls back reducer
     artworkView.artworkReducer('remove');
@@ -55,12 +62,14 @@ const controlGenerateArtwork = async function (renderImage) {
 
 const controlLatestArtwork = function () {
   model.loadLatest();
-  artworkView.artworkLatest(model.state.curImgURL);
+  artworkView.artworkLatest(model.state.current.imgURL);
+
+  console.log(model.state.current.name);
 };
 
 const init = function () {
-  artworkView.addHandlerGenerateArtwork(controlGenerateArtwork);
   artworkView.addHandlerLatest(controlLatestArtwork);
+  artworkView.addHandlerGenerateArtwork(controlGenerateArtwork);
   console.log(model.state.artworks);
 };
 

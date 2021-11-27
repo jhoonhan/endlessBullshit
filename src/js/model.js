@@ -5,8 +5,15 @@ const { v4: uuidv4 } = require('uuid');
 
 export const state = {
   artworks: [],
-  img: '',
-  curImgURL: '',
+  current: {
+    name: '',
+    id: '',
+    statement: '',
+    index: '',
+    img: '',
+    imgURL: '',
+    date: '',
+  },
 };
 
 // export const latestArtwork = async function () {};
@@ -15,7 +22,7 @@ export const state = {
 export const loadArtwork = async function (renderImage) {
   try {
     const img = await html2canvas(renderImage);
-    state.img = img;
+    state.current.img = img;
   } catch (err) {
     console.error(`${err} - admin`);
   }
@@ -26,10 +33,11 @@ export const logArtwork = function (inputData, imgURL) {
   const index = state.artworks.length + 1;
   const log = {
     name: inputData.name,
-    statement: inputData.statement,
-    index: index,
     id: uuidv4(),
+    index: index,
+    statement: inputData.statement,
     imgURL: imgURL,
+    date: '22222',
   };
   // newely generated log gets added to archive
   state.artworks.push(log);
@@ -40,14 +48,18 @@ export const logArtwork = function (inputData, imgURL) {
 export const loadLatest = function () {
   if (state.artworks.length < 1) {
     console.log(ARTWORK);
-    state.curImgURL = ARTWORK;
+    state.current.imgURL = ARTWORK;
     return;
   }
   if (state.artworks.length < 1) return;
-  // Selects the latest artwork
-  const [log] = state.artworks.slice(-1);
-  // Sets its to current image.
-  state.curImgURL = log.imgURL;
+  // Sets latest artwork
+  const [latestLog] = state.artworks.slice(-1);
+  state.current.name = latestLog.name;
+  state.current.id = latestLog.id;
+  state.current.index = latestLog.index;
+  state.current.statement = latestLog.statement;
+  state.current.imgURL = latestLog.imgURL;
+  state.current.date = latestLog.date;
 };
 
 const saveToStorage = function () {

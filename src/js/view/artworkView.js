@@ -1,15 +1,15 @@
 import * as config from '../config.js';
+import View from './View.js';
 
-class ArtworkView {
+class ArtworkView extends View {
   _trigger = document.querySelector('.form-artwork');
-
   _renderReceiver = document.querySelector('.render-receiver');
-
   _renderImage = document.querySelector('.render-artwork');
-
   _renderOriginalImage = document.querySelector('.render-origial-image');
-
   _artwork = document.querySelector('.artwork');
+  _latestName = document.querySelector('.render-text-title');
+
+  locationHTML;
 
   artworkRender(image) {
     // a4) render sequence fired
@@ -74,6 +74,22 @@ class ArtworkView {
     window.addEventListener('load', function () {
       handler();
     });
+  }
+
+  addLatestTitle(data) {
+    const locationHTML = this._latestName;
+    const dataHTML = this._generateMarkup(data);
+    return [dataHTML, locationHTML];
+  }
+
+  _generateMarkup(data) {
+    const [name, date] = data;
+    const year = '2222000011';
+    return `
+      <span>
+        <i>This is Bullshit</i>, ${name}, ${year}
+      </span>
+    `;
   }
 }
 
