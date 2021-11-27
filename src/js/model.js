@@ -43,6 +43,7 @@ export const loadLatest = function () {
     state.curImgURL = ARTWORK;
     return;
   }
+  if (state.artworks.length < 1) return;
   // Selects the latest artwork
   const [log] = state.artworks.slice(-1);
   // Sets its to current image.

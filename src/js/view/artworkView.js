@@ -1,7 +1,6 @@
-import View from './view.js';
 import * as config from '../config.js';
 
-class ArtworkView extends View {
+class ArtworkView {
   _trigger = document.querySelector('.form-artwork');
 
   _renderReceiver = document.querySelector('.render-receiver');
