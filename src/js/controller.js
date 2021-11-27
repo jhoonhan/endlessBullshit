@@ -1,5 +1,4 @@
 import * as model from './model.js';
-import * as config from './config.js';
 import artworkView from './view/artworkView.js';
 
 const artworkContainer = document.querySelector('.render-artwork');
@@ -34,7 +33,6 @@ const controlGenerateArtwork = async function (renderImage) {
   try {
     // reduce dummy to fit in the center with 70%
     artworkView.artworkReducer('add');
-    document.querySelector('.render-origial-image').style.opacity = 0.5;
     //
     await model.loadArtwork(renderImage);
 

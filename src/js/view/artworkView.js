@@ -51,10 +51,12 @@ class ArtworkView {
     // Adds CSS values to renderImage to be conveted to canvas
     if (type === 'add') {
       this._renderOriginalImage.classList.add('render-reduce');
+      this._renderOriginalImage.style.opacity = config.OPACITY;
     }
 
     if (type === 'remove') {
       this._renderOriginalImage.classList.remove('render-reduce');
+      this._renderOriginalImage.style.opacity = 1;
     }
   }
 

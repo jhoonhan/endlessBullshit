@@ -146,8 +146,15 @@ textarea {
 }
 
 .render-reduce {
-  width: 70%;
-  height: 70%;
+  width: 80%;
+  height: 80%;
+}
+.render-text-title {
+  position: absolute;
+  font-size: 3rem;
+  line-height: 3rem;
+  right: 10%;
+  bottom: calc(10% - 4rem);
 }
 
 .render-box {
@@ -191,14 +198,6 @@ textarea {
   background-repeat: no-repeat;
 }
 
-.render-text-title {
-  position: absolute;
-  font-size: 3rem;
-  line-height: 3rem;
-  right: 15%;
-  bottom: calc(15% - 4rem);
-}
-
 .render-inner-shadow {
   width: 100%;
   height: 100%;
@@ -208,3 +207,5 @@ textarea {
   left: -100vw;
   top: -100vh;
 }
+
+///CHILBAKJDKSAJDSALKDJALSKJDLKASJDLKASJDLKAJSLDKJASL
