@@ -1,4 +1,5 @@
 import View from './view.js';
+import * as config from '../config.js';
 
 class ArtworkView extends View {
   _trigger = document.querySelector('.form-artwork');
@@ -14,17 +15,20 @@ class ArtworkView extends View {
   artworkRender(image) {
     // a4) render sequence fired
     this._image = image;
-    this._renderReceiver.width = 1000;
-    this._renderReceiver.height = 1000;
+    this._renderReceiver.width = config.RENDERQUALITY;
+    this._renderReceiver.height = config.RENDERQUALITY;
     const renderData = this._renderReceiver.getContext('2d');
-    renderData.drawImage(image, 0, 0, 1000, 1000);
+    renderData.drawImage(
+      image,
+      0,
+      0,
+      config.RENDERQUALITY,
+      config.RENDERQUALITY
+    );
   }
 
   artworkLatest(imgURL) {
     // change background style of...
-    // this._artwork.style.backgroundImage = `url(${imgURL})`;
-    // this._renderOriginalImage.style.backgroundImage = `url(${imgURL})`;
-
     this._artwork.style.backgroundImage = `url(${imgURL})`;
     this._renderOriginalImage.style.backgroundImage = `url(${imgURL})`;
   }
@@ -46,11 +50,13 @@ class ArtworkView extends View {
 
   artworkReducer(type) {
     // Adds CSS values to renderImage to be conveted to canvas
-    if (type === 'add')
+    if (type === 'add') {
       this._renderOriginalImage.classList.add('render-reduce');
+    }
 
-    if (type === 'remove')
+    if (type === 'remove') {
       this._renderOriginalImage.classList.remove('render-reduce');
+    }
   }
 
   addHandlerGenerateArtwork(handler) {

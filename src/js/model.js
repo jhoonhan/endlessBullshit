@@ -1,5 +1,5 @@
 import html2canvas from 'html2canvas';
-import { OGARTWORK } from './config.js';
+import { ARTWORK } from './config.js';
 
 const { v4: uuidv4 } = require('uuid');
 
@@ -39,8 +39,8 @@ export const logArtwork = function (inputData, imgURL) {
 
 export const loadLatest = function () {
   if (state.artworks.length < 1) {
-    console.log(OGARTWORK);
-    state.curImgURL = OGARTWORK;
+    console.log(ARTWORK);
+    state.curImgURL = ARTWORK;
     return;
   }
   // Selects the latest artwork

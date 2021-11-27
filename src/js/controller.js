@@ -34,7 +34,7 @@ const controlGenerateArtwork = async function (renderImage) {
   try {
     // reduce dummy to fit in the center with 70%
     artworkView.artworkReducer('add');
-
+    document.querySelector('.render-origial-image').style.opacity = 1;
     //
     await model.loadArtwork(renderImage);
 
