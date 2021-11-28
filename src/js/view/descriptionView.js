@@ -4,12 +4,6 @@ import View from './View.js';
 class DescriptionView extends View {
   _parentElement = document.querySelector('.description');
   _form = document.querySelector('.form-artwork');
-  _btnClose = document.querySelector('.btn--hide-description');
-
-  constructor() {
-    super();
-    this._addHandlerHideDescription();
-  }
 
   artworkInputData() {
     const inputDataArr = [...new FormData(this._form)];
@@ -18,14 +12,17 @@ class DescriptionView extends View {
   }
   addDescription(data) {
     super.insertHTML(data, this._parentElement);
+    // attach event handler to the button
+    this.attachEventHandler();
   }
 
   toggleWindow() {
     this._parentElement.classList.toggle('hidden');
     this._form.classList.toggle('hidden');
   }
-  _addHandlerHideDescription() {
-    this._btnClose.addEventListener('click', this.toggleWindow.bind(this));
+  attachEventHandler() {
+    const btnClose = document.querySelector('.btn--hide-description');
+    btnClose.addEventListener('click', this.toggleWindow.bind(this));
   }
 
   _generateMarkup(data) {

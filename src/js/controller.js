@@ -54,6 +54,7 @@ const controlGenerateArtwork = async function (renderImage) {
 
     // hide form
     descriptionView.toggleWindow();
+    // Add handler to the button
 
     // Refresh
     controlLatestArtwork();
@@ -77,6 +78,8 @@ const controlLatestArtwork = function () {
     model.state.current.date,
     model.state.current.statement,
   ]);
+  // attach event handlers to generated htmls
+  // descriptionView.attachEventHandler();
 };
 
 const init = function () {
