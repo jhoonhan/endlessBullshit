@@ -1,7 +1,6 @@
 import latestWorkView from './view/latestWorkView.js';
 import * as model from './model.js';
 import renderView from './view/renderView.js';
-import latestWorkView from './view/latestWorkView.js';
 import descriptionView from './view/descriptionView.js';
 import betweenView from './view/betweenView.js';
 
