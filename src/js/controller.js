@@ -34,7 +34,9 @@ if (module.hot) {
 const controlGenerateArtwork = async function (renderImage) {
   // @renderImage = html node to be converted to image
   try {
-    // checks input data
+    // get and checks input data
+    const inputData = descriptionView.artworkInputData();
+    if (!inputData) return;
 
     // reduce dummy to fit in the center with 70%
     renderView.artworkReducer('add');
@@ -47,8 +49,7 @@ const controlGenerateArtwork = async function (renderImage) {
     // rolls back reducer
     renderView.artworkReducer('remove');
 
-    // Get input data rendered imgURL
-    const inputData = descriptionView.artworkInputData();
+    // Get rendered imgURL
     const imgURL = renderView.artworkImgURL();
 
     // Save the data

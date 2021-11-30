@@ -229,3 +229,11 @@ textarea {
 .hidden {
   display: none !important;
 }
+
+.error-message--form {
+  color: red;
+  font-size: 1rem;
+}
+.error-box {
+  border: 1px solid red;
+}

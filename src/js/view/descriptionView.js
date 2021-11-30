@@ -5,12 +5,57 @@ class DescriptionView extends View {
   _parentElement = document.querySelector('.description');
   _form = document.querySelector('.form-artwork');
   _textarea = document.querySelector('.input-form-textarea');
+  _errorMessage = document.querySelector('.error-message--form');
+  // _errorData = [];
+
+  constructor() {
+    super();
+    this._characterCount();
+  }
 
   artworkInputData() {
     const inputDataArr = [...new FormData(this._form)];
     const inputData = Object.fromEntries(inputDataArr);
-    return inputData;
+    const isDataValid = this._inputDataValidate(inputData);
+    // if (this._errorData.length > 0) return false;
+    // if (this._errorData.length === 0) return inputData;
+    if (isDataValid) return inputData;
+    if (!isDataValid) return false;
   }
+  _inputDataValidate(inputData) {
+    const statement = inputData.statement;
+    // this._errorData = [];
+    if (statement.length < config.STATEMENTMIN) {
+      this._errorMessage.innerHTML = '';
+      this._errorMessage.innerHTML = `statment has to be at least ${config.STATEMENTMIN} characters.`;
+      this._textarea.classList.add('error-box');
+      return false;
+    } else {
+      this._textarea.classList.remove('error-box');
+      return true;
+    }
+    // if (name.length < config.NAMEMIN) {
+    //   console.log(`name too short`);
+    //   this._errorData.push(`name too short`);
+    // }
+  }
+
+  _characterCount() {
+    const currentCount = document.querySelector('.current-count');
+    const maximumCount = document.querySelector('.maximum-count');
+    const textCount = document.querySelector('.text-count');
+    this._textarea.addEventListener(
+      'keyup',
+      function () {
+        let characterCount = this._textarea.value.length;
+        currentCount.innerHTML = characterCount;
+      }.bind(this)
+    );
+  }
+  _invalidStatement() {
+    const message = `Statment has to be at least ${config.STATEMENTMIN} characters.`;
+  }
+
   addDescription(data) {
     super.insertHTML(data, this._parentElement);
     // attach event handler to the button
