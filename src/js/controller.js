@@ -34,6 +34,8 @@ if (module.hot) {
 const controlGenerateArtwork = async function (renderImage) {
   // @renderImage = html node to be converted to image
   try {
+    // checks input data
+
     // reduce dummy to fit in the center with 70%
     renderView.artworkReducer('add');
     //
