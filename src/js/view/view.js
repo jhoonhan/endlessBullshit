@@ -10,6 +10,12 @@ export default class View {
     locationHTML.insertAdjacentHTML('afterbegin', dataHTML);
   }
 
+  controlHidden(selector = this._parentElement, type = 'toggle') {
+    if (type === 'add') selector.classList.add('hidden');
+    if (type === 'remove') selector.classList.remove('hidden');
+    if (type === 'toggle') selector.classList.toggle('hidden');
+  }
+
   _clear(locationHTML) {
     locationHTML.innerHTML = '';
   }

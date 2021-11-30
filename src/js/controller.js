@@ -3,6 +3,7 @@ import * as model from './model.js';
 import renderView from './view/renderView.js';
 import latestWorkView from './view/latestWorkView.js';
 import descriptionView from './view/descriptionView.js';
+import betweenView from './view/betweenView.js';
 
 const artworkContainer = document.querySelector('.render-artwork');
 
@@ -52,9 +53,11 @@ const controlGenerateArtwork = async function (renderImage) {
     // Save the data
     model.logArtwork(inputData, imgURL);
 
+    // Prompt between page
+    betweenView.showBetween();
+
     // hide form
     descriptionView.toggleWindow();
-    // Add handler to the button
 
     // Refresh
     controlLatestArtwork();

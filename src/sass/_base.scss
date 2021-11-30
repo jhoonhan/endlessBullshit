@@ -36,6 +36,20 @@ textarea {
   align-items: stretch;
   justify-items: stretch;
 }
+
+.fullSizeBetween {
+  width: 100vw;
+  height: 100vh;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 9999;
+}
+
 .column {
   height: 100vh;
   display: grid;
@@ -107,6 +121,7 @@ textarea {
   text-align: right;
   margin-top: -2.5%;
   margin-right: 2%;
+  font-size: 1.6rem;
 }
 
 .artwork-subtitle {
@@ -214,8 +229,3 @@ textarea {
 .hidden {
   display: none !important;
 }
-///cjoba;lkdsal;dk
-//dasdasdasdasa//dasdasdasdasa
-//dasdasdasdasa
-//dasdasdasdasa
-//dasdasdasdasa
