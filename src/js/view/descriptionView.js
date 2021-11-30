@@ -34,7 +34,7 @@ class DescriptionView extends View {
     </div>
     <div class="cell cell--3 artwork-description">
         <p>
-        ${statement}
+        &quot${statement}&quot
         </p>
     </div>
     <button class="btn--hide-description">This is bullshit</button>
