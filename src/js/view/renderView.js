@@ -8,6 +8,9 @@ class RenderView extends View {
   _form = document.querySelector('.form-artwork');
   _artwork = document.querySelector('.artwork');
 
+  _renderTitle = document.querySelector('.render-text-title');
+  _latestTitle = document.querySelector('.artwork-tag');
+
   addHandlerGenerateArtwork(handler) {
     this._form.addEventListener(
       'submit',

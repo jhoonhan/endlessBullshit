@@ -9,7 +9,8 @@ export const state = {
       name: 'Maurizio Cattelan',
       title: 'Comedian',
       statement: `"Comedian, with its simple composition, ultimately offered a complex reflection of ourselves. We would like to warmly thank all those who participated in this memorable adventure, as well as to our colleagues. We sincerely apologize to all the visitors of the fair who today will not be able to participate in Comedian. Lorem ipsum dolor sit amet consectetur adipisicing elit. A vero,distinctio animi praesentium, nesciunt enim quis velit, repellat incidunt illum iste? Quisquam numquam ad accusamus dolorum amet. Lorem ipsum dolor sit amet consectetur adipisicing elit. A vero,distinctio animi praesentium, nesciunt enim quis velit, repellat incidunt illum iste? Quisquam numquam ad accusamus dolorum amet".`,
-      date: '2019',
+      date: '1/1',
+      year: '2019',
       id: '1234',
       index: '0',
       img: '',
@@ -21,6 +22,7 @@ export const state = {
     title: '',
     statement: '',
     date: '',
+    year: '',
     id: '',
     index: '',
     img: '',
@@ -40,18 +42,35 @@ export const loadArtwork = async function (renderImage) {
   }
 };
 
+const today = function () {
+  const date = new Date();
+  const utcDate = Date.UTC(
+    date.getUTCFullYear(),
+    date.getUTCMonth(),
+    date.getUTCDate(),
+    date.getUTCHours(),
+    date.getUTCMinutes()
+  );
+  const formattedDate = new Intl.DateTimeFormat('en-US').format(utcDate);
+
+  return formattedDate;
+};
+
 export const logArtwork = function (inputData, imgURL) {
   // save new log
+
   const index = state.artworks.length + 1;
   const log = {
     name: inputData.name,
     title: 'This is Bullshit',
     statement: inputData.statement,
-    date: '2021',
+    date: today().slice(0, -5),
+    year: today().slice(-4),
     id: uuidv4(),
     index: index,
     imgURL: imgURL,
   };
+  // console.log(log.date.slice(0, 4));
   // newely generated log gets added to archive
   state.artworks.push(log);
   console.log(state.artworks);
@@ -68,6 +87,7 @@ export const loadLatest = function () {
     state.current.title = latestLog.title;
     state.current.statement = latestLog.statement;
     state.current.date = latestLog.date;
+    state.current.year = latestLog.year;
     state.current.id = latestLog.id;
     state.current.index = latestLog.index;
     state.current.imgURL = latestLog.imgURL;

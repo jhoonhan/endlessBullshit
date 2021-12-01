@@ -73,8 +73,8 @@ class DescriptionView extends View {
   }
 
   toggleWindow() {
-    this._parentElement.classList.toggle('hidden');
-    this._form.classList.toggle('hidden');
+    super.controlHidden(this._parentElement, 'toggle');
+    super.controlHidden(this._form, 'toggle');
   }
   _attachEventHandler() {
     const btnClose = document.querySelector('.btn--hide-description');
@@ -82,15 +82,13 @@ class DescriptionView extends View {
   }
 
   _generateMarkup(data) {
-    const [name, date, statement] = data;
-    const year = '2222000011';
     return `
     <div class="cell cell--2 artwork-subtitle">
-        <h3>by ${name}, ${date}</h3>
+        <h3>by ${data.name}, ${data.year}</h3>
     </div>
     <div class="cell cell--3 artwork-description">
         <p>
-        &quot${statement}&quot
+        &quot${data.statement}&quot
         </p>
     </div>
     <button class="btn--hide-description">This is bullshit</button>

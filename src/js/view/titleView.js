@@ -1,10 +1,9 @@
 import * as config from '../config.js';
 import View from './View.js';
 
-class LatestWorkView extends View {
+class TitleView extends View {
   _renderTitle = document.querySelector('.render-text-title');
   _latestTitle = document.querySelector('.artwork-tag');
-  _renderOriginalImage = document.querySelector('.render-origial-image');
 
   addHandlerLatest(handler) {
     window.addEventListener('load', function () {
@@ -23,14 +22,12 @@ class LatestWorkView extends View {
   }
 
   _generateMarkup(data) {
-    const [name, title, date] = data;
-    const year = '2222000011';
     return `
       <span>
-      ${name}, <i>${title}</i>, ${date}
+      ${data.name}, <i>${data.title}</i>, ${data.year}
       </span>
     `;
   }
 }
 
-export default new LatestWorkView();
+export default new TitleView();

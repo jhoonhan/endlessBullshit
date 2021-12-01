@@ -19,6 +19,7 @@ export default class View {
   _clear(locationHTML) {
     locationHTML.innerHTML = '';
   }
+
   renderSpinner(locationHTML) {
     const markup = `
               <div class="spinner">

@@ -1,4 +1,4 @@
-import latestWorkView from './view/latestWorkView.js';
+import titleView from './view/titleView.js';
 import * as model from './model.js';
 import renderView from './view/renderView.js';
 import descriptionView from './view/descriptionView.js';
@@ -73,27 +73,25 @@ const controlLatestArtwork = function () {
   model.loadLatest();
   renderView.artworkRender(model.state.current.imgURL);
   // latest log data to artwork title for render
-  latestWorkView.addTitles([
-    model.state.current.name,
-    model.state.current.title,
-    model.state.current.date,
-  ]);
+  titleView.addTitles(model.state.current);
   // load latest log data to description
-  descriptionView.addDescription([
-    model.state.current.name,
-    model.state.current.date,
-    model.state.current.statement,
-  ]);
+  descriptionView.addDescription(model.state.current);
   logView.renderLatestLogs(model.state.artworks);
 };
 
 const controlLogRender = function () {
-  const imgURL = logView.getImageHashChange(model.state.artworks);
+  // Gets imgURL of selected log
+  const selectedArtwork = logView.getImageHashChange(model.state.artworks);
+  const imgURL = selectedArtwork.imgURL;
+  // Render selected url
   renderView.artworkRender(imgURL);
+  // Update description and title
+  descriptionView.addDescription(selectedArtwork);
+  titleView.addTitles(selectedArtwork);
 };
 
 const init = function () {
-  latestWorkView.addHandlerLatest(controlLatestArtwork);
+  titleView.addHandlerLatest(controlLatestArtwork);
   renderView.addHandlerGenerateArtwork(controlGenerateArtwork);
   logView.addHandlerLogRender(controlLogRender);
 };
