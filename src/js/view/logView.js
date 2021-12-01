@@ -9,6 +9,7 @@ class LogView extends View {
     '.log--search--dropdown-options'
   );
   _searchForm = document.querySelector('.log--search--form');
+  _searchInput = document.querySelector('.log--serach--input');
   _byName = document.querySelector('.by-name');
   _byID = document.querySelector('.by-id');
 
@@ -16,11 +17,11 @@ class LogView extends View {
 
   constructor() {
     super();
-    this.renderLatestLogs();
+    this.renderLogs();
     this._init();
   }
 
-  renderLatestLogs(data) {
+  renderLogs(data) {
     if (!data) return;
     super.insertHTML(data, this._parentElement);
   }
@@ -29,7 +30,12 @@ class LogView extends View {
     const logsPerPage = 10;
     const generatedHTML = data
       .slice(0, logsPerPage)
-      .map(el => `<li><a href="#${el.id}" class="log-logs">${el.name}</a></li>`)
+      .map(
+        el =>
+          `<li><a href="#${el.id}" class="log-logs">${this.capitalizeName(
+            el.name
+          )}</a></li>`
+      )
       .reverse()
       .join(' ');
 
@@ -40,11 +46,19 @@ class LogView extends View {
     window.addEventListener('hashchange', handler);
   }
   addHandlerSearch(handler) {
-    this._searchForm.addEventListener('submit', handler);
+    this._searchForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      handler();
+    });
   }
 
-  search() {
-    const keyword = this._searchFrom.value;
+  search(data) {
+    const keyword = this._searchInput.value.toLowerCase();
+    console.log(keyword);
+    console.log(data);
+    const result = data.filter(el => el.name.includes(keyword));
+    if (!result) console.log(`no result found`);
+    return result;
   }
 
   getImageHashChange(data) {
@@ -56,8 +70,8 @@ class LogView extends View {
   }
 
   _searchBtnSQ1() {
-    super.controlHidden(this._btnSearchDropdown, 'toggle');
-    super.controlHidden(this._searchDropdownOptions, 'toggle');
+    // super.controlHidden(this._btnSearchDropdown, 'toggle');
+    // super.controlHidden(this._searchDropdownOptions, 'toggle');
   }
   _searchByName() {
     super.controlHidden(this._searchForm, 'remove');

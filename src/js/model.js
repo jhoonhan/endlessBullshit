@@ -61,7 +61,7 @@ export const logArtwork = function (inputData, imgURL) {
 
   const index = state.artworks.length + 1;
   const log = {
-    name: inputData.name,
+    name: inputData.name.toLowerCase(),
     title: 'This is Bullshit',
     statement: inputData.statement,
     date: today().slice(0, -5),

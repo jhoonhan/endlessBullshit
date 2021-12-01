@@ -68,39 +68,41 @@ const controlGenerateArtwork = async function (renderImage) {
     console.error(`${err} - admin 2`);
   }
 };
-
+const _updateArtwork = function (log) {
+  renderView.artworkRender(log.imgURL);
+  // latest log data to artwork title for render
+  titleView.addTitles(log);
+  // load latest log data to description
+  descriptionView.addDescription(log);
+};
 const controlLatestArtwork = function () {
   model.loadLatest();
-  renderView.artworkRender(model.state.current.imgURL);
-  // latest log data to artwork title for render
-  titleView.addTitles(model.state.current);
-  // load latest log data to description
-  descriptionView.addDescription(model.state.current);
-  logView.renderLatestLogs(model.state.artworks);
+
+  _updateArtwork(model.state.current);
+
+  logView.renderLogs(model.state.artworks);
 };
 
 const controlLogRender = function () {
   // Gets imgURL of selected log
   const selectedArtwork = logView.getImageHashChange(model.state.artworks);
-  const imgURL = selectedArtwork.imgURL;
-  // Render selected url
-  renderView.artworkRender(imgURL);
-  // Update description and title
-  descriptionView.addDescription(selectedArtwork);
-  titleView.addTitles(selectedArtwork);
+  // Update
+  _updateArtwork(selectedArtwork);
 };
 
 const controlSearch = function () {
   // Get input text
-  // Search algorithym fired
+  const result = logView.search(model.state.artworks);
   // Display search results
+  logView.renderLogs(result);
+  _updateArtwork(result[0]);
 };
 
 const init = function () {
   titleView.addHandlerLatest(controlLatestArtwork);
   renderView.addHandlerGenerateArtwork(controlGenerateArtwork);
   logView.addHandlerLogRender(controlLogRender);
-  logView.addHandlerSearch();
+  logView.addHandlerSearch(controlSearch);
 };
 
 init();

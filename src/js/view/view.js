@@ -20,6 +20,13 @@ export default class View {
     locationHTML.innerHTML = '';
   }
 
+  capitalizeName(name) {
+    return name
+      .split(' ')
+      .map(letter => `${letter.slice(0, 1).toUpperCase()}${letter.slice(1)}`)
+      .join(' ');
+  }
+
   renderSpinner(locationHTML) {
     const markup = `
               <div class="spinner">

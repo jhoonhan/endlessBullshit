@@ -24,7 +24,7 @@ class TitleView extends View {
   _generateMarkup(data) {
     return `
       <span>
-      ${data.name}, <i>${data.title}</i>, ${data.year}
+      ${this.capitalizeName(data.name)}, <i>${data.title}</i>, ${data.year}
       </span>
     `;
   }
