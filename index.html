@@ -84,12 +84,12 @@
           <form class="form-artwork hidden">
             <div class="cell cell--2">
               <label class="label-form">Your Name :</label>
-              <input name="name" class="input-form" value="Junghoon Han"  type="text"></input>
+              <input name="name" class="input--text input-form" placeholder="artist name"  type="text" required></input>
             </div>
             <div class="cell cell--3">
               <label class="label-form">Your Statement :</label>
               <span class="error-message--form"></span>
-              <textarea name="statement" class="input-form-textarea" type="text"></textarea>
+              <textarea name="statement" class="input--text input-form-textarea" placeholder="artist statement has to be minimum of 100 characters" type="text" required></textarea>
               <div class="text-count">
                 <span class="current-count">0</span>
                 <span class="maximum-count">/ 300</span>
@@ -98,9 +98,9 @@
             </div>
 
             <div class="cell cell--4 form-checkbox">
-              <input name="ownership" class="checkbox"  type="checkbox"></input>
+              <input name="ownership" class="checkbox"  type="checkbox" required></input>
               <label class="label-checkbox" for="ownership">by checking this box, you agree that all the rights and ownership on your generated artwork and participation remain to the original artist.</label>
-              <input name="ofage" class="checkbox"  type="checkbox"></input>
+              <input name="ofage" class="checkbox"  type="checkbox" required></input>
               <label class="label-checkbox" for="ofage">by checking this box, you are 18 and older.</label>
             </div>
             

@@ -17,10 +17,20 @@ class DescriptionView extends View {
     const inputDataArr = [...new FormData(this._form)];
     const inputData = Object.fromEntries(inputDataArr);
     const isDataValid = this._inputDataValidate(inputData);
+
     // if (this._errorData.length > 0) return false;
     // if (this._errorData.length === 0) return inputData;
-    if (isDataValid) return inputData;
+    if (isDataValid) {
+      this._resetInputs();
+      return inputData;
+    }
     if (!isDataValid) return false;
+  }
+  _resetInputs() {
+    const inputTexts = this._form.querySelectorAll('.input--text');
+    const inputCheckBoxes = this._form.querySelectorAll('.checkbox');
+    inputTexts.forEach(el => (el.value = ''));
+    inputCheckBoxes.forEach(el => (el.checked = false));
   }
   _inputDataValidate(inputData) {
     const statement = inputData.statement;
