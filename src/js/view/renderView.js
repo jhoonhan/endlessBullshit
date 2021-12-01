@@ -6,6 +6,7 @@ class RenderView extends View {
   _renderImage = document.querySelector('.render-artwork');
   _renderOriginalImage = document.querySelector('.render-origial-image');
   _form = document.querySelector('.form-artwork');
+  _artwork = document.querySelector('.artwork');
 
   addHandlerGenerateArtwork(handler) {
     this._form.addEventListener(
@@ -16,9 +17,8 @@ class RenderView extends View {
       }.bind(this)
     );
   }
-  artworkRender(image) {
+  artworkGenerate(image) {
     // a4) render sequence fired
-    this._image = image;
     this._renderReceiver.width = config.RENDERQUALITY;
     this._renderReceiver.height = config.RENDERQUALITY;
     const renderData = this._renderReceiver.getContext('2d');
@@ -38,6 +38,11 @@ class RenderView extends View {
     ));
     return imgURL;
   }
+  artworkRender(imgURL) {
+    this._artwork.style.backgroundImage = `url(${imgURL})`;
+    this._renderOriginalImage.style.backgroundImage = `url(${imgURL})`;
+  }
+
   artworkReducer(type) {
     // Adds CSS values to renderImage to be conveted to canvas
     if (type === 'add') {

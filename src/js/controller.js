@@ -3,6 +3,7 @@ import * as model from './model.js';
 import renderView from './view/renderView.js';
 import descriptionView from './view/descriptionView.js';
 import betweenView from './view/betweenView.js';
+import logView from './view/logView.js';
 
 const artworkContainer = document.querySelector('.render-artwork');
 
@@ -44,7 +45,7 @@ const controlGenerateArtwork = async function (renderImage) {
     await model.loadArtwork(renderImage);
 
     // use current IMG to render
-    renderView.artworkRender(model.state.current.img);
+    renderView.artworkGenerate(model.state.current.img);
 
     // rolls back reducer
     renderView.artworkReducer('remove');
@@ -70,7 +71,7 @@ const controlGenerateArtwork = async function (renderImage) {
 
 const controlLatestArtwork = function () {
   model.loadLatest();
-  latestWorkView.artworkLatest(model.state.current.imgURL);
+  renderView.artworkRender(model.state.current.imgURL);
   // latest log data to artwork title for render
   latestWorkView.addTitles([
     model.state.current.name,
@@ -83,13 +84,18 @@ const controlLatestArtwork = function () {
     model.state.current.date,
     model.state.current.statement,
   ]);
-  // attach event handlers to generated htmls
-  // descriptionView.attachEventHandler();
+  logView.renderLatestLogs(model.state.artworks);
+};
+
+const controlLogRender = function () {
+  const imgURL = logView.getImageHashChange(model.state.artworks);
+  renderView.artworkRender(imgURL);
 };
 
 const init = function () {
   latestWorkView.addHandlerLatest(controlLatestArtwork);
   renderView.addHandlerGenerateArtwork(controlGenerateArtwork);
+  logView.addHandlerLogRender(controlLogRender);
 };
 
 init();
