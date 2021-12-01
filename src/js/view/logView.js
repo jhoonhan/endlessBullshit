@@ -39,6 +39,13 @@ class LogView extends View {
   addHandlerLogRender(handler) {
     window.addEventListener('hashchange', handler);
   }
+  addHandlerSearch(handler) {
+    this._searchForm.addEventListener('submit', handler);
+  }
+
+  search() {
+    const keyword = this._searchFrom.value;
+  }
 
   getImageHashChange(data) {
     const hashID = window.location.hash.slice(1);

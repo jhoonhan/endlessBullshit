@@ -90,10 +90,17 @@ const controlLogRender = function () {
   titleView.addTitles(selectedArtwork);
 };
 
+const controlSearch = function () {
+  // Get input text
+  // Search algorithym fired
+  // Display search results
+};
+
 const init = function () {
   titleView.addHandlerLatest(controlLatestArtwork);
   renderView.addHandlerGenerateArtwork(controlGenerateArtwork);
   logView.addHandlerLogRender(controlLogRender);
+  logView.addHandlerSearch();
 };
 
 init();
