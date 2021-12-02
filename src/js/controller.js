@@ -69,11 +69,16 @@ const controlGenerateArtwork = async function (renderImage) {
   }
 };
 const _updateArtwork = function (log) {
+  if (!log) return;
   renderView.artworkRender(log.imgURL);
+  // Insert ID to artwork on view
+  renderView.artworkID(log.id);
   // latest log data to artwork title for render
   titleView.addTitles(log);
   // load latest log data to description
   descriptionView.addDescription(log);
+  // highlight
+  logView.highlightActiveLog();
 };
 const controlLatestArtwork = function () {
   model.loadLatest();
@@ -88,8 +93,6 @@ const controlLogRender = function () {
   const selectedArtwork = logView.getImageHashChange(model.state.artworks);
   // Update
   _updateArtwork(selectedArtwork);
-  // highlight
-  logView.highlightActiveLog();
 };
 
 const controlSearch = function () {

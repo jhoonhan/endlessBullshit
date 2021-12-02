@@ -13,21 +13,13 @@ class LogView extends View {
   _byName = document.querySelector('.by-name');
   _byID = document.querySelector('.by-id');
 
-  _searchType = '';
+  _searchType = 'name';
   _node = '';
 
   constructor() {
     super();
     this.renderLogs();
-    this._getClickedNode();
-
-    this._btnSearchDropdown.addEventListener(
-      'click',
-      this._searchBtnSQ1.bind(this)
-    );
-    this._byName.addEventListener('click', this._searchByName.bind(this));
-
-    this._byID.addEventListener('click', this._searchByID.bind(this));
+    this._addHandlerSearchOption();
   }
 
   renderLogs(data) {
@@ -41,7 +33,7 @@ class LogView extends View {
       .slice(0, logsPerPage)
       .map(
         el =>
-          `<li><a href="#${el.id}" class="log-logs">${this.capitalizeName(
+          `<li><a href="#${el.id}" class="log--logs">${this.capitalizeName(
             el.name
           )}</a></li>`
       )
@@ -52,7 +44,8 @@ class LogView extends View {
   }
 
   addHandlerLogRender(handler) {
-    window.addEventListener('hashchange', handler);
+    ['hashchange', 'load'].forEach(ev => window.addEventListener(ev, handler));
+    // window.addEventListener('hashchange', handler);
   }
   addHandlerSearch(handler) {
     this._searchForm.addEventListener('submit', function (e) {
@@ -60,48 +53,44 @@ class LogView extends View {
       handler();
     });
   }
-  _getClickedNode() {
-    this._parentElement.addEventListener(
-      'click',
-      function (e) {
-        this._node = e.target;
-      }.bind(this)
-    );
-  }
   highlightActiveLog() {
-    console.log(this._node.href);
-    console.log(window.location.hash);
-    if (this._node.href.includes(window.location.hash)) {
-      console.log(`aaang`);
-      this._node.classList.add('highlighted-text');
-    }
-    // let clicked;
-    // console.log(window.location.hash);
-    // this._parentElement.onclick = e => {
-    //   clicked = e.target;
-    //   console.log(clicked);
-    // };
-    // console.log(clicked);
-    // this._parentElement.onclick = function (e) {
-    //   const clicked = e.target;
-    //   console.log(clicked.href);
-    //   if (clicked.href.includes(window.location.hash)) {
-    //     console.log(`aaang`);
-    //     clicked.style.color = 'red';
-    //   }
-    // };
+    const logs = document.querySelectorAll('.log--logs');
+    const artwork = document.querySelector('.artwork');
+
+    // if (window.location.hash === '') return;
     // logs.forEach(function (log) {
-    //   if (log.href.includes(window.location.hash)) log.style.color = 'red';
-    //   if (!log.href.includes(window.location.hash)) log.style.color = 'black';
+    //   if (log.href.includes(window.location.hash)) {
+    //     log.classList.add('highlighted-text');
+    //   } else {
+    //     log.classList.remove('highlighted-text');
+    //   }
     // });
+    logs.forEach(function (log) {
+      if (log.href.slice(-36) === artwork.dataset.id) {
+        log.classList.add('highlighted-text');
+      } else {
+        log.classList.remove('highlighted-text');
+      }
+    });
   }
+
+  // _addHandlerSearchSelector() {
+  //   this._byName.addEventListener('click', function () {
+  //     this._searchType = 'name';
+  //     console.log(`search type: name`);
+  //   });
+  // }
 
   search(data) {
     const keyword = this._searchInput.value.toLowerCase();
-    console.log(keyword);
-    console.log(data);
-    const result = data.filter(el => el.name.includes(keyword));
-    if (!result) console.log(`no result found`);
+    let result;
+    if (this._searchType === 'name') {
+      result = data.filter(el => el.name.includes(keyword));
+    }
+    if (this._searchType === 'id') {
+      result = data.filter(el => el.id.includes(keyword));
+    }
+    if (result.length === 0) console.log(`no results`);
     return result;
   }
 
@@ -117,13 +106,23 @@ class LogView extends View {
     // super.controlHidden(this._btnSearchDropdown, 'toggle');
     // super.controlHidden(this._searchDropdownOptions, 'toggle');
   }
+  _addHandlerSearchOption() {
+    this._btnSearchDropdown.addEventListener(
+      'click',
+      this._searchBtnSQ1.bind(this)
+    );
+
+    this._byName.addEventListener('click', this._searchByName.bind(this));
+
+    this._byID.addEventListener('click', this._searchByID.bind(this));
+  }
   _searchByName() {
-    super.controlHidden(this._searchForm, 'remove');
     this._searchType = 'name';
+    console.log(`search by name`);
   }
   _searchByID() {
-    super.controlHidden(this._searchForm, 'remove');
-    this._searchType = 'ID';
+    this._searchType = 'id';
+    console.log(`search by id`);
   }
 }
 

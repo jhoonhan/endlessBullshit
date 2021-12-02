@@ -46,6 +46,10 @@ class RenderView extends View {
     this._renderOriginalImage.style.backgroundImage = `url(${imgURL})`;
   }
 
+  artworkID(id) {
+    this._artwork.dataset.id = id;
+  }
+
   artworkReducer(type) {
     // Adds CSS values to renderImage to be conveted to canvas
     if (type === 'add') {
