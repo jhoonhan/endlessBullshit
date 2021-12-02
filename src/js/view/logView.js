@@ -14,11 +14,20 @@ class LogView extends View {
   _byID = document.querySelector('.by-id');
 
   _searchType = '';
+  _node = '';
 
   constructor() {
     super();
     this.renderLogs();
-    this._init();
+    this._getClickedNode();
+
+    this._btnSearchDropdown.addEventListener(
+      'click',
+      this._searchBtnSQ1.bind(this)
+    );
+    this._byName.addEventListener('click', this._searchByName.bind(this));
+
+    this._byID.addEventListener('click', this._searchByID.bind(this));
   }
 
   renderLogs(data) {
@@ -51,6 +60,41 @@ class LogView extends View {
       handler();
     });
   }
+  _getClickedNode() {
+    this._parentElement.addEventListener(
+      'click',
+      function (e) {
+        this._node = e.target;
+      }.bind(this)
+    );
+  }
+  highlightActiveLog() {
+    console.log(this._node.href);
+    console.log(window.location.hash);
+    if (this._node.href.includes(window.location.hash)) {
+      console.log(`aaang`);
+      this._node.classList.add('highlighted-text');
+    }
+    // let clicked;
+    // console.log(window.location.hash);
+    // this._parentElement.onclick = e => {
+    //   clicked = e.target;
+    //   console.log(clicked);
+    // };
+    // console.log(clicked);
+    // this._parentElement.onclick = function (e) {
+    //   const clicked = e.target;
+    //   console.log(clicked.href);
+    //   if (clicked.href.includes(window.location.hash)) {
+    //     console.log(`aaang`);
+    //     clicked.style.color = 'red';
+    //   }
+    // };
+    // logs.forEach(function (log) {
+    //   if (log.href.includes(window.location.hash)) log.style.color = 'red';
+    //   if (!log.href.includes(window.location.hash)) log.style.color = 'black';
+    // });
+  }
 
   search(data) {
     const keyword = this._searchInput.value.toLowerCase();
@@ -80,15 +124,6 @@ class LogView extends View {
   _searchByID() {
     super.controlHidden(this._searchForm, 'remove');
     this._searchType = 'ID';
-  }
-  _init() {
-    this._btnSearchDropdown.addEventListener(
-      'click',
-      this._searchBtnSQ1.bind(this)
-    );
-    this._byName.addEventListener('click', this._searchByName.bind(this));
-
-    this._byID.addEventListener('click', this._searchByID.bind(this));
   }
 }
 

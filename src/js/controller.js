@@ -88,6 +88,8 @@ const controlLogRender = function () {
   const selectedArtwork = logView.getImageHashChange(model.state.artworks);
   // Update
   _updateArtwork(selectedArtwork);
+  // highlight
+  logView.highlightActiveLog();
 };
 
 const controlSearch = function () {
