@@ -83,9 +83,8 @@ const _updateArtwork = function (log) {
 const controlLatestArtwork = function () {
   model.loadLatest();
 
-  _updateArtwork(model.state.current);
-
   logView.renderLogs(model.state.artworks);
+  _updateArtwork(model.state.current);
 };
 
 const controlLogRender = function () {

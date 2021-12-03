@@ -28,6 +28,7 @@ export const state = {
     img: '',
     imgURL: '',
   },
+  view: '',
 };
 
 // export const latestArtwork = async function () {};

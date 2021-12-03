@@ -7,6 +7,7 @@ class TitleView extends View {
 
   addHandlerLatest(handler) {
     window.addEventListener('load', function () {
+      console.log(`handler portion fired`);
       handler();
     });
   }
