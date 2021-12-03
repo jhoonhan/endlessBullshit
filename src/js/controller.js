@@ -53,7 +53,7 @@ const controlGenerateArtwork = async function (renderImage) {
     // Get rendered imgURL
     const imgURL = renderView.artworkImgURL();
 
-    // Save the data
+    // Save the img url data
     model.logArtwork(inputData, imgURL);
 
     // Prompt between page
@@ -68,8 +68,24 @@ const controlGenerateArtwork = async function (renderImage) {
     console.error(`${err} - admin 2`);
   }
 };
-const _updateArtwork = function (log) {
-  if (!log) return;
+// const _updateArtwork = function (log) {
+//   if (!log) return;
+//   renderView.artworkRender(log.imgURL);
+//   // Insert ID to artwork on view
+//   renderView.artworkID(log.id);
+//   // latest log data to artwork title for render
+//   titleView.addTitles(log);
+//   // load latest log data to description
+//   descriptionView.addDescription(log);
+//   // render logs
+//   logView.renderLogs(model.state.artworks);
+//   // highlight
+//   logView.highlightActiveLog();
+// };
+const controlLatestArtwork = function () {
+  model.loadLatest();
+  const log = model.state.current;
+
   renderView.artworkRender(log.imgURL);
   // Insert ID to artwork on view
   renderView.artworkID(log.id);
@@ -77,28 +93,35 @@ const _updateArtwork = function (log) {
   titleView.addTitles(log);
   // load latest log data to description
   descriptionView.addDescription(log);
+  // render logs
+  logView.renderLogs(model.state.artworks);
   // highlight
   logView.highlightActiveLog();
-};
-const controlLatestArtwork = function () {
-  model.loadLatest();
-
-  logView.renderLogs(model.state.artworks);
-  _updateArtwork(model.state.current);
 };
 
 const controlLogRender = function () {
   // Gets imgURL of selected log
   const selectedArtwork = logView.getImageHashChange(model.state.artworks);
   // Update
-  _updateArtwork(selectedArtwork);
+  const log = selectedArtwork;
+
+  renderView.artworkRender(log.imgURL);
+  // Insert ID to artwork on view
+  renderView.artworkID(log.id);
+  // latest log data to artwork title for render
+  titleView.addTitles(log);
+  // load latest log data to description
+  descriptionView.addDescription(log);
+  // render logs
+  logView.renderLogs(model.state.artworks);
+  // highlight
+  logView.highlightActiveLog();
 };
 
 const controlSearch = function () {
   // Get input text
   const result = logView.search(model.state.artworks);
   // Display search results
-  logView.renderLogs(result);
   _updateArtwork(result[0]);
 };
 

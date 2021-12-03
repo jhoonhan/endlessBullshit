@@ -1,7 +1,7 @@
 import * as config from '../config.js';
 import View from './View.js';
 
-class DescriptionView extends View {
+class DetailView extends View {
   _parentElement = document.querySelector('.description');
   _form = document.querySelector('.form-artwork');
   _textarea = document.querySelector('.input-form-textarea');
@@ -97,4 +97,4 @@ class DescriptionView extends View {
   }
 }
 
-export default new DescriptionView();
+export default new DetailView();

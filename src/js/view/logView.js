@@ -3,7 +3,7 @@ import View from './View.js';
 
 class LogView extends View {
   _parentElement = document.querySelector('.log--results');
-  _logs = document.querySelectorAll('.log-logs');
+  _logs = document.querySelectorAll('.log--logs');
   _btnSearchDropdown = document.querySelector('.log--serach--dropdown');
   _searchDropdownOptions = document.querySelector(
     '.log--search--dropdown-options'
