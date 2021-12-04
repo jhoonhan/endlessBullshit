@@ -29,27 +29,6 @@ class LogView extends View {
     this._addHandlerSearchOption();
   }
 
-  renderLogs(data) {
-    if (!data) return;
-    super.insertHTML(data, this._logResultContainer);
-  }
-
-  _generateMarkup(data) {
-    const logsPerPage = 10;
-    const generatedHTML = data
-      .slice(0, logsPerPage)
-      .map(
-        el =>
-          `<li><a href="#${el.id}" class="log--logs">${this.capitalizeName(
-            el.name
-          )}</a></li>`
-      )
-      .reverse()
-      .join(' ');
-
-    return generatedHTML;
-  }
-
   addHandlerToggleView(handler) {
     this._btnToggleView.addEventListener('click', handler);
     // this._btnToggleView.addEventListener(
@@ -66,19 +45,6 @@ class LogView extends View {
     //   }.bind(this)
     // );
   }
-
-  toggleView() {
-    const width = this._parentElement.classList.toggle('left-100vw');
-
-    // opening search will hide form
-    this._description.classList.remove('hidden');
-    this._form.classList.add('hidden');
-
-    if (this._btnToggleView.dataset.type === 'open')
-      this._btnToggleView.dataset.type = 'close';
-    else this._btnToggleView.dataset.type = 'open';
-  }
-
   addHandlerLogRender(handler) {
     ['hashchange'].forEach(ev => window.addEventListener(ev, handler));
     // window.addEventListener('hashchange', handler);
@@ -89,9 +55,39 @@ class LogView extends View {
       handler();
     });
   }
+  _addHandlerSearchOption() {
+    this._btnSearchDropdown.addEventListener(
+      'click',
+      this._searchBtnSQ1.bind(this)
+    );
+
+    this._byName.addEventListener('click', this._searchByName.bind(this));
+
+    this._byOrder.addEventListener('click', this._searchByOrder.bind(this));
+
+    this._byID.addEventListener('click', this._searchByID.bind(this));
+  }
+
+  renderLogs(data) {
+    if (!data) return;
+    super.insertHTML(data, this._logResultContainer);
+  }
+
+  toggleView() {
+    this._parentElement.classList.toggle('left-100vw');
+
+    // opening search will hide form
+    this._description.classList.remove('hidden');
+    this._form.classList.add('hidden');
+
+    if (this._btnToggleView.dataset.type === 'open')
+      this._btnToggleView.dataset.type = 'close';
+    else this._btnToggleView.dataset.type = 'open';
+  }
+
   highlightActiveLog() {
     const logs = document.querySelectorAll('.log--logs');
-    const artwork = document.querySelector('.artwork');
+    const artworkInfo = document.querySelector('.artwork-info');
 
     // if (window.location.hash === '') return;
     // logs.forEach(function (log) {
@@ -102,7 +98,7 @@ class LogView extends View {
     //   }
     // });
     logs.forEach(function (log) {
-      if (log.href.slice(-36) === artwork.dataset.id) {
+      if (log.href.slice(-36) === artworkInfo.dataset.id) {
         log.classList.add('highlighted-text');
       } else {
         log.classList.remove('highlighted-text');
@@ -117,39 +113,70 @@ class LogView extends View {
   //   });
   // }
 
-  search(data) {
-    const keyword = this._searchInput.value.toLowerCase();
+  _getProximiyIndex = function (data, keyIndex) {
+    let prox = [];
+    for (let i = 0; i < config.MAXSEARCHRESULT; i++) {
+      prox.push(keyIndex - Math.floor(config.MAXSEARCHRESULT / 2) + i);
+    }
+    const largestNum = prox.slice(-1)[0];
+    const largestIndex = data.length - 1;
+    const smallestNum = prox[0];
 
-    const getProximiyIndex = function (keyIndex) {
-      const prox = [];
-      for (let i = 0; i < 5; i++) {
-        prox.push(keyIndex - Math.floor(5 / 2) + i);
+    // When there is no element after
+    if (largestNum > largestIndex) {
+      const discrepancy = largestNum - largestIndex;
+      const filteredProx = prox.filter(index => index <= largestIndex);
+
+      for (let i = 1; i <= discrepancy; i++) {
+        filteredProx.unshift(smallestNum - i);
       }
-      return prox;
-    };
-    const getResultProx = function (data, keyIndex) {
-      const proximity = getProximiyIndex(keyIndex);
-      return data.filter(
-        el => proximity[0] <= el.index && el.index <= proximity.slice(-1)
-      );
-    };
+      prox = filteredProx;
+    }
 
-    if (this._searchType === 'order') {
-      const resultAccu = data.filter(el => el.index === +keyword);
-      const resultProx = getResultProx(data, keyword);
+    // When there is no element before
+    if (smallestNum < 0) {
+      const filteredProx = prox.filter(index => index >= 0);
+      const discrepancy = config.MAXSEARCHRESULT - filteredProx.length;
+
+      for (let i = 0; i <= discrepancy; i++) {
+        filteredProx.push(largestNum + i);
+      }
+      prox = filteredProx;
+    }
+    return prox;
+  };
+
+  _getResultProx = function (data, keyIndex) {
+    const proximity = this._getProximiyIndex(data, keyIndex);
+    return data.filter(
+      el => el.index >= proximity[0] && el.index <= proximity.slice(-1)
+    );
+  };
+
+  search(data, type, keyword) {
+    let inputKeyword;
+    if (!keyword) {
+      inputKeyword = this._searchInput.value.toLowerCase();
+    } else {
+      inputKeyword = keyword;
+    }
+
+    if (type === 'order' || this._searchType === 'order') {
+      const resultAccu = data.filter(el => el.index === +inputKeyword);
+      const resultProx = this._getResultProx(data, inputKeyword);
 
       return [resultAccu, resultProx];
     }
-    if (this._searchType === 'name') {
-      const resultAccu = data.filter(el => el.name.includes(keyword));
+    if (!type && this._searchType === 'name') {
+      const resultAccu = data.filter(el => el.name.includes(inputKeyword));
       const resultProx = resultAccu;
 
       return [[resultAccu[0]], resultProx];
     }
-    if (this._searchType === 'id') {
-      const resultAccu = data.filter(el => el.id === keyword);
+    if (!type && this._searchType === 'id') {
+      const resultAccu = data.filter(el => el.id === inputKeyword);
       const keyIndex = resultAccu[0].index;
-      const resultProx = getResultProx(data, keyIndex);
+      const resultProx = this._getResultProx(data, keyIndex);
 
       return [resultAccu, resultProx];
     }
@@ -167,27 +194,31 @@ class LogView extends View {
     // super.controlHidden(this._btnSearchDropdown, 'toggle');
     // super.controlHidden(this._searchDropdownOptions, 'toggle');
   }
-  _addHandlerSearchOption() {
-    this._btnSearchDropdown.addEventListener(
-      'click',
-      this._searchBtnSQ1.bind(this)
-    );
 
-    this._byName.addEventListener('click', this._searchByName.bind(this));
-
-    this._byOrder.addEventListener('click', this._searchByOrder.bind(this));
-
-    this._byID.addEventListener('click', this._searchByID.bind(this));
-  }
   _searchByName() {
     this._searchType = 'name';
   }
   _searchByOrder() {
     this._searchType = 'order';
-    console.log(`search by order`);
   }
   _searchByID() {
     this._searchType = 'id';
+  }
+
+  _generateMarkup(data) {
+    const logsPerPage = config.MAXSEARCHRESULT;
+    const generatedHTML = data
+      .slice(0, logsPerPage)
+      .map(
+        el =>
+          `<li><a href="#${el.id}" class="log--logs">${this.capitalizeName(
+            el.name
+          )}</a></li>`
+      )
+      .reverse()
+      .join(' ');
+
+    return generatedHTML;
   }
 }
 

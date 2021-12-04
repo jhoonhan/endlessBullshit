@@ -7,9 +7,12 @@ class RenderView extends View {
   _renderOriginalImage = document.querySelector('.render-origial-image');
   _form = document.querySelector('.form-artwork');
   _artwork = document.querySelector('.artwork');
+  _artworkInfo = document.querySelector('.artwork-info');
 
   _renderTitle = document.querySelector('.render-text-title');
   _latestTitle = document.querySelector('.artwork-tag');
+
+  _locationHTML = '';
 
   addHandlerGenerateArtwork(handler) {
     this._form.addEventListener(
@@ -41,13 +44,21 @@ class RenderView extends View {
     ));
     return imgURL;
   }
+
+  locationDecider(location) {
+    if (location === 'artwork') this._locationHTML = this._artwork;
+    if (location === 'artworkInfo') this._locationHTML = this._artworkInfo;
+  }
+
   artworkRender(imgURL) {
-    this._artwork.style.backgroundImage = `url(${imgURL})`;
-    this._renderOriginalImage.style.backgroundImage = `url(${imgURL})`;
+    this._locationHTML.style.backgroundImage = `url(${imgURL})`;
+    // only fireds when location is set to artwork
+    if (this._locationHTML === this._artwork)
+      this._renderOriginalImage.style.backgroundImage = `url(${imgURL})`;
   }
 
   artworkID(id) {
-    this._artwork.dataset.id = id;
+    this._locationHTML.dataset.id = id;
   }
 
   artworkReducer(type) {

@@ -6,7 +6,6 @@ class DescriptionView extends View {
   _form = document.querySelector('.form-artwork');
   _textarea = document.querySelector('.input-form-textarea');
   _errorMessage = document.querySelector('.error-message--form');
-  // _errorData = [];
 
   constructor() {
     super();

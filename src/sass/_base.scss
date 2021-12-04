@@ -12,16 +12,24 @@ body {
   font-family: 'Nunito Sans', sans-serif;
   font-weight: 400;
   line-height: 1.6;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 textarea {
   font-family: 'Nunito Sans', sans-serif;
 }
 .section--2 {
   display: grid;
-  grid-template-rows: 1fr;
+  grid-template-rows: 1fr 1fr;
   grid-template-columns: 1fr 0.8fr;
   column-gap: 5%;
+  min-height: 100vh;
+}
+
+.column--4 {
+  border: 1px solid red;
+}
+.column--5 {
+  border: 1px solid red;
 }
 .container {
   max-width: 100vw;
@@ -75,6 +83,9 @@ textarea {
 }
 // .log--search--form {
 // }
+.log--container {
+  position: relative;
+}
 .log--search--dropdown-options {
   display: flex;
 }
@@ -182,12 +193,6 @@ textarea {
 
   row-gap: 1rem;
 }
-.top-100vh {
-  top: -100vh;
-}
-.left100vw {
-  left: 100vw;
-}
 
 .sub-grid--2 {
   // grid-template-rows: 1fr 16px;
@@ -241,7 +246,7 @@ textarea {
   box-sizing: border-box;
 }
 
-.artwork {
+.artwork-frame {
   background-position: center center;
   background-repeat: no-repeat;
   background-size: contain;
@@ -250,7 +255,7 @@ textarea {
 }
 
 .render-origial-image {
-  @extend .artwork;
+  @extend .artwork-frame;
   // background-image: url(../img/comedian.jpg);
   box-sizing: border-box;
 }
@@ -334,10 +339,3 @@ textarea {
 .highlighted-text {
   color: red;
 }
-
-.left-100vw {
-  position: absolute;
-  left: -100px;
-}
-
-///dsadasdasd

@@ -3,7 +3,8 @@ import View from './View.js';
 
 class TitleView extends View {
   _renderTitle = document.querySelector('.render-text-title');
-  _latestTitle = document.querySelector('.artwork-tag');
+  _latestTag = document.querySelector('.latest-tag');
+  _logTag = document.querySelector('.log-tag');
 
   addHandlerLatest(handler) {
     window.addEventListener('load', function () {
@@ -16,9 +17,14 @@ class TitleView extends View {
   //   this._artwork.style.backgroundImage = `url(${imgURL})`;
   //   this._renderOriginalImage.style.backgroundImage = `url(${imgURL})`;
   // }
-  addTitles(data) {
-    super.insertHTML(data, this._renderTitle);
-    super.insertHTML(data, this._latestTitle);
+  addTitles(data, type) {
+    if (type === 'artwork') {
+      super.insertHTML(data, this._latestTag);
+      super.insertHTML(data, this._renderTitle);
+    }
+    if (type === 'artworkInfo') {
+      super.insertHTML(data, this._logTag);
+    }
   }
 
   _generateMarkup(data) {

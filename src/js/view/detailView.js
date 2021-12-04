@@ -2,7 +2,7 @@ import * as config from '../config.js';
 import View from './View.js';
 
 class DetailView extends View {
-  _parentElement = document.querySelector('.description');
+  _parentElement = document.querySelector('.detail-information');
 
   addDetailInformation(data) {
     super.insertHTML(data, this._parentElement);
