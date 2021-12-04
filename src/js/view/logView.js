@@ -2,8 +2,10 @@ import * as config from '../config.js';
 import View from './View.js';
 
 class LogView extends View {
-  _parentElement = document.querySelector('.log--results');
+  _parentElement = document.querySelector('.log--container');
+  _logResultContainer = document.querySelector('.log--results');
   _logs = document.querySelectorAll('.log--logs');
+  _btnToggleView = document.querySelector('.log--toggle-view');
   _btnSearchDropdown = document.querySelector('.log--serach--dropdown');
   _searchDropdownOptions = document.querySelector(
     '.log--search--dropdown-options'
@@ -11,9 +13,14 @@ class LogView extends View {
   _searchForm = document.querySelector('.log--search--form');
   _searchInput = document.querySelector('.log--serach--input');
   _byName = document.querySelector('.by-name');
+  _byOrder = document.querySelector('.by-order');
   _byID = document.querySelector('.by-id');
 
+  _description = document.querySelector('.description');
+  _form = document.querySelector('.form-artwork');
+
   _searchType = 'name';
+  _view = '';
   _node = '';
 
   constructor() {
@@ -24,7 +31,7 @@ class LogView extends View {
 
   renderLogs(data) {
     if (!data) return;
-    super.insertHTML(data, this._parentElement);
+    super.insertHTML(data, this._logResultContainer);
   }
 
   _generateMarkup(data) {
@@ -43,8 +50,37 @@ class LogView extends View {
     return generatedHTML;
   }
 
+  addHandlerToggleView(handler) {
+    this._btnToggleView.addEventListener('click', handler);
+    // this._btnToggleView.addEventListener(
+    //   'mouseover',
+    //   function () {
+    //     this._parentElement.style.left = '0px';
+    //   }.bind(this)
+    // );
+
+    // this._btnToggleView.addEventListener(
+    //   'mouseout',
+    //   function () {
+    //     this._parentElement.style.left = '-100px';
+    //   }.bind(this)
+    // );
+  }
+
+  toggleView() {
+    const width = this._parentElement.classList.toggle('left-100vw');
+
+    // opening search will hide form
+    this._description.classList.remove('hidden');
+    this._form.classList.add('hidden');
+
+    if (this._btnToggleView.dataset.type === 'open')
+      this._btnToggleView.dataset.type = 'close';
+    else this._btnToggleView.dataset.type = 'open';
+  }
+
   addHandlerLogRender(handler) {
-    ['hashchange', 'load'].forEach(ev => window.addEventListener(ev, handler));
+    ['hashchange'].forEach(ev => window.addEventListener(ev, handler));
     // window.addEventListener('hashchange', handler);
   }
   addHandlerSearch(handler) {
@@ -83,15 +119,40 @@ class LogView extends View {
 
   search(data) {
     const keyword = this._searchInput.value.toLowerCase();
-    let result;
+
+    const getProximiyIndex = function (keyIndex) {
+      const prox = [];
+      for (let i = 0; i < 5; i++) {
+        prox.push(keyIndex - Math.floor(5 / 2) + i);
+      }
+      return prox;
+    };
+    const getResultProx = function (data, keyIndex) {
+      const proximity = getProximiyIndex(keyIndex);
+      return data.filter(
+        el => proximity[0] <= el.index && el.index <= proximity.slice(-1)
+      );
+    };
+
+    if (this._searchType === 'order') {
+      const resultAccu = data.filter(el => el.index === +keyword);
+      const resultProx = getResultProx(data, keyword);
+
+      return [resultAccu, resultProx];
+    }
     if (this._searchType === 'name') {
-      result = data.filter(el => el.name.includes(keyword));
+      const resultAccu = data.filter(el => el.name.includes(keyword));
+      const resultProx = resultAccu;
+
+      return [[resultAccu[0]], resultProx];
     }
     if (this._searchType === 'id') {
-      result = data.filter(el => el.id.includes(keyword));
+      const resultAccu = data.filter(el => el.id === keyword);
+      const keyIndex = resultAccu[0].index;
+      const resultProx = getResultProx(data, keyIndex);
+
+      return [resultAccu, resultProx];
     }
-    if (result.length === 0) console.log(`no results`);
-    return result;
   }
 
   getImageHashChange(data) {
@@ -114,15 +175,19 @@ class LogView extends View {
 
     this._byName.addEventListener('click', this._searchByName.bind(this));
 
+    this._byOrder.addEventListener('click', this._searchByOrder.bind(this));
+
     this._byID.addEventListener('click', this._searchByID.bind(this));
   }
   _searchByName() {
     this._searchType = 'name';
-    console.log(`search by name`);
+  }
+  _searchByOrder() {
+    this._searchType = 'order';
+    console.log(`search by order`);
   }
   _searchByID() {
     this._searchType = 'id';
-    console.log(`search by id`);
   }
 }
 

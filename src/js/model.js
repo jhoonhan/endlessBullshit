@@ -60,7 +60,7 @@ const today = function () {
 export const logArtwork = function (inputData, imgURL) {
   // save new log
 
-  const index = state.artworks.length + 1;
+  const index = state.artworks.length;
   const log = {
     name: inputData.name.toLowerCase(),
     title: 'This is Bullshit',

@@ -4,6 +4,7 @@ import renderView from './view/renderView.js';
 import descriptionView from './view/descriptionView.js';
 import betweenView from './view/betweenView.js';
 import logView from './view/logView.js';
+import detailView from './view/detailView.js';
 
 const artworkContainer = document.querySelector('.render-artwork');
 
@@ -82,47 +83,70 @@ const controlGenerateArtwork = async function (renderImage) {
 //   // highlight
 //   logView.highlightActiveLog();
 // };
-const controlLatestArtwork = function () {
-  model.loadLatest();
-  const log = model.state.current;
-
+const _update = function (log) {
   renderView.artworkRender(log.imgURL);
   // Insert ID to artwork on view
   renderView.artworkID(log.id);
   // latest log data to artwork title for render
   titleView.addTitles(log);
-  // load latest log data to description
-  descriptionView.addDescription(log);
-  // render logs
-  logView.renderLogs(model.state.artworks);
   // highlight
   logView.highlightActiveLog();
+};
+
+const controlLatestArtwork = function () {
+  model.loadLatest();
+  _update(model.state.current);
+
+  // render logs
+  logView.renderLogs(model.state.artworks);
+  // load latest log data to description
+  descriptionView.addDescription(model.state.current);
 };
 
 const controlLogRender = function () {
   // Gets imgURL of selected log
   const selectedArtwork = logView.getImageHashChange(model.state.artworks);
   // Update
-  const log = selectedArtwork;
+  _update(selectedArtwork);
 
-  renderView.artworkRender(log.imgURL);
-  // Insert ID to artwork on view
-  renderView.artworkID(log.id);
-  // latest log data to artwork title for render
-  titleView.addTitles(log);
-  // load latest log data to description
-  descriptionView.addDescription(log);
-  // render logs
-  logView.renderLogs(model.state.artworks);
-  // highlight
-  logView.highlightActiveLog();
+  detailView.addDetailInformation(selectedArtwork);
 };
 
 const controlSearch = function () {
   // Get input text
-  const result = logView.search(model.state.artworks);
+  const [[resultAccu], resultProx] = logView.search(model.state.artworks);
+  console.log(resultAccu);
+  // render the first result
+  _update(resultAccu);
   // Display search results
-  _updateArtwork(result[0]);
+  logView.renderLogs(resultProx);
+  // add detail info
+  detailView.addDetailInformation(resultAccu);
+  // change has to the first result item
+  window.location.hash = `#${resultAccu.id}`;
+  // rerun highlight
+  logView.highlightActiveLog();
+};
+
+const controlSerachView = function () {
+  logView.toggleView();
+  const btn = document.querySelector('.log--toggle-view');
+  const selectedArtwork = logView.getImageHashChange(model.state.artworks);
+
+  if (btn.dataset.type === 'close') {
+    // document.querySelector('.column--2').classList.toggle('left100vw');
+    // document.querySelector('.column--3').classList.toggle('left100vw');
+    btn.classList.toggle('arrow-rotate');
+    detailView.addDetailInformation(selectedArtwork);
+    window.location.hash = model.state.current.id;
+    logView.highlightActiveLog();
+  } else {
+    // document.querySelector('.column--2').classList.toggle('left100vw');
+    // document.querySelector('.column--3').classList.toggle('left100vw');
+    btn.classList.toggle('arrow-rotate');
+    logView.highlightActiveLog();
+    controlLatestArtwork();
+  }
 };
 
 const init = function () {
@@ -130,6 +154,7 @@ const init = function () {
   renderView.addHandlerGenerateArtwork(controlGenerateArtwork);
   logView.addHandlerLogRender(controlLogRender);
   logView.addHandlerSearch(controlSearch);
+  logView.addHandlerToggleView(controlSerachView);
 };
 
 init();

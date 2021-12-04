@@ -39,6 +39,32 @@ p {
   margin-top: 2rem;
   width: 70%;
 }
+.btn--right-arrow {
+  position: absolute;
+  cursor: pointer;
+  left: 100%;
+  top: calc(50vh - 10px);
+  background-color: transparent;
+
+  border: solid black;
+  border-width: 0 1px 1px 0;
+  padding: 10px;
+  transition: all 0.2s;
+  &:hover {
+    border: solid red;
+    border-width: 0 1px 1px 0;
+  }
+}
+
+.arrow-right {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+.arrow-rotate {
+  transform: rotate(-225deg);
+  -webkit-transform: rotate(-225deg);
+  margin-left: 15px;
+}
 
 %input {
   box-sizing: border-box;
@@ -108,3 +134,5 @@ p {
 .message {
   font-size: 2rem;
 }
+
+///dlkasjdlsajdljsaldjlsajdljsaldal
