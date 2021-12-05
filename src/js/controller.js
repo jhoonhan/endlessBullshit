@@ -122,6 +122,8 @@ const controlLogRender = function () {
   controlSearch(model.state.artworks, 'order', selectedArtwork.index);
 };
 
+const controlScrollLogView = function () {};
+
 const controlSearch = function (data = model.state.artworks, type, keyword) {
   // Get input text
   const [[resultAccu], resultProx] = logView.search(data, type, keyword);

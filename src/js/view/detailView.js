@@ -7,6 +7,9 @@ class DetailView extends View {
   addDetailInformation(data) {
     super.insertHTML(data, this._parentElement);
   }
+
+  generateScrollLogs(data) {}
+
   _generateMarkup(data) {
     return `
     <div class="cell cell--2 artwork-subtitle">
