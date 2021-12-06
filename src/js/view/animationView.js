@@ -7,15 +7,17 @@ class AnimationView extends View {
   _column3 = document.querySelector('.column--3');
   _column4 = document.querySelector('.column--4');
   _column5 = document.querySelector('.column--5');
+  _row1 = document.querySelector('.row--1');
+  _row2 = document.querySelector('.row--2');
+  _row3 = document.querySelector('.row--3');
+
   _expandSearchBtn = document.querySelector('.log--toggle-view');
 
   toggleDescription() {
-    const columns = [this._column2, this._column3];
-    columns.forEach(column => column.classList.toggle('left100vw'));
+    this._row1.classList.toggle('left100vw');
   }
   toggleDetailInformation() {
-    const columns = [this._column4, this._column5];
-    columns.forEach(column => column.classList.toggle('top100vh'));
+    this._row2.classList.toggle('top100vh');
   }
 
   toggleRotateExpandBtn() {

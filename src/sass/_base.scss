@@ -59,7 +59,12 @@ textarea {
 .row {
   min-height: 100vh;
   border: 1px solid red;
+  position: relative;
+  transition: all 0.5s;
+  left: 0;
+  top: 0;
 }
+/// whadkaskdh
 .row--1 {
   @extend .row;
   display: grid;
