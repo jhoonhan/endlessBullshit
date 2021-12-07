@@ -87,7 +87,7 @@ class LogView extends View {
 
   highlightActiveLog() {
     const logs = document.querySelectorAll('.log--logs');
-    const artworkInfo = document.querySelector('.artwork-info');
+    const artworkInfo = document.querySelector('.scroll--active .artwork-info');
 
     // if (window.location.hash === '') return;
     // logs.forEach(function (log) {
@@ -211,9 +211,9 @@ class LogView extends View {
       .slice(0, logsPerPage)
       .map(
         el =>
-          `<li><a href="#${el.id}" class="log--logs">${this.capitalizeName(
-            el.name
-          )}</a></li>`
+          `<li><a href="#${el.id}" class="log--logs" data-index="${
+            el.index
+          }">${this.capitalizeName(el.name)}</a></li>`
       )
       .reverse()
       .join(' ');

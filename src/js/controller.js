@@ -7,6 +7,7 @@ import betweenView from './view/betweenView.js';
 import logView from './view/logView.js';
 import detailView from './view/detailView.js';
 import animationView from './view/animationView.js';
+import scrollLogView from './view/scrollLogView.js';
 
 const artworkContainer = document.querySelector('.render-artwork');
 
@@ -89,25 +90,26 @@ const _update = function (log, location = 'artwork') {
   // Selects location (artwork or artworkInfo)
   renderView.locationDecider(location);
   // Renders artwork
+  if (!log) return;
   renderView.artworkRender(log.imgURL);
   // Insert ID to artwork on view
   renderView.artworkID(log.id);
   // latest log data to artwork title for render
   titleView.addTitles(log, location);
   // highlight
-  logView.highlightActiveLog();
+  // logView.highlightActiveLog();
 };
 
 const controlLatestArtwork = function () {
   model.loadLatest();
   _update(model.state.current);
-  _update(model.state.current, 'artworkInfo');
+  // _update(model.state.current, 'artworkInfo');
 
   // set has location
   window.location.hash = `#${model.state.current.id}`;
 
   // render logs
-  logView.renderLogs(model.state.artworks);
+  // logView.renderLogs(model.state.artworks);
   // load latest log data to description
   descriptionView.addDescription(model.state.current);
 };
@@ -116,27 +118,36 @@ const controlLogRender = function () {
   // Gets imgURL of selected log
   const selectedArtwork = logView.getImageHashChange(model.state.artworks);
   // Update
-  _update(selectedArtwork, 'artworkInfo');
+  // _update(selectedArtwork, 'artworkInfo');
 
-  detailView.addDetailInformation(selectedArtwork);
-  controlSearch(model.state.artworks, 'order', selectedArtwork.index);
+  // detailView.addDetailInformation(selectedArtwork);
+  // controlSearch(model.state.artworks, 'order', selectedArtwork.index);
+
+  model.updateProperties(model.state.current, selectedArtwork);
+  // logView.setCurrentLog(selectedArtwork);
 };
 
-const controlScrollLogView = function () {};
-
 const controlSearch = function (data = model.state.artworks, type, keyword) {
+  console.log(`controlSearch fired`);
   // Get input text
   const [[resultAccu], resultProx] = logView.search(data, type, keyword);
+  if (!resultAccu) return;
   // render the first result
-  _update(resultAccu, 'artworkInfo');
+  // _update(resultAccu, 'artworkInfo');
   // Display search results
   logView.renderLogs(resultProx);
+
   // add detail info
-  detailView.addDetailInformation(resultAccu);
-  // change has to the first result item
+  scrollLogView.renderScrolls(resultProx);
+  scrollLogView.moveToActiveScroll(resultAccu.index, resultProx.length);
+  // detailView.addDetailInformation(resultAccu);
+  // change hash to the first result item
   window.location.hash = `#${resultAccu.id}`;
   // rerun highlight
   logView.highlightActiveLog();
+  // side effect & set current
+  model.updateProperties(model.state.current, resultAccu);
+  // logView.setCurrentLog(resultAccu);
 };
 
 const controlSerachView = function () {
@@ -156,6 +167,7 @@ const controlSerachView = function () {
   } else {
     animationView.toggleDescription();
     animationView.toggleDetailInformation();
+    document.querySelector('.scroll-log-container').style.top = '0';
     animationView.toggleRotateExpandBtn();
     // returns to the latest when search closed.
     window.location.hash = `#${model.state.current.id}`;

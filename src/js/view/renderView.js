@@ -7,7 +7,7 @@ class RenderView extends View {
   _renderOriginalImage = document.querySelector('.render-origial-image');
   _form = document.querySelector('.form-artwork');
   _artwork = document.querySelector('.artwork');
-  _artworkInfo = document.querySelector('.artwork-info');
+  _artworkInfo = document.querySelector('.artwork-info--1');
 
   _renderTitle = document.querySelector('.render-text-title');
   _latestTitle = document.querySelector('.artwork-tag');

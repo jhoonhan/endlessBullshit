@@ -78,20 +78,19 @@ export const logArtwork = function (inputData, imgURL) {
   saveToStorage();
 };
 
+export const updateProperties = function (to, from) {
+  Object.keys(to).forEach(function (key) {
+    to[key] = from[key];
+  });
+};
+
 export const loadLatest = function () {
   if (state.artworks.length < 1) return;
 
   if (state.artworks.length > 0) {
     // Sets latest artwork
     const [latestLog] = state.artworks.slice(-1);
-    state.current.name = latestLog.name;
-    state.current.title = latestLog.title;
-    state.current.statement = latestLog.statement;
-    state.current.date = latestLog.date;
-    state.current.year = latestLog.year;
-    state.current.id = latestLog.id;
-    state.current.index = latestLog.index;
-    state.current.imgURL = latestLog.imgURL;
+    updateProperties(state.current, latestLog);
   }
 };
 

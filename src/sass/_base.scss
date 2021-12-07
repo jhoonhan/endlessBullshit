@@ -58,7 +58,8 @@ textarea {
 }
 .row {
   min-height: 100vh;
-  border: 1px solid red;
+  // border: 1px solid red;
+  background-color: white;
   position: relative;
   transition: all 0.5s;
   left: 0;
@@ -74,14 +75,27 @@ textarea {
 .row--2 {
   @extend .row;
   display: flex;
+  position: relative;
   flex-direction: column;
+  top: 0;
 }
 .scroll {
   display: grid;
   grid-template-columns: 1fr 0.8fr;
   column-gap: 5%;
   min-height: 100vh;
+  min-width: 100%;
+  background-color: white;
 }
+// .scroll--0 {
+//   top: -100vh;
+// }
+// .scroll--1 {
+//   top: 0vh;
+// }
+// .scroll--2 {
+//   top: 100vh;
+// }
 .column {
   display: grid;
   align-content: center;

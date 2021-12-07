@@ -2,7 +2,7 @@ import * as config from '../config.js';
 import View from './View.js';
 
 class DetailView extends View {
-  _parentElement = document.querySelector('.detail-information');
+  _parentElement = document.querySelector('.scroll--1 .detail-information');
 
   addDetailInformation(data) {
     super.insertHTML(data, this._parentElement);
