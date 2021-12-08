@@ -49,8 +49,8 @@ class ScrollLogView extends View {
       this._scroll2.classList.remove('hidden');
     }
   }
-  renderScrolls(resultProx) {
-    super.insertHTML(resultProx, this._parentElement);
+  renderScrolls(data) {
+    super.insertHTML(data, this._parentElement);
   }
   moveToActiveScroll(activeIndex, qtScroll) {
     // console.log(`moveToActiveScroll fired`);
@@ -68,8 +68,13 @@ class ScrollLogView extends View {
   }
   //
   //
+  getTotalNumber(totalNumber) {
+    return totalNumber;
+  }
+
   _generateMarkup(data) {
-    const generatedHTML = data
+    const [resultProx, totalNumber] = data;
+    const generatedHTML = resultProx
       .map(function (el, i) {
         return `
           <div class="scroll scroll--${i}" data-order="${i}" data-index="${el.index}"">
@@ -92,9 +97,16 @@ class ScrollLogView extends View {
                   <h3>by ${el.name}, ${el.year}</h3>
                   </div>
                   <div class="cell cell--3 artwork-description">
-                  <p>
-                      ${el.statement}
-                  </p>
+                    <ul class="detail-data">
+                      <label>Statement :</label>
+                      <li>${el.statement}</li>
+                      <label>Date :</label>
+                      <li>${el.date}/${el.year}</li>
+                      <label>Order :</label>
+                      <li>${el.index} out of ${totalNumber}</li>
+                      <label>ID :</label>
+                      <li>${el.id}</li>
+                    </ul>
                   </div>
               </div>
           </div>

@@ -115,7 +115,8 @@ const controlSearch = function () {
   _search();
 
   // if (!resultAccurate) return;
-  scrollLogView.renderScrolls(resultProximate);
+  scrollLogView.renderScrolls([resultProximate, model.totlaNumber]);
+
   scrollLogView.moveToActiveScroll(
     resultAccurate.index,
     resultProximate.length
@@ -140,18 +141,14 @@ const _search = function (keyword, type) {
 };
 
 const controlSerachView = function () {
-  logView.toggleView();
-
   const btn = document.querySelector('.log--toggle-view');
   const selectedArtwork = logView.getImageHashChange(model.state.artworks);
 
-  // refine logs according to the latest artwork
-  // controlSearch(model.state.artworks, 'order', selectedArtwork.index);
   _search(selectedArtwork.index, 'order');
 
   model.updateProperties(model.state.current, resultAccurate);
 
-  scrollLogView.renderScrolls(resultProximate);
+  scrollLogView.renderScrolls([resultProximate, model.totlaNumber]);
 
   scrollLogView.moveToActiveScroll(
     selectedArtwork.index,
@@ -163,19 +160,7 @@ const controlSerachView = function () {
   window.location.hash = `#${resultAccurate.id}`;
   logView.highlightActiveLog();
 
-  if (btn.dataset.type === 'close') {
-    animationView.toggleDescription();
-    animationView.toggleDetailInformation();
-    animationView.toggleRotateExpandBtn();
-    detailView.addDetailInformation(selectedArtwork);
-  } else {
-    animationView.toggleDescription();
-    animationView.toggleDetailInformation();
-    document.querySelector('.scroll-log-container').style.top = '0';
-    animationView.toggleRotateExpandBtn();
-    // returns to the latest when search closed.
-    window.location.hash = `#${model.state.current.id}`;
-  }
+  animationView.animateToggleSearchView();
 };
 
 const init = function () {

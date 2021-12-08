@@ -31,19 +31,6 @@ class LogView extends View {
 
   addHandlerToggleView(handler) {
     this._btnToggleView.addEventListener('click', handler);
-    // this._btnToggleView.addEventListener(
-    //   'mouseover',
-    //   function () {
-    //     this._parentElement.style.left = '0px';
-    //   }.bind(this)
-    // );
-
-    // this._btnToggleView.addEventListener(
-    //   'mouseout',
-    //   function () {
-    //     this._parentElement.style.left = '-100px';
-    //   }.bind(this)
-    // );
   }
   addHandlerLogRender(handler) {
     window.addEventListener('hashchange', handler);
@@ -70,18 +57,6 @@ class LogView extends View {
   renderLogs(data) {
     if (!data) return;
     super.insertHTML(data, this._logResultContainer);
-  }
-
-  toggleView() {
-    this._parentElement.classList.toggle('left-100vw');
-
-    // opening search will hide form
-    this._description.classList.remove('hidden');
-    this._form.classList.add('hidden');
-
-    if (this._btnToggleView.dataset.type === 'open')
-      this._btnToggleView.dataset.type = 'close';
-    else this._btnToggleView.dataset.type = 'open';
   }
 
   highlightActiveLog() {

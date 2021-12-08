@@ -2,6 +2,7 @@ import html2canvas from 'html2canvas';
 import { ARTWORK } from './config.js';
 
 const { v4: uuidv4 } = require('uuid');
+export let totlaNumber = 1;
 
 export const state = {
   artworks: [
@@ -59,7 +60,6 @@ const today = function () {
 
 export const logArtwork = function (inputData, imgURL) {
   // save new log
-
   const index = state.artworks.length;
   const log = {
     name: inputData.name.toLowerCase(),
@@ -74,7 +74,7 @@ export const logArtwork = function (inputData, imgURL) {
   // console.log(log.date.slice(0, 4));
   // newely generated log gets added to archive
   state.artworks.push(log);
-  console.log(state.artworks);
+  totlaNumber = totlaNumber + 1;
   saveToStorage();
 };
 
