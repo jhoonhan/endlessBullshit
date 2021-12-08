@@ -46,8 +46,7 @@ class LogView extends View {
     // );
   }
   addHandlerLogRender(handler) {
-    ['hashchange'].forEach(ev => window.addEventListener(ev, handler));
-    // window.addEventListener('hashchange', handler);
+    window.addEventListener('hashchange', handler);
   }
   addHandlerSearch(handler) {
     this._searchForm.addEventListener('submit', function (e) {
@@ -97,6 +96,7 @@ class LogView extends View {
     //     log.classList.remove('highlighted-text');
     //   }
     // });
+    if (!artworkInfo) return;
     logs.forEach(function (log) {
       if (log.href.slice(-36) === artworkInfo.dataset.id) {
         log.classList.add('highlighted-text');

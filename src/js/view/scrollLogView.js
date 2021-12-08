@@ -53,17 +53,17 @@ class ScrollLogView extends View {
     super.insertHTML(resultProx, this._parentElement);
   }
   moveToActiveScroll(activeIndex, qtScroll) {
-    console.log(qtScroll);
+    // console.log(`moveToActiveScroll fired`);
     const scrolls = document.querySelectorAll('.scroll');
-    console.log(activeIndex);
     scrolls.forEach(function (el) {
-      if (+el.dataset.order !== +activeIndex)
+      if (+el.dataset.index !== +activeIndex)
         el.classList.remove('scroll--active');
-      if (+el.dataset.order === +activeIndex)
+      if (+el.dataset.index === +activeIndex)
         el.classList.add('scroll--active');
     });
-    // const moveValue = `${100 * activeIndex}vh`;
-    const moveValue = qtScroll * 100 + 0 - activeIndex * 100;
+    const active = document.querySelector('.scroll--active');
+    if (!active) return;
+    const moveValue = qtScroll * 100 - active.dataset.order * 100;
     this._parentElement.style.top = `-${moveValue}vh`;
   }
   //
@@ -72,7 +72,7 @@ class ScrollLogView extends View {
     const generatedHTML = data
       .map(function (el, i) {
         return `
-          <div class="scroll scroll--${i}" data-order="${i}">
+          <div class="scroll scroll--${i}" data-order="${i}" data-index="${el.index}"">
           <div class="column column--4">
               <div class="cell cell--1 container-outer outer-shadow">
               <div class="container-artwork">

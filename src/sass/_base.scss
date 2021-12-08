@@ -12,7 +12,7 @@ body {
   font-family: 'Nunito Sans', sans-serif;
   font-weight: 400;
   line-height: 1.6;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 textarea {
   font-family: 'Nunito Sans', sans-serif;
@@ -106,12 +106,6 @@ textarea {
   top: 0;
   left: 0;
   transition: all 0.5s;
-}
-.column--4 {
-  border: 1px solid red;
-}
-.column--5 {
-  border: 1px solid red;
 }
 
 .log--search--container {

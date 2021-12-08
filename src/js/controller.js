@@ -11,30 +11,12 @@ import scrollLogView from './view/scrollLogView.js';
 
 const artworkContainer = document.querySelector('.render-artwork');
 
+let resultAccurate, resultProximate;
+
 // const aang = document.querySelector('.aang');
 if (module.hot) {
   module.hot.accept();
 }
-
-// const screenshot = async function () {
-//   try {
-//     const canvas = document.querySelector('.artwork-canvas');
-//     const renderedData = canvas.getContext('2d');
-//     console.log(renderedData);
-//     const res = await html2canvas(artworkContainer);
-//     const hmm = function () {
-//       canvas.width = 1000;
-//       canvas.height = 1000;
-//       canvas.style.opacity = 0.5;
-//       // canvas.classList.add('opacity');
-//       console.log(canvas);
-//       renderedData.drawImage(res, 0, 0, 1001, 1001);
-//     };
-//     hmm();
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
 
 const controlGenerateArtwork = async function (renderImage) {
   // @renderImage = html node to be converted to image
@@ -117,37 +99,44 @@ const controlLatestArtwork = function () {
 const controlLogRender = function () {
   // Gets imgURL of selected log
   const selectedArtwork = logView.getImageHashChange(model.state.artworks);
-  // Update
-  // _update(selectedArtwork, 'artworkInfo');
 
-  // detailView.addDetailInformation(selectedArtwork);
-  // controlSearch(model.state.artworks, 'order', selectedArtwork.index);
+  if (!resultProximate) return;
+  scrollLogView.moveToActiveScroll(
+    selectedArtwork.index,
+    resultProximate.length
+  );
+  logView.highlightActiveLog();
 
   model.updateProperties(model.state.current, selectedArtwork);
-  // logView.setCurrentLog(selectedArtwork);
 };
 
-const controlSearch = function (data = model.state.artworks, type, keyword) {
-  console.log(`controlSearch fired`);
+const controlSearch = function () {
   // Get input text
-  const [[resultAccu], resultProx] = logView.search(data, type, keyword);
-  if (!resultAccu) return;
-  // render the first result
-  // _update(resultAccu, 'artworkInfo');
-  // Display search results
-  logView.renderLogs(resultProx);
+  _search();
 
-  // add detail info
-  scrollLogView.renderScrolls(resultProx);
-  scrollLogView.moveToActiveScroll(resultAccu.index, resultProx.length);
-  // detailView.addDetailInformation(resultAccu);
-  // change hash to the first result item
-  window.location.hash = `#${resultAccu.id}`;
-  // rerun highlight
+  // if (!resultAccurate) return;
+  scrollLogView.renderScrolls(resultProximate);
+  scrollLogView.moveToActiveScroll(
+    resultAccurate.index,
+    resultProximate.length
+  );
+
+  logView.renderLogs(resultProximate);
   logView.highlightActiveLog();
-  // side effect & set current
-  model.updateProperties(model.state.current, resultAccu);
-  // logView.setCurrentLog(resultAccu);
+  window.location.hash = `#${resultAccurate.id}`;
+
+  model.updateProperties(model.state.current, resultAccurate);
+};
+
+const _search = function (keyword, type) {
+  const [[resultAccu], resultProx] = logView.search(
+    model.state.artworks,
+    type,
+    keyword
+  );
+  // Side effect
+  resultAccurate = resultAccu;
+  resultProximate = resultProx;
 };
 
 const controlSerachView = function () {
@@ -157,7 +146,22 @@ const controlSerachView = function () {
   const selectedArtwork = logView.getImageHashChange(model.state.artworks);
 
   // refine logs according to the latest artwork
-  controlSearch(model.state.artworks, 'order', selectedArtwork.index);
+  // controlSearch(model.state.artworks, 'order', selectedArtwork.index);
+  _search(selectedArtwork.index, 'order');
+
+  model.updateProperties(model.state.current, resultAccurate);
+
+  scrollLogView.renderScrolls(resultProximate);
+
+  scrollLogView.moveToActiveScroll(
+    selectedArtwork.index,
+    resultProximate.length
+  );
+
+  logView.renderLogs(resultProximate);
+
+  window.location.hash = `#${resultAccurate.id}`;
+  logView.highlightActiveLog();
 
   if (btn.dataset.type === 'close') {
     animationView.toggleDescription();
