@@ -6,12 +6,12 @@ class LogView extends View {
   _logResultContainer = document.querySelector('.log--results');
   _logs = document.querySelectorAll('.log--logs');
   _btnToggleView = document.querySelector('.log--toggle-view');
-  _btnSearchDropdown = document.querySelector('.log--serach--dropdown');
+  _btnSearchDropdown = document.querySelector('.log--search--dropdown');
   _searchDropdownOptions = document.querySelector(
     '.log--search--dropdown-options'
   );
   _searchForm = document.querySelector('.log--search--form');
-  _searchInput = document.querySelector('.log--serach--input');
+  _searchInput = document.querySelector('.log--search--input');
   _byName = document.querySelector('.by-name');
   _byOrder = document.querySelector('.by-order');
   _byID = document.querySelector('.by-id');

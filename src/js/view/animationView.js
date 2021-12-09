@@ -21,10 +21,56 @@ class AnimationView extends View {
   // Serach view
   _expandSearchBtn = document.querySelector('.log--toggle-view');
   //
+  // Search box
+  _searchContainer = document.querySelector('.log--search--container');
+  _searchExpandBtn = document.querySelector('.log--search--expand');
+  _searchDropdown = document.querySelector('.log--search--dropdown');
+  _searchOptionContainer = document.querySelector('.log--search--options');
+  _searchOptions = document.querySelectorAll('.log--search--option');
+  _searchForm = document.querySelector('.log--search--form');
+  _searchInput = document.querySelector('.log--search--input');
+  //
 
   constructor() {
     super();
     this._initSearchView();
+    this._searchExpandBtn.addEventListener(
+      'click',
+      function () {
+        this.sq1();
+      }.bind(this)
+    );
+    this._searchOptions.forEach(
+      function (btn) {
+        btn.addEventListener(
+          'click',
+          function () {
+            this.sq2();
+            this._searchInput.value = '';
+          }.bind(this)
+        );
+      }.bind(this)
+    );
+    this._searchForm.addEventListener(
+      'submit',
+      function () {
+        this.sq3();
+      }.bind(this)
+    );
+  }
+
+  sq1() {
+    this._searchOptionContainer.classList.toggle('hidden');
+  }
+
+  sq2() {
+    console.log(`sq2 fired`);
+    this._searchForm.classList.toggle('hidden');
+  }
+  sq3() {
+    console.log(`sq3 fired`);
+    this._searchOptionContainer.classList.toggle('hidden');
+    this._searchForm.classList.toggle('hidden');
   }
 
   _initSearchView() {

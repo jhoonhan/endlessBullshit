@@ -108,32 +108,17 @@ textarea {
   transition: all 0.5s;
 }
 
+.log--container {
+  position: relative;
+  transition: all 0.3s;
+}
+//////////
 .log--search--container {
   position: absolute;
   width: 100%;
   top: 5rem;
   left: 0;
-}
-// .log--search--form {
-// }
-.log--container {
-  position: relative;
-  transition: all 0.3s;
-}
-.log--search--dropdown-options {
-  display: flex;
-}
-.log--serach--box {
-  width: 50%;
-  list-style: none;
-  text-align: center;
-  box-sizing: border-box;
-  padding: 1rem;
-  font-size: 1.2rem;
-  background-color: white;
   border: 1px solid black;
-  cursor: pointer;
-  border-radius: 0rem;
   &:hover {
     border: 1px solid red;
   }
@@ -142,16 +127,38 @@ textarea {
     outline: none;
   }
 }
-.log--serach--box .by-id {
-  margin-left: -1px;
-  width: calc(100% + 1px);
+////dasdsadasd
+//@extend//dsadasd/sad/asd
+.log--search--box {
+  width: 100%;
+  list-style: none;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 0rem;
+  font-size: 1.2rem;
+  background-color: white;
+  border-radius: 0rem;
+  line-height: 3.6rem;
+  & a {
+    cursor: pointer;
+  }
 }
 
-.log--serach--input {
-  @extend .log--serach--box;
-  margin-top: -1px;
+.log--search--options {
+  display: flex;
+}
+.log--search--option {
+  @extend .log--search--box;
+}
+
+.log--search--input {
+  @extend .log--search--box;
   width: 100%;
   cursor: text;
+  border: none;
+  &:focus {
+    outline: none;
+  }
 }
 
 .log--search--input {

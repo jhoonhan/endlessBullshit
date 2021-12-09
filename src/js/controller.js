@@ -88,7 +88,7 @@ const controlLatestArtwork = function () {
   // _update(model.state.current, 'artworkInfo');
 
   // set has location
-  window.location.hash = `#${model.state.current.id}`;
+  window.location.hash = `#${model.state.artworks.slice(-1)[0].id}`;
 
   // render logs
   // logView.renderLogs(model.state.artworks);
