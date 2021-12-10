@@ -383,7 +383,7 @@ textarea {
   display: grid;
   grid-template-columns: auto 1fr;
   column-gap: 1rem;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: auto auto auto auto;
   font-size: 1.6rem;
   & label {
     font-weight: 600;
