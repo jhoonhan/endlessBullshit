@@ -29,15 +29,20 @@ class AnimationView extends View {
   _searchOptions = document.querySelectorAll('.log--search--option');
   _searchForm = document.querySelector('.log--search--form');
   _searchInput = document.querySelector('.log--search--input');
+
   //
 
   constructor() {
     super();
     this._initSearchView();
+    this._animateSearchBoxListeners();
+  }
+
+  _animateSearchBoxListeners() {
     this._searchExpandBtn.addEventListener(
       'click',
       function () {
-        this.sq1();
+        this.animateSearchBox(1);
       }.bind(this)
     );
     this._searchOptions.forEach(
@@ -45,7 +50,7 @@ class AnimationView extends View {
         btn.addEventListener(
           'click',
           function () {
-            this.sq2();
+            this.animateSearchBox(2);
             this._searchInput.value = '';
           }.bind(this)
         );
@@ -54,27 +59,31 @@ class AnimationView extends View {
     this._searchForm.addEventListener(
       'submit',
       function () {
-        this.sq3();
+        this.animateSearchBox(3);
       }.bind(this)
     );
   }
 
-  sq1() {
-    this._searchOptionContainer.classList.toggle('hidden');
-  }
-
-  sq2() {
-    console.log(`sq2 fired`);
-    this._searchForm.classList.toggle('hidden');
-  }
-  sq3() {
-    console.log(`sq3 fired`);
-    this._searchOptionContainer.classList.toggle('hidden');
-    this._searchForm.classList.toggle('hidden');
+  animateSearchBox(index) {
+    if (index === 1) {
+      console.log(`sq1 fired`);
+      this._searchOptionContainer.classList.toggle('hidden');
+      this._searchForm.classList.add('hidden');
+    }
+    if (index === 2) {
+      console.log(`sq2 fired`);
+      this._searchForm.classList.remove('hidden');
+    }
+    if (index === 3) {
+      console.log(`sq3 fired`);
+      this._searchOptionContainer.classList.add('hidden');
+      this._searchForm.classList.add('hidden');
+    }
   }
 
   _initSearchView() {
     const left = this._logContainer.getBoundingClientRect().width;
+    if (left > 1000) return;
     this._logContainer.style.left = `-${left + 1}px`;
     this._logContainer.classList.remove('left-100vw');
   }
