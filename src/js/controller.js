@@ -44,6 +44,7 @@ const controlGenerateArtwork = async function (renderImage) {
 
     // Prompt between page
     betweenView.showBetween();
+    betweenView.update(model.state.artworks.slice(-1)[0]);
 
     // hide form
     descriptionView.toggleWindow();

@@ -74,6 +74,7 @@ export const logArtwork = function (inputData, imgURL) {
   // console.log(log.date.slice(0, 4));
   // newely generated log gets added to archive
   state.artworks.push(log);
+
   totlaNumber = totlaNumber + 1;
   saveToStorage();
 };

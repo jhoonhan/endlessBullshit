@@ -26,7 +26,7 @@ class AnimationView extends View {
   _searchExpandBtn = document.querySelector('.log--search--expand');
   _searchDropdown = document.querySelector('.log--search--dropdown');
   _searchOptionContainer = document.querySelector('.log--search--options');
-  _searchOptions = document.querySelectorAll('.log--search--option');
+  _searchOptions = document.querySelectorAll('.log--search--option a');
   _searchForm = document.querySelector('.log--search--form');
   _searchInput = document.querySelector('.log--search--input');
 
@@ -45,20 +45,23 @@ class AnimationView extends View {
         this.animateSearchBox(1);
       }.bind(this)
     );
+
     this._searchOptions.forEach(
       function (btn) {
         btn.addEventListener(
           'click',
-          function () {
+          function (e) {
             this.animateSearchBox(2);
-            this._searchInput.value = '';
+            e.target.classList.toggle('highlighted-text');
           }.bind(this)
         );
       }.bind(this)
     );
+
     this._searchForm.addEventListener(
       'submit',
-      function () {
+      function (e) {
+        e.preventDefault();
         this.animateSearchBox(3);
       }.bind(this)
     );
@@ -73,11 +76,16 @@ class AnimationView extends View {
     if (index === 2) {
       console.log(`sq2 fired`);
       this._searchForm.classList.remove('hidden');
+      this._searchOptions.forEach(a => a.classList.remove('highlighted-text'));
+
+      this._searchInput.value = '';
+      this._searchInput.focus();
     }
     if (index === 3) {
       console.log(`sq3 fired`);
       this._searchOptionContainer.classList.add('hidden');
       this._searchForm.classList.add('hidden');
+      this._searchOptions.forEach(a => a.classList.remove('highlighted-text'));
     }
   }
 

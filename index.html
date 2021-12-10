@@ -20,8 +20,19 @@
     </header> -->
     <div class="top-level hidden">
       <div class="fullSizeBetween">
-        <div class="centerAlign">
+        <div class="between--container">
           <span class="message">Your artwork has been submitted.</span>
+          <ul class="between--information">
+            <label>Name</label>
+            <label class="column">:</label>
+            <li>${name}</li>
+            <label>Order</label>
+            <label class="column">:</label>
+            <li>${index}</li>
+            <label>ID</label>
+            <label class="column">:</label>
+            <li>${id}</li>
+          </ul>
           <button class="btn--large btn--close-between">next</button>
         </div>
       </div>
@@ -29,20 +40,20 @@
     <div class="container artworkPage">
 
       <div class="section section--1">
-        <div class="log--container left-100vw">
+        <div class="log--container">
           <button class="btn--right-arrow arrow-right log--toggle-view"><a class=""></a></button>
           <div class="log--search--container">
             <div class="log--search--dropdown log--search--box">
               <a class="log--search--expand">search</a>
 
               <ul class="log--search--options hidden">
-                <li class="log--search--option by-name"><a>by name</a></li>
+                <li class="log--search--option by-name"><a class="highlighted-text">by name</a></li>
                 <li class="log--search--option by-order"><a>by order</a></li>
                 <li class="log--search--option by-id"><a>by ID</a></li>
               </ul>
 
               <form class="log--search--form hidden">
-                <input name="search" class="log--search--input" placeholder="search"  type="text"></input>
+                <input name="search" class="log--search--input" placeholder="search keyword"  type="text"></input>
               </form>
             </div>
   

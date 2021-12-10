@@ -11,9 +11,6 @@ class BetweenView extends View {
     this._addHandlerHideWindow();
   }
   showBetween() {
-    const message = `Your art has been submitted.`;
-    this._message.innerHTML = '';
-    this._message.innerHTML = message;
     this._toggleWindow();
   }
 
@@ -22,10 +19,40 @@ class BetweenView extends View {
   }
 
   _addHandlerHideWindow() {
-    this._btnClose.addEventListener('click', this._toggleWindow.bind(this));
+    this._btnClose.addEventListener(
+      'click',
+      function () {
+        this._toggleWindow();
+      }.bind(this)
+    );
   }
 
-  _generateMarkup() {}
+  _generateMarkup(data) {
+    const { name, id, index } = data;
+    const formattedName = `${name
+      .split(' ')
+      .map(el => el.slice(0, 1).toUpperCase() + el.slice(1))
+      .join(' ')}`;
+    return `
+      <div class="fullSizeBetween">
+        <div class="between--container">
+          <span class="message">Your artwork has been submitted.</span>
+          <ul class="between--information">
+            <label>Name</label>
+            <label class="column">:</label>
+            <li>${formattedName}</li>
+            <label>Order</label>
+            <label class="column">:</label>
+            <li>${index}</li>
+            <label>ID</label>
+            <label class="column">:</label>
+            <li>${id}</li>
+          </ul>
+          <button class="btn--large btn--close-between">next</button>
+        </div>
+      </div>
+      `;
+  }
 }
 
 export default new BetweenView();

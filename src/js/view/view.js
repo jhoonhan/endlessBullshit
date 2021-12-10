@@ -10,6 +10,33 @@ export default class View {
     locationHTML.insertAdjacentHTML('afterbegin', dataHTML);
   }
 
+  update(data) {
+    const newMarkup = this._generateMarkup(data);
+
+    const newDOM = document.createRange().createContextualFragment(newMarkup);
+    const newElements = Array.from(newDOM.querySelectorAll('*'));
+    const curElements = Array.from(this._parentElement.querySelectorAll('*'));
+
+    newElements.forEach((newEl, i) => {
+      const curEl = curElements[i];
+
+      // Update changed TEXT
+      if (
+        !newEl.isEqualNode(curEl) &&
+        newEl.firstChild?.nodeValue.trim() !== ''
+      ) {
+        curEl.textContent = newEl.textContent;
+      }
+
+      // Update changed ATTRIBUTES
+      if (!newEl.isEqualNode(curEl)) {
+        Array.from(newEl.attributes).forEach(attr =>
+          curEl.setAttribute(attr.name, attr.value)
+        );
+      }
+    });
+  }
+
   controlHidden(selector = this._parentElement, type = 'toggle') {
     if (type === 'add') selector.classList.add('hidden');
     if (type === 'remove') selector.classList.remove('hidden');
