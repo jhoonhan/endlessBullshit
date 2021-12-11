@@ -69,12 +69,10 @@ class AnimationView extends View {
 
   animateSearchBox(index) {
     if (index === 1) {
-      console.log(`sq1 fired`);
       this._searchOptionContainer.classList.toggle('hidden');
       this._searchForm.classList.add('hidden');
     }
     if (index === 2) {
-      console.log(`sq2 fired`);
       this._searchForm.classList.remove('hidden');
       this._searchOptions.forEach(a => a.classList.remove('highlighted-text'));
 
@@ -82,7 +80,6 @@ class AnimationView extends View {
       this._searchInput.focus();
     }
     if (index === 3) {
-      console.log(`sq3 fired`);
       this._searchOptionContainer.classList.add('hidden');
       this._searchForm.classList.add('hidden');
       this._searchOptions.forEach(a => a.classList.remove('highlighted-text'));

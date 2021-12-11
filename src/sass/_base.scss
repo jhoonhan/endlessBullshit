@@ -12,7 +12,7 @@ body {
   font-family: 'Nunito Sans', sans-serif;
   font-weight: 400;
   line-height: 1.6;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 textarea {
   font-family: 'Nunito Sans', sans-serif;
@@ -358,7 +358,7 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgb(252, 252, 252);
+  // background-color: rgb(252, 252, 252);
 
   aspect-ratio: 1 / 1;
   box-sizing: border-box;

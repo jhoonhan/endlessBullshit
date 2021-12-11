@@ -75,17 +75,24 @@ class ScrollLogView extends View {
   _generateMarkup(data) {
     const [resultProx, totalNumber] = data;
     const generatedHTML = resultProx
-      .map(function (el, i) {
-        return `
-          <div class="scroll scroll--${i}" data-order="${i}" data-index="${el.index}"">
+      .map(
+        function (el, i) {
+          return `
+          <div class="scroll scroll--${i}" data-order="${i}" data-index="${
+            el.index
+          }"">
           <div class="column column--4">
               <div class="cell cell--1 container-outer outer-shadow">
               <div class="container-artwork">
-                  <div class="artwork-info artwork-frame" data-id="${el.id}" style="background-image: url(${el.imgURL})"></div>
+                  <div class="artwork-info artwork-frame" data-id="${
+                    el.id
+                  }" style="background-image: url(${el.imgURL})"></div>
               </div>
               </div>
               <div class="cell cell--2 artwork-tag log-tag">
-              <span><i>Endless Bullshit</i>, ${el.name}, ${el.year}</span>
+              <span><i>Endless Bullshit</i>, ${this.capitalizeName(el.name)}, ${
+            el.year
+          }</span>
               </div>
           </div>
           <div class="column column--5">
@@ -94,7 +101,7 @@ class ScrollLogView extends View {
               </div>
               <div class="detail-information information">
                   <div class="cell cell--2 artwork-subtitle">
-                  <h3>by ${el.name}, ${el.year}</h3>
+                  <h3>by ${this.capitalizeName(el.name)}, ${el.year}</h3>
                   </div>
                   <div class="cell cell--3 artwork-description">
                     <ul class="detail-data">
@@ -112,7 +119,8 @@ class ScrollLogView extends View {
           </div>
           </div>
           `;
-      })
+        }.bind(this)
+      )
       .reverse()
       .join(' ');
 

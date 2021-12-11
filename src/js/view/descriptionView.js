@@ -16,7 +16,6 @@ class DescriptionView extends View {
     const inputDataArr = [...new FormData(this._form)];
     const inputData = Object.fromEntries(inputDataArr);
     const isDataValid = this._inputDataValidate(inputData);
-
     // if (this._errorData.length > 0) return false;
     // if (this._errorData.length === 0) return inputData;
     if (isDataValid) {
@@ -31,18 +30,37 @@ class DescriptionView extends View {
     inputTexts.forEach(el => (el.value = ''));
     inputCheckBoxes.forEach(el => (el.checked = false));
   }
+  _promptError(message) {
+    this._errorMessage.innerHTML = '';
+    this._errorMessage.innerHTML = `${message}`;
+    this._textarea.classList.add('error-box');
+  }
   _inputDataValidate(inputData) {
-    const statement = inputData.statement;
-    // this._errorData = [];
+    const { name, statement } = inputData;
+
+    if (name.length > config.NAMEMAX) {
+      this._errorMessage.innerHTML = '';
+      this._errorMessage.innerHTML = `name has to be less than ${config.NAMEMAX} characters.`;
+      this._textarea.classList.add('error-box');
+      return false;
+    }
+
+    // Statement validate
     if (statement.length < config.STATEMENTMIN) {
       this._errorMessage.innerHTML = '';
       this._errorMessage.innerHTML = `statment has to be at least ${config.STATEMENTMIN} characters.`;
+      this._textarea.classList.add('error-box');
+      return false;
+    } else if (statement.length > config.STATEMENTMAX) {
+      this._errorMessage.innerHTML = '';
+      this._errorMessage.innerHTML = `statment has to be less than ${config.STATEMENTMAX} characters.`;
       this._textarea.classList.add('error-box');
       return false;
     } else {
       this._textarea.classList.remove('error-box');
       return true;
     }
+
     // if (name.length < config.NAMEMIN) {
     //   console.log(`name too short`);
     //   this._errorData.push(`name too short`);

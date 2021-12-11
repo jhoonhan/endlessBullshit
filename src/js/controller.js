@@ -23,6 +23,7 @@ const controlGenerateArtwork = async function (renderImage) {
   try {
     // get and checks input data
     const inputData = descriptionView.artworkInputData();
+    console.log(inputData);
     if (!inputData) return;
 
     // reduce dummy to fit in the center with 70%

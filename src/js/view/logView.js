@@ -180,15 +180,28 @@ class LogView extends View {
     this._searchType = 'id';
   }
 
+  _convertName(name) {
+    if (name.length > config.NAMESHORTEN) {
+      if (name.split(' ').length > 1) {
+        const firstInitial = name.split(' ')[0].slice(0, 1);
+        const lastName = name.split(' ').slice(-1)[0];
+        return `${firstInitial}. ${lastName}`;
+      }
+      if (name.split(' ').length <= 1) {
+        return name.slice(0, 15);
+      }
+    } else return name;
+  }
   _generateMarkup(data) {
-    const logsPerPage = config.MAXSEARCHRESULT;
     const generatedHTML = data
-      .slice(0, logsPerPage)
+      .slice(0, config.MAXSEARCHRESULT)
       .map(
-        el =>
-          `<li><a href="#${el.id}" class="log--logs" data-index="${
+        function (el) {
+          const convtName = this._convertName(el.name);
+          return `<li><a href="#${el.id}" class="log--logs" data-index="${
             el.index
-          }">${this.capitalizeName(el.name)}</a></li>`
+          }">${this.capitalizeName(convtName)}</a></li>`;
+        }.bind(this)
       )
       .reverse()
       .join(' ');
