@@ -150,6 +150,7 @@ class LogView extends View {
     }
     if (!type && this._searchType === 'id') {
       const resultAccu = data.filter(el => el.id === inputKeyword);
+      if (!resultAccu[0]) return;
       const keyIndex = resultAccu[0].index;
       const resultProx = this._getResultProx(data, keyIndex);
 

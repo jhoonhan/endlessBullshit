@@ -137,9 +137,14 @@ const _search = function (keyword, type) {
     type,
     keyword
   );
-  // Side effect
-  resultAccurate = resultAccu;
-  resultProximate = resultProx;
+  if (!resultAccu || !resultProx) {
+    resultProximate = [];
+    return;
+  } else {
+    // Side effect
+    resultAccurate = resultAccu;
+    resultProximate = resultProx;
+  }
 };
 
 const controlSerachView = function () {

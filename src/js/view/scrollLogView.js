@@ -74,6 +74,15 @@ class ScrollLogView extends View {
 
   _generateMarkup(data) {
     const [resultProx, totalNumber] = data;
+
+    if (resultProx.length < 1) {
+      return `
+        <div class="no-result">
+          <span>There is no result with your search. <br>Try it again or close the archive panel
+          </span>
+        </div>`;
+    }
+
     const generatedHTML = resultProx
       .map(
         function (el, i) {
@@ -124,7 +133,9 @@ class ScrollLogView extends View {
       .reverse()
       .join(' ');
 
-    return generatedHTML;
+    if (resultProx.length > 0) {
+      return generatedHTML;
+    }
   }
 }
 
