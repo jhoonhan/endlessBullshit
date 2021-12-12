@@ -11,6 +11,10 @@ class AnimationView extends View {
   _row2 = document.querySelector('.row--2');
   _row3 = document.querySelector('.row--3');
 
+  // Main page
+  _artworkPage = document.querySelector('.artworkPage');
+  //
+
   // Log view
   _logContainer = document.querySelector('.log--container');
   _scrollContainer = document.querySelector('.scroll-log-container');
@@ -29,15 +33,27 @@ class AnimationView extends View {
   _searchOptions = document.querySelectorAll('.log--search--option a');
   _searchForm = document.querySelector('.log--search--form');
   _searchInput = document.querySelector('.log--search--input');
-
   //
+
+  // Introduction
+  _intro = document.querySelector('.introduction');
+  _introCloseBtn = document.querySelector('.btn--close--intro');
 
   constructor() {
     super();
     this._initSearchView();
     this._animateSearchBoxListeners();
+    this._animateIntroListeners();
   }
 
+  _animateIntroListeners() {
+    this._introCloseBtn.addEventListener(
+      'click',
+      function () {
+        this.controlHidden(this._intro, 'add');
+      }.bind(this)
+    );
+  }
   _animateSearchBoxListeners() {
     this._searchExpandBtn.addEventListener(
       'click',

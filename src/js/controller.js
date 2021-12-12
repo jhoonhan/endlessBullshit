@@ -153,6 +153,7 @@ const controlSerachView = function () {
 
   _search(selectedArtwork.index, 'order');
 
+  if (!resultAccurate) return;
   model.updateProperties(model.state.current, resultAccurate);
 
   scrollLogView.renderScrolls([resultProximate, model.totlaNumber]);
