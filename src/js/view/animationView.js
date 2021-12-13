@@ -2,6 +2,8 @@ import * as config from '../config.js';
 import View from './View.js';
 
 class AnimationView extends View {
+  _section1 = document.querySelector('.section--1');
+  _section2 = document.querySelector('.section--2');
   _column1 = document.querySelector('.column--1');
   _column2 = document.querySelector('.column--2');
   _column3 = document.querySelector('.column--3');
@@ -13,6 +15,7 @@ class AnimationView extends View {
 
   // Main page
   _artworkPage = document.querySelector('.artworkPage');
+  _container = document.querySelector('.container');
   //
 
   // Log view
@@ -38,21 +41,79 @@ class AnimationView extends View {
   // Introduction
   _intro = document.querySelector('.introduction');
   _introCloseBtn = document.querySelector('.btn--close--intro');
+  _introArtworkContainer = document.querySelector('.intro--container');
+  _introDescription = document.querySelector('.intro--text');
+  _introTitle = document.querySelector('.introduction .artwork-title');
+  _introSubtitle = document.querySelector('.introduction .artwork-subtitle');
+  _introStatement = document.querySelector('.intro--statement');
+  //
 
   constructor() {
     super();
     this._initSearchView();
     this._animateSearchBoxListeners();
     this._animateIntroListeners();
+    this._animateIntro();
   }
 
   _animateIntroListeners() {
     this._introCloseBtn.addEventListener(
       'click',
       function () {
-        this.controlHidden(this._intro, 'add');
+        this._animateIntro(1);
       }.bind(this)
     );
+  }
+  _animateIntro(sequence) {
+    setTimeout(
+      function () {
+        this._introTitle.classList.toggle('right-100vw');
+      }.bind(this),
+      100
+    );
+
+    setTimeout(
+      function () {
+        this._introArtworkContainer.classList.toggle('left-100vw');
+      }.bind(this),
+      500
+    );
+
+    setTimeout(
+      function () {
+        this._introSubtitle.classList.toggle('right-100vw');
+      }.bind(this),
+      700
+    );
+
+    setTimeout(
+      function () {
+        this._introStatement.classList.toggle('right-100vw');
+      }.bind(this),
+      800
+    );
+
+    setTimeout(
+      function () {
+        this._introCloseBtn.classList.toggle('right-100vw');
+      }.bind(this),
+      1000
+    );
+    if (sequence === 1) {
+      setTimeout(
+        function () {
+          this._intro.classList.toggle('opacity0');
+        }.bind(this),
+        1000
+      );
+
+      setTimeout(
+        function () {
+          this.controlHidden(this._intro, 'add');
+        }.bind(this),
+        4000
+      );
+    }
   }
   _animateSearchBoxListeners() {
     this._searchExpandBtn.addEventListener(
@@ -109,42 +170,53 @@ class AnimationView extends View {
     this._logContainer.classList.remove('left-100vw');
   }
 
-  _toggleDescription() {
-    this._row1.classList.toggle('left100vw');
-  }
-  _toggleDetailInformation() {
-    this._row2.classList.toggle('top100vh');
-  }
-
-  _toggleRotateExpandBtn() {
-    this._expandSearchBtn.classList.toggle('arrow-rotate');
-  }
-
   _toggleSerachView(rect) {
     if (rect.x < 0) {
       this._logContainer.style.left = `0px`;
+      this._section2.classList.toggle('left0');
     }
     if (rect.x >= 0) {
       this._logContainer.style.left = `-${rect.width + 1}px`;
+
+      this._section2.classList.toggle('left0');
+    }
+  }
+  _toggleScrollView(rect) {
+    if (rect.x < 0) {
+      this._row1.classList.toggle('left100vw');
+      setTimeout(
+        function () {
+          this._row2.classList.toggle('top100vh');
+        }.bind(this),
+        5000
+      );
+      this._expandSearchBtn.classList.toggle('arrow-rotate');
+    }
+    if (rect.x >= 0) {
+      this._row1.classList.toggle('left100vw');
+      setTimeout(
+        function () {
+          this._row2.classList.toggle('top100vh');
+        }.bind(this),
+        5000
+      );
+      this._expandSearchBtn.classList.toggle('arrow-rotate');
+
+      this._scrollContainer.style.top = '0';
     }
   }
 
   animateToggleSearchView() {
     const rect = this._logContainer.getBoundingClientRect();
-    const sequence0 = function () {
-      this._toggleDescription();
-      this._toggleDetailInformation();
-      this._toggleRotateExpandBtn();
-    }.bind(this);
+    // const sequence0 = function () {
+    //   this._row1.classList.toggle('left100vw');
+    //   this._row2.classList.toggle('top100vh');
+    //   this._expandSearchBtn.classList.toggle('arrow-rotate');
+    // }.bind(this);
 
     this._toggleSerachView(rect);
-    if (rect.x < 0) {
-      sequence0();
-    }
-    if (rect.x >= 0) {
-      sequence0();
-      this._scrollContainer.style.top = '0';
-    }
+    this._toggleScrollView(rect);
+
     // opening search will hide form
     this._description.classList.remove('hidden');
     this._form.classList.add('hidden');

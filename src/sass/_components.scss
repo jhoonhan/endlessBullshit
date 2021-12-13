@@ -27,6 +27,8 @@ p {
   font-weight: 600;
   width: 100%;
   justify-content: center;
+  position: relative;
+  right: 0;
 }
 .btn--hide-description {
   @extend .btn--large;

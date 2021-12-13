@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0;
+  transition: all 0.5s;
 }
 
 html {
@@ -19,9 +20,12 @@ textarea {
 }
 .section--2 {
   display: flex;
+  position: relative;
   flex-direction: column;
   width: 100%;
   min-height: 100vh;
+  // animation
+  left: -5%;
 }
 
 .container {
@@ -31,17 +35,17 @@ textarea {
 
   display: grid;
   grid-template-rows: 1fr;
-
-  // JS
-  // grid-template-columns: 0.5fr 3fr 3fr 0fr;
-  grid-template-columns: 1fr 7fr;
-
   column-gap: 5rem;
-
   align-content: center;
   justify-content: center;
   align-items: stretch;
   justify-items: stretch;
+
+  // JS animation
+
+  grid-template-columns: 1fr 7fr;
+  transition: all 0.3s;
+  //
 }
 
 .fullSizeBetween {
@@ -334,29 +338,48 @@ textarea {
 .introduction {
   display: flex;
   position: fixed;
-  top: 0;
-  left: 0;
   justify-content: center;
   align-content: center;
   height: 100vh;
   width: 100%;
   z-index: 2;
   background-color: white;
+  //animation
+  top: 0;
+  left: 0;
+  opacity: 1;
+  transition: all 3s;
+}
+.intro--container {
+  left: 0;
+  transition: all 0.5s;
 }
 .intro--text {
+  position: relative;
+  right: 0;
   display: flex;
   justify-content: center;
   flex-direction: column;
+  transition: all 0.5s;
   & h1 {
+    right: 0;
+    position: relative;
     font-size: 3rem;
+    transition: all 0.5s;
   }
   & h3 {
+    right: 0;
+    position: relative;
     align-self: flex-end;
+    transition: all 0.5s;
   }
   & span {
+    right: 0;
+    position: relative;
     font-size: 1.6rem;
     margin-top: 1rem;
     margin-bottom: 4rem;
+    transition: all 0.5s;
   }
 }
 .intro--tag {
