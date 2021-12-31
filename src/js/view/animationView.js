@@ -183,23 +183,33 @@ class AnimationView extends View {
   }
   _toggleScrollView(rect) {
     if (rect.x < 0) {
+      // this._row1.classList.toggle('left100vw');
+      // setTimeout(
+      //   function () {
+      //     this._row2.classList.toggle('top100vh');
+      //   }.bind(this),
+      //   1000
+      // );
+      // this._expandSearchBtn.classList.toggle('arrow-rotate');
+      //
       this._row1.classList.toggle('left100vw');
-      setTimeout(
-        function () {
-          this._row2.classList.toggle('top100vh');
-        }.bind(this),
-        5000
-      );
+      this._row2.classList.toggle('top100vh');
       this._expandSearchBtn.classList.toggle('arrow-rotate');
     }
     if (rect.x >= 0) {
+      // this._row1.classList.toggle('left100vw');
+      // setTimeout(
+      //   function () {
+      //     this._row2.classList.toggle('top100vh');
+      //   }.bind(this),
+      //   1000
+      // );
+      // this._expandSearchBtn.classList.toggle('arrow-rotate');
+
+      // this._scrollContainer.style.top = '0';
+      //
       this._row1.classList.toggle('left100vw');
-      setTimeout(
-        function () {
-          this._row2.classList.toggle('top100vh');
-        }.bind(this),
-        5000
-      );
+      this._row2.classList.toggle('top100vh');
       this._expandSearchBtn.classList.toggle('arrow-rotate');
 
       this._scrollContainer.style.top = '0';

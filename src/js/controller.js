@@ -157,7 +157,6 @@ const controlSerachView = function () {
   model.updateProperties(model.state.current, resultAccurate);
 
   scrollLogView.renderScrolls([resultProximate, model.totlaNumber]);
-
   scrollLogView.moveToActiveScroll(
     selectedArtwork.index,
     resultProximate.length
