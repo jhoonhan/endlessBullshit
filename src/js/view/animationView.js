@@ -48,12 +48,15 @@ class AnimationView extends View {
   _introStatement = document.querySelector('.intro--statement');
   //
 
+  leftSectionWidth;
+
   constructor() {
     super();
     this._initSearchView();
     this._animateSearchBoxListeners();
     this._animateIntroListeners();
     this._animateIntro();
+    this._getWidthWhenResize();
   }
 
   _animateIntroListeners() {
@@ -163,10 +166,21 @@ class AnimationView extends View {
     }
   }
 
+  _getWidthWhenResize() {
+    window.addEventListener(
+      'resize',
+      function () {
+        this.leftSectionWidth =
+          this._logContainer.getBoundingClientRect().width;
+
+        if (this.leftSectionWidth > 1000) return;
+        this._logContainer.style.left = `-${this.leftSectionWidth + 1}px`;
+      }.bind(this)
+    );
+  }
   _initSearchView() {
-    const left = this._logContainer.getBoundingClientRect().width;
-    if (left > 1000) return;
-    this._logContainer.style.left = `-${left + 1}px`;
+    // const left = this._logContainer.getBoundingClientRect().width;
+
     this._logContainer.classList.remove('left-100vw');
   }
 
