@@ -1,7 +1,4 @@
 const Artwork = require('../models/artworkModel');
-const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/appError');
-const APIFeatures = require('../utils/apiFeatures');
 const factory = require('./handlerFactory');
 
 // exports.setTourUserIds = (req, res, next) => {

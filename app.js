@@ -5,6 +5,7 @@ const helmet = require('helmet');
 const xss = require('xss-clean');
 const mongoSanitize = require('express-mongo-sanitize');
 const hpp = require('hpp');
+// const path = require('path');
 
 // const path = require('path');
 
@@ -13,6 +14,8 @@ const artworkRouter = require('./backend/routes/artworkRoutes');
 const app = express();
 
 // GLOBAL MIDDLEWARES
+app.use(express.static(path.join(__dirname, 'public')));
+
 // Set security HTTP headers
 app.use(helmet());
 
@@ -50,6 +53,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use('/', viewRouter);
 app.use('/api/v1/artworks', artworkRouter);
 
 // app.route('/api/v1/artworks').get(getAllArtworks).post(getAllArtworks);
