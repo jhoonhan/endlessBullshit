@@ -1,12 +1,11 @@
 import html2canvas from 'html2canvas';
 import { OGARTWORK } from './config.js';
-const Artwork = require('../../backend/controllers/artworkController.js');
 
 const { v4: uuidv4 } = require('uuid');
 export let totlaNumber = 1;
 
 export const state = {
-  OGARTWORKs: [
+  artworks: [
     {
       name: 'maurizio cattelan',
       title: 'Comedian',

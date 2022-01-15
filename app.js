@@ -9,8 +9,6 @@ const hpp = require('hpp');
 
 // const path = require('path');
 
-const artworkRouter = require('./backend/routes/artworkRoutes');
-
 const app = express();
 
 // GLOBAL MIDDLEWARES
