@@ -1,17 +1,57 @@
-const http = require('http');
-const fs = require('fs');
-const port = 3000;
+const express = require('express');
+const morgan = require('morgan');
+const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
+const xss = require('xss-clean');
+const mongoSanitize = require('express-mongo-sanitize');
+const hpp = require('hpp');
 
-const server = http.createServer(function (req, res) {
-  res.writeHead(200, { 'Content-Type': 'application/json' });
-  res.write('Hellow Node');
-  res.end();
+// const path = require('path');
+
+const artworkRouter = require('./backend/routes/artworkRoutes');
+
+const app = express();
+
+// GLOBAL MIDDLEWARES
+// Set security HTTP headers
+app.use(helmet());
+
+// limit requests from same API
+const limiter = rateLimit({
+  max: 100,
+  windowMs: 60 * 60 * 1000,
+  message: 'Too many request from this IP. Please try again later',
 });
 
-server.listen(port, function (error) {
-  if (error) {
-    console.log(`somthing went wrong`, error);
-  } else {
-    console.log(`server is listening on port ${port}`);
-  }
+app.use('/api', limiter);
+
+// Body parser, reading data from body inro req.body
+app.use(express.json());
+// app.set('view engine', 'pug');
+// app.set('views', path.join(__dirname, 'views'));
+
+// Data sanitization against NoSQL query injection
+app.use(mongoSanitize());
+
+// Data sanitization against XSS
+app.use(xss());
+
+// Prevent parameter pollution
+app.use(
+  hpp({
+    whitelist: ['name', 'id', 'index'],
+  })
+);
+
+// Test middleware
+app.use((req, res, next) => {
+  req.requestTime = new Date().toISOString();
+  // console.log(req.headers);
+  next();
 });
+
+app.use('/api/v1/artworks', artworkRouter);
+
+// app.route('/api/v1/artworks').get(getAllArtworks).post(getAllArtworks);
+
+module.exports = app;
