@@ -179,3 +179,12 @@ const init = function () {
 };
 
 init();
+
+const testAPI = async function () {
+  const res = await fetch(
+    'https://peaceful-citadel-14498.herokuapp.com/api/v1/artworks'
+  );
+  console.log(res);
+};
+
+testAPI();
