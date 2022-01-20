@@ -182,9 +182,10 @@ init();
 
 const testAPI = async function () {
   const res = await fetch(
-    'https://peaceful-citadel-14498.herokuapp.com/api/v1/artworks'
+    'https://desolate-chamber-98684.herokuapp.com/api/v1/artworks'
   );
-  console.log(res);
+  const data = await res.json();
+  console.log(data);
 };
 
 testAPI();
