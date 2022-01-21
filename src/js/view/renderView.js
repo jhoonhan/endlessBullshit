@@ -26,6 +26,7 @@ class RenderView extends View {
   }
   artworkGenerate(image) {
     // a4) render sequence fired
+    // get node elements from specified HTML element(this._renderImage in <canvas> form from model.state.imageCache)
     this._renderReceiver.width = config.RENDERQUALITY;
     this._renderReceiver.height = config.RENDERQUALITY;
     const renderData = this._renderReceiver.getContext('2d');
@@ -62,31 +63,36 @@ class RenderView extends View {
       //   img = data[1];
       // } else {
 
-      // const res = await fetch(`http://127.0.0.1:3000/archive/${imgURL}`);
-      // // const data = await res.json();
+      const res = await fetch(`http://127.0.0.1:3000/archive/${imgURL}`);
+      // const img = await res.json();
       // console.log(res);
-      // const img = res.url;
+      const imgBlob = await res.blob();
 
-      // const img = `http://127.0.0.1:3000/archive/${imgURL}`;
-      const img = require('../../archive/test.png');
+      // Option 1
+      // const reader = new FileReader();
+      // reader.readAsDataURL(imgBlob);
+      // reader.onloadend = () => {
+      //   const img64 = reader.result;
+      // };
+      // console.log(reader.result);
+
+      // Option 2
+      const img = URL.createObjectURL(imgBlob);
+      console.log(img);
+
+      // const img = require('../../archive/test.png');
 
       this._locationHTML.style.backgroundImage = `url(${img})`;
       // only fireds when location is set to artwork
       if (this._locationHTML === this._artwork)
         this._renderOriginalImage.style.backgroundImage = `url(${img})`;
-
-      //STATC
-      // const img = require('../../archive/test.png');
-      // this._locationHTML.style.backgroundImage = `url(${img})`;
-      // // only fireds when location is set to artwork
-      // if (this._locationHTML === this._artwork)
-      //   this._renderOriginalImage.style.backgroundImage = `url(${img})`;
     } catch (err) {
       console.log(err);
     }
   }
 
   artworkID(id) {
+    //side effect
     this._locationHTML.dataset.id = id;
   }
 

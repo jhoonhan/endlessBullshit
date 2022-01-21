@@ -27,20 +27,20 @@ const controlGenerateArtwork = async function (renderImage) {
     if (!inputData) return;
 
     // reduce dummy to fit in the center with 70%
-    // renderView.artworkReducer('add');
+    renderView.artworkReducer('add');
     //
     await model.loadArtwork(renderImage);
 
-    // use current IMG to render
+    // use current IMG to render to the canvas
     renderView.artworkGenerate(model.state.current.img);
 
     // rolls back reducer
-    // renderView.artworkReducer('remove');
+    renderView.artworkReducer('remove');
 
-    // Get rendered blob
+    // Get rendered blob from the canvas
     const imgBlob = await renderView.artworkImgURL();
 
-    // Save the img url data
+    // Save the imgURL data
     await model.logArtwork(inputData, imgBlob);
     // await model.uploadIMG(imgURL);
 
