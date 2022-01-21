@@ -3,7 +3,6 @@ import axios from 'axios';
 import html2canvas from 'html2canvas';
 import { OGARTWORK } from './config.js';
 import { text } from 'body-parser';
-import { v4 as uuidv4 } from 'uuid';
 
 export const state = {
   artworks: [
@@ -63,7 +62,6 @@ export const logArtwork = async (inputData, imgBlob) => {
     // get the order of the latest artwork from database
     const res = await fetch('http://127.0.0.1:3000/api/v1/artworks/latest');
     const latestArtwork = await res.json();
-    const id = uuidv4();
     let imageID = `${Date.now()}-${+latestArtwork.data.data.order + 1}`;
 
     const data = {
