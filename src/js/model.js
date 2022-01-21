@@ -164,7 +164,7 @@ export const getOne = async () => {
     const hashID = window.location.hash.slice(1);
     const res = await axios({
       method: 'GET',
-      url: `http://127.0.0.1:3000/api/v1/artworks/61ea2e48d366052e10a56221`,
+      url: `http://127.0.0.1:3000/api/v1/artworks/${hashID}`,
     });
     if (res.data.status === 'success') {
       return res.data.data.data;
@@ -202,18 +202,18 @@ export const getSearched = async keyword => {
   }
 };
 
-const saveToStorage = function () {
-  localStorage.setItem('artworks', JSON.stringify(state.artworks));
-};
-const getFromStorage = function () {
-  const storage = localStorage.getItem('artworks');
-  if (storage) {
-    state.artworks = JSON.parse(storage);
-  }
-};
+// const saveToStorage = function () {
+//   localStorage.setItem('artworks', JSON.stringify(state.artworks));
+// };
+// const getFromStorage = function () {
+//   const storage = localStorage.getItem('artworks');
+//   if (storage) {
+//     state.artworks = JSON.parse(storage);
+//   }
+// };
 
-const init = function () {
-  getFromStorage();
-};
+// const init = function () {
+//   getFromStorage();
+// };
 
-init();
+// init();
