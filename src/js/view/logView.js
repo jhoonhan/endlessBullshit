@@ -158,13 +158,13 @@ class LogView extends View {
     }
   }
 
-  getImageHashChange(data) {
-    const hashID = window.location.hash.slice(1);
-    const [resultID] = data.filter(obj => {
-      return obj.id === hashID;
-    });
-    return resultID;
-  }
+  // getImageHashChange(data) {
+  //   const hashID = window.location.hash.slice(1);
+  //   const [resultID] = data.filter(obj => {
+  //     return obj.id === hashID;
+  //   });
+  //   return resultID;
+  // }
 
   _searchBtnSQ1() {
     // super.controlHidden(this._btnSearchDropdown, 'toggle');
@@ -199,8 +199,8 @@ class LogView extends View {
       .map(
         function (el) {
           const convtName = this._convertName(el.name);
-          return `<li><a href="#${el.id}" class="log--logs" data-index="${
-            el.index
+          return `<li><a href="#${el._id}" class="log--logs" data-index="${
+            el.order
           }">${this.capitalizeName(convtName)}</a></li>`;
         }.bind(this)
       )

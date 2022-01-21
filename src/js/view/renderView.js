@@ -62,12 +62,22 @@ class RenderView extends View {
       // if (data) {
       //   img = data[1];
       // } else {
-
+      console.log(imgURL);
+      let imgBlob;
+      let img;
       const res = await fetch(`http://127.0.0.1:3000/archive/${imgURL}`);
-      // const img = await res.json();
-      // console.log(res);
-      const imgBlob = await res.blob();
+      console.log(res);
+      if (res.ok === 'success') {
+        imgBlob = await res.blob();
+        img = URL.createObjectURL(imgBlob);
+      }
 
+      if (res.ok === false) {
+        console.log(`img not found`);
+        img = require('../../archive/test.png');
+      }
+
+      console.log(img);
       // Option 1
       // const reader = new FileReader();
       // reader.readAsDataURL(imgBlob);
@@ -77,9 +87,8 @@ class RenderView extends View {
       // console.log(reader.result);
 
       // Option 2
-      const img = URL.createObjectURL(imgBlob);
 
-      // const img = require('../../archive/test.png');
+      // const img =
 
       this._locationHTML.style.backgroundImage = `url(${img})`;
       // only fireds when location is set to artwork

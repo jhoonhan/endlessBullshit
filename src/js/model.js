@@ -159,6 +159,49 @@ export const loadLatest = async () => {
   }
 };
 
+export const getOne = async () => {
+  try {
+    const hashID = window.location.hash.slice(1);
+    const res = await axios({
+      method: 'GET',
+      url: `http://127.0.0.1:3000/api/v1/artworks/61ea2e48d366052e10a56221`,
+    });
+    if (res.data.status === 'success') {
+      return res.data.data.data;
+    }
+  } catch (err) {
+    console.error(err.response);
+  }
+};
+
+export const getAll = async () => {
+  try {
+    const res = await axios({
+      method: 'GET',
+      url: `http://127.0.0.1:3000/api/v1/artworks/all`,
+    });
+    if (res.data.status === 'success') {
+      return res.data.data.data;
+    }
+  } catch (err) {
+    console.error(err.response);
+  }
+};
+
+export const getSearched = async keyword => {
+  try {
+    const res = await axios({
+      method: 'GET',
+      url: `http://127.0.0.1:3000/api/v1/artworks/search/${keyword}`,
+    });
+    if (res.data.status === 'success') {
+      return res.data.data.data;
+    }
+  } catch (err) {
+    console.error(err.response);
+  }
+};
+
 const saveToStorage = function () {
   localStorage.setItem('artworks', JSON.stringify(state.artworks));
 };

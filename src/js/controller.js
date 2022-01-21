@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 import titleView from './view/titleView.js';
 import * as model from './model.js';
 import * as config from './config.js';
@@ -109,18 +111,22 @@ const controlLatestArtwork = async () => {
   }
 };
 
-const controlLogRender = function () {
-  // Gets imgURL of selected log
-  const selectedArtwork = logView.getImageHashChange(model.state.artworks);
+const controlLogRender = async () => {
+  try {
+    // Gets imgURL of selected log
+    const selectedArtwork = model.getOne();
 
-  if (!resultProximate) return;
-  scrollLogView.moveToActiveScroll(
-    selectedArtwork.index,
-    resultProximate.length
-  );
-  logView.highlightActiveLog();
+    if (!resultProximate) return;
+    scrollLogView.moveToActiveScroll(
+      selectedArtwork.order,
+      resultProximate.length
+    );
+    logView.highlightActiveLog();
 
-  model.updateProperties(model.state.current, selectedArtwork);
+    model.updateProperties(model.state.current, selectedArtwork);
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 const controlSearch = function () {
@@ -142,40 +148,44 @@ const controlSearch = function () {
   model.updateProperties(model.state.current, resultAccurate);
 };
 
-const _search = function (keyword, type) {
-  const [[resultAccu], resultProx] = logView.search(
-    model.state.artworks,
-    type,
-    keyword
-  );
-  if (!resultAccu || !resultProx) {
-    resultProximate = [];
-    return;
-  } else {
-    // Side effect
-    resultAccurate = resultAccu;
-    resultProximate = resultProx;
+const _search = async (keyword, type) => {
+  try {
+    const [[resultAccu], resultProx] = logView.search(
+      model.state.artworks,
+      type,
+      keyword
+    );
+    if (!resultAccu || !resultProx) {
+      resultProximate = [];
+      return;
+    } else {
+      // Side effect
+      resultAccurate = resultAccu;
+      resultProximate = resultProx;
+    }
+  } catch (err) {
+    console.log(err);
   }
 };
 
 const controlSerachView = function () {
   const btn = document.querySelector('.log--toggle-view');
-  const selectedArtwork = logView.getImageHashChange(model.state.artworks);
+  const selectedArtwork = model.getOne();
 
-  _search(selectedArtwork.index, 'order');
+  _search(selectedArtwork.order, 'order');
 
   if (!resultAccurate) return;
   model.updateProperties(model.state.current, resultAccurate);
 
   scrollLogView.renderScrolls([resultProximate, model.state.current.order]);
   scrollLogView.moveToActiveScroll(
-    selectedArtwork.index,
+    selectedArtwork.order,
     resultProximate.length
   );
 
   logView.renderLogs(resultProximate);
 
-  window.location.hash = `#${resultAccurate.id}`;
+  window.location.hash = `#${resultAccurate._id}`;
   logView.highlightActiveLog();
 
   animationView.animateToggleSearchView();
@@ -195,6 +205,34 @@ init();
 //   const res = await fetch('http://127.0.0.1:3000/api/v1/artworks/latest');
 //   const data = await res.json();
 //   console.log(data);
+// };
+
+// const testAPI = async (req, res) => {
+//   try {
+//     const hashID = window.location.hash.slice(1);
+//     const res = await axios({
+//       method: 'GET',
+//       url: `http://127.0.0.1:3000/api/v1/artworks/61ea2e48d366052e10a56221`,
+//     });
+//     if (res.data.status === 'success') console.log(res.data.data.data);
+//   } catch (err) {
+//     console.error(err.response);
+//   }
+// };
+
+// export const testAPI = async () => {
+//   try {
+//     const res = await axios({
+//       method: 'GET',
+//       url: `http://127.0.0.1:3000/api/v1/artworks/all`,
+//     });
+//     if (res.data.status === 'success') {
+//       console.log(res.data.data.data);
+//       return res.data.data;
+//     }
+//   } catch (err) {
+//     console.error(err.response);
+//   }
 // };
 
 // testAPI();
