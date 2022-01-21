@@ -100,9 +100,11 @@ class DescriptionView extends View {
   }
 
   _generateMarkup(data) {
+    const year = data.date.slice(0, 4);
+
     return `
     <div class="cell cell--2 artwork-subtitle">
-        <h3>by ${this.capitalizeName(data.name)}, ${data.year}</h3>
+        <h3>by ${this.capitalizeName(data.name)}, ${year}</h3>
     </div>
     <div class="cell cell--3 artwork-description">
         <p>

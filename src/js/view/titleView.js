@@ -28,9 +28,10 @@ class TitleView extends View {
   }
 
   _generateMarkup(data) {
+    const year = data.date.slice(0, 4);
     return `
       <span>
-      ${this.capitalizeName(data.name)}, <i>${data.title}</i>, ${data.year}
+      ${this.capitalizeName(data.name)}, <i>This Is Bullshit</i>, ${year}
       </span>
     `;
   }

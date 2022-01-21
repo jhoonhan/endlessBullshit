@@ -78,7 +78,6 @@ class RenderView extends View {
 
       // Option 2
       const img = URL.createObjectURL(imgBlob);
-      console.log(img);
 
       // const img = require('../../archive/test.png');
 

@@ -114,7 +114,7 @@ class AnimationView extends View {
         function () {
           this.controlHidden(this._intro, 'add');
         }.bind(this),
-        4000
+        0 // !LC to 4000
       );
     }
   }

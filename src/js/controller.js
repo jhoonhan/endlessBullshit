@@ -44,12 +44,12 @@ const controlGenerateArtwork = async function (renderImage) {
     await model.logArtwork(inputData, imgBlob);
     // await model.uploadIMG(imgURL);
 
-    // Prompt between page
-    betweenView.showBetween();
-    // betweenView.update(model.state.artworks.slice(-1)[0]);
-
     // Refresh
     await controlLatestArtwork();
+
+    // Prompt between page
+    betweenView.showBetween();
+    betweenView.update(model.state.current);
 
     // hide form
     descriptionView.toggleWindow();
@@ -95,7 +95,6 @@ const controlLatestArtwork = async () => {
   try {
     await model.loadLatest();
     await _update(model.state.current);
-    console.log(model.state.current);
     // _update(model.state.current, 'artworkInfo');
 
     // set has location
@@ -192,10 +191,10 @@ const init = function () {
 
 init();
 
-const testAPI = async function () {
-  const res = await fetch('http://127.0.0.1:3000/api/v1/artworks/latest');
-  const data = await res.json();
-  console.log(data);
-};
+// const testAPI = async function () {
+//   const res = await fetch('http://127.0.0.1:3000/api/v1/artworks/latest');
+//   const data = await res.json();
+//   console.log(data);
+// };
 
-testAPI();
+// testAPI();

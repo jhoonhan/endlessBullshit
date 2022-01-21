@@ -28,7 +28,8 @@ class BetweenView extends View {
   }
 
   _generateMarkup(data) {
-    const { name, id, index } = data;
+    console.log(data);
+    const { name, _id, order } = data;
     const formattedName = `${name
       .split(' ')
       .map(el => el.slice(0, 1).toUpperCase() + el.slice(1))
@@ -43,10 +44,10 @@ class BetweenView extends View {
             <li>${formattedName}</li>
             <label>Order</label>
             <label class="column">:</label>
-            <li>${index}</li>
+            <li>${order}</li>
             <label>ID</label>
             <label class="column">:</label>
-            <li>${id}</li>
+            <li>${_id}</li>
           </ul>
           <button class="btn--large btn--close-between">next</button>
         </div>
