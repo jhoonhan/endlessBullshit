@@ -62,12 +62,12 @@ export const logArtwork = async (inputData, imgBlob) => {
     // get the order of the latest artwork from database
     const res = await fetch('http://127.0.0.1:3000/api/v1/artworks/latest');
     const latestArtwork = await res.json();
-    let imageID = `${Date.now()}-${+latestArtwork.data.data.order + 1}`;
+    let imageID = `${Date.now()}-${+latestArtwork.data.order + 1}`;
 
     const data = {
       name: inputData.name.toLowerCase(),
       statement: inputData.statement,
-      order: +latestArtwork.data.data.order + 1,
+      order: +latestArtwork.data.order + 1,
       imgURL: `${imageID}.png`,
       timestamp: Date.now(),
     };
@@ -146,7 +146,8 @@ export const loadLatest = async () => {
   try {
     const res = await fetch('http://127.0.0.1:3000/api/v1/artworks/latest');
     const data = await res.json();
-    const latestArtwork = data.data.data;
+    const latestArtwork = data.data;
+    console.log(latestArtwork);
     if (latestArtwork.order < 1) return;
 
     if (latestArtwork.order.length > 0) {
@@ -159,18 +160,28 @@ export const loadLatest = async () => {
   }
 };
 
-const saveToStorage = function () {
-  localStorage.setItem('artworks', JSON.stringify(state.artworks));
-};
-const getFromStorage = function () {
-  const storage = localStorage.getItem('artworks');
-  if (storage) {
-    state.artworks = JSON.parse(storage);
+export const getOne = async id => {
+  try {
+    const hashID = window.location.hash.slice(1);
+    const res = await fetch(`http://127.0.0.1:3000/api/v1/artworks/${id}`);
+    const data = await res.json();
+  } catch (err) {
+    console.log(err);
   }
 };
 
-const init = function () {
-  getFromStorage();
-};
+// const saveToStorage = function () {
+//   localStorage.setItem('artworks', JSON.stringify(state.artworks));
+// };
+// const getFromStorage = function () {
+//   const storage = localStorage.getItem('artworks');
+//   if (storage) {
+//     state.artworks = JSON.parse(storage);
+//   }
+// };
 
-init();
+// const init = function () {
+//   getFromStorage();
+// };
+
+// init();

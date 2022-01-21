@@ -111,11 +111,14 @@ const controlLatestArtwork = async () => {
 
 const controlLogRender = function () {
   // Gets imgURL of selected log
-  const selectedArtwork = logView.getImageHashChange(model.state.artworks);
+  // const selectedArtwork = logView.getImageHashChange(model.state.artworks);
 
+  const hashID = window.location.hash.slice(1);
+  const selectedArtwork = model.getOne(hashID);
+  console.log(resultProximate);
   if (!resultProximate) return;
   scrollLogView.moveToActiveScroll(
-    selectedArtwork.index,
+    selectedArtwork.order,
     resultProximate.length
   );
   logView.highlightActiveLog();
@@ -160,16 +163,17 @@ const _search = function (keyword, type) {
 
 const controlSerachView = function () {
   const btn = document.querySelector('.log--toggle-view');
-  const selectedArtwork = logView.getImageHashChange(model.state.artworks);
+  const hashID = window.location.hash.slice(1);
+  const selectedArtwork = model.getOne(hashID);
 
-  _search(selectedArtwork.index, 'order');
+  _search(selectedArtwork.order, 'order');
 
   if (!resultAccurate) return;
   model.updateProperties(model.state.current, resultAccurate);
 
   scrollLogView.renderScrolls([resultProximate, model.state.current.order]);
   scrollLogView.moveToActiveScroll(
-    selectedArtwork.index,
+    selectedArtwork.order,
     resultProximate.length
   );
 
@@ -191,10 +195,15 @@ const init = function () {
 
 init();
 
-// const testAPI = async function () {
-//   const res = await fetch('http://127.0.0.1:3000/api/v1/artworks/latest');
-//   const data = await res.json();
-//   console.log(data);
+// const testAPI = async () => {
+//   try {
+//     const hashID = window.location.hash.slice(1);
+//     const res = await fetch(`http://127.0.0.1:3000/api/v1/artworks/${hashID}`);
+//     const data = await res.json();
+//     console.log(data);
+//   } catch (err) {
+//     console.log(err);
+//   }
 // };
 
 // testAPI();
