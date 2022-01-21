@@ -1,5 +1,6 @@
 import * as config from '../config.js';
 import View from './View.js';
+// import images from '../../archive/*.png';
 
 class RenderView extends View {
   _renderReceiver = document.querySelector('.render-receiver');
@@ -36,13 +37,14 @@ class RenderView extends View {
       config.RENDERQUALITY
     );
   }
-  artworkImgURL() {
-    const image = new Image();
-    const imgURL = (image.src = this._renderReceiver.toDataURL(
-      'image/png',
-      1.0
-    ));
-    return imgURL;
+  async artworkImgURL() {
+    const blob = await new Promise(res => this._renderReceiver.toBlob(res));
+    return blob;
+
+    // const imgURL = this._renderReceiver.toBlob(blob => {
+    //   URL.createObjectURL(blob);
+    // });
+    // return imgURL;
   }
 
   locationDecider(location) {
@@ -50,11 +52,38 @@ class RenderView extends View {
     if (location === 'artworkInfo') this._locationHTML = this._artworkInfo;
   }
 
-  artworkRender(imgURL) {
-    this._locationHTML.style.backgroundImage = `url(${imgURL})`;
-    // only fireds when location is set to artwork
-    if (this._locationHTML === this._artwork)
-      this._renderOriginalImage.style.backgroundImage = `url(${imgURL})`;
+  async artworkRender(imgURL) {
+    try {
+      //API call for imgURL
+      //DYNAMIC
+      // let img;
+      // const data = Object.entries(images).find(arr => arr[0] === `${imgURL}`);
+      // if (data) {
+      //   img = data[1];
+      // } else {
+
+      // const res = await fetch(`http://127.0.0.1:3000/archive/${imgURL}`);
+      // // const data = await res.json();
+      // console.log(res);
+      // const img = res.url;
+
+      // const img = `http://127.0.0.1:3000/archive/${imgURL}`;
+      const img = require('../../archive/test.png');
+
+      this._locationHTML.style.backgroundImage = `url(${img})`;
+      // only fireds when location is set to artwork
+      if (this._locationHTML === this._artwork)
+        this._renderOriginalImage.style.backgroundImage = `url(${img})`;
+
+      //STATC
+      // const img = require('../../archive/test.png');
+      // this._locationHTML.style.backgroundImage = `url(${img})`;
+      // // only fireds when location is set to artwork
+      // if (this._locationHTML === this._artwork)
+      //   this._renderOriginalImage.style.backgroundImage = `url(${img})`;
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   artworkID(id) {

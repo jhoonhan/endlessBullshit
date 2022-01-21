@@ -11,7 +11,8 @@ import scrollLogView from './view/scrollLogView.js';
 
 const artworkContainer = document.querySelector('.render-artwork');
 
-let resultAccurate, resultProximate;
+let resultAccurate;
+let resultProximate;
 
 // const aang = document.querySelector('.aang');
 if (module.hot) {
@@ -23,11 +24,10 @@ const controlGenerateArtwork = async function (renderImage) {
   try {
     // get and checks input data
     const inputData = descriptionView.artworkInputData();
-    console.log(inputData);
     if (!inputData) return;
 
     // reduce dummy to fit in the center with 70%
-    renderView.artworkReducer('add');
+    // renderView.artworkReducer('add');
     //
     await model.loadArtwork(renderImage);
 
@@ -35,23 +35,24 @@ const controlGenerateArtwork = async function (renderImage) {
     renderView.artworkGenerate(model.state.current.img);
 
     // rolls back reducer
-    renderView.artworkReducer('remove');
+    // renderView.artworkReducer('remove');
 
-    // Get rendered imgURL
-    const imgURL = renderView.artworkImgURL();
+    // Get rendered blob
+    const imgBlob = await renderView.artworkImgURL();
 
     // Save the img url data
-    model.logArtwork(inputData, imgURL);
+    await model.logArtwork(inputData, imgBlob);
+    // await model.uploadIMG(imgURL);
 
     // Prompt between page
     betweenView.showBetween();
-    betweenView.update(model.state.artworks.slice(-1)[0]);
+    // betweenView.update(model.state.artworks.slice(-1)[0]);
+
+    // Refresh
+    await controlLatestArtwork();
 
     // hide form
     descriptionView.toggleWindow();
-
-    // Refresh
-    controlLatestArtwork();
   } catch (err) {
     console.error(`${err} - admin 2`);
   }
@@ -70,32 +71,43 @@ const controlGenerateArtwork = async function (renderImage) {
 //   // highlight
 //   logView.highlightActiveLog();
 // };
-const _update = function (log, location = 'artwork') {
-  // Selects location (artwork or artworkInfo)
-  renderView.locationDecider(location);
-  // Renders artwork
-  if (!log) return;
-  renderView.artworkRender(log.imgURL);
-  // Insert ID to artwork on view
-  renderView.artworkID(log.id);
-  // latest log data to artwork title for render
-  titleView.addTitles(log, location);
-  // highlight
-  // logView.highlightActiveLog();
+const _update = async function (log, location = 'artwork') {
+  try {
+    // Selects location (artwork or artworkInfo)
+    renderView.locationDecider(location);
+    // Renders artwork
+    if (!log) return;
+
+    await renderView.artworkRender(log.imgURL);
+
+    // Insert ID to artwork on view
+    renderView.artworkID(log._id);
+    // latest log data to artwork title for render
+    titleView.addTitles(log, location);
+    // highlight
+    // logView.highlightActiveLog();
+  } catch (err) {
+    console.log(err);
+  }
 };
 
-const controlLatestArtwork = function () {
-  model.loadLatest();
-  _update(model.state.current);
-  // _update(model.state.current, 'artworkInfo');
+const controlLatestArtwork = async () => {
+  try {
+    await model.loadLatest();
+    await _update(model.state.current);
+    console.log(model.state.current);
+    // _update(model.state.current, 'artworkInfo');
 
-  // set has location
-  window.location.hash = `#${model.state.artworks.slice(-1)[0].id}`;
+    // set has location
+    window.location.hash = `#${model.state.current._id}`;
 
-  // render logs
-  // logView.renderLogs(model.state.artworks);
-  // load latest log data to description
-  descriptionView.addDescription(model.state.current);
+    // render logs
+    // logView.renderLogs(model.state.artworks);
+    // load latest log data to description
+    descriptionView.addDescription(model.state.current);
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 const controlLogRender = function () {
@@ -117,7 +129,7 @@ const controlSearch = function () {
   _search();
 
   // if (!resultAccurate) return;
-  scrollLogView.renderScrolls([resultProximate, model.totlaNumber]);
+  scrollLogView.renderScrolls([resultProximate, model.state.current.order]);
 
   scrollLogView.moveToActiveScroll(
     resultAccurate.index,
@@ -156,7 +168,7 @@ const controlSerachView = function () {
   if (!resultAccurate) return;
   model.updateProperties(model.state.current, resultAccurate);
 
-  scrollLogView.renderScrolls([resultProximate, model.totlaNumber]);
+  scrollLogView.renderScrolls([resultProximate, model.state.current.order]);
   scrollLogView.moveToActiveScroll(
     selectedArtwork.index,
     resultProximate.length
@@ -181,9 +193,7 @@ const init = function () {
 init();
 
 const testAPI = async function () {
-  const res = await fetch(
-    'https://desolate-chamber-98684.herokuapp.com/api/v1/artworks'
-  );
+  const res = await fetch('http://127.0.0.1:3000/api/v1/artworks/latest');
   const data = await res.json();
   console.log(data);
 };
