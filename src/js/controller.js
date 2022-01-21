@@ -146,11 +146,18 @@ const controlSearch = function () {
 };
 
 const _search = function (keyword, type) {
+  let searchKeyword = keyword;
+  if (!keyword) {
+    searchKeyword = logView.getSearchInput();
+  }
   const [[resultAccu], resultProx] = logView.search(
     model.state.artworks,
     type,
     keyword
   );
+
+  // const [[resultAccu], resultProx] = model.search(type, searchKeyword);
+
   if (!resultAccu || !resultProx) {
     resultProximate = [];
     return;

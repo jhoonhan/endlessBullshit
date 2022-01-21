@@ -162,9 +162,15 @@ export const loadLatest = async () => {
 
 export const getOne = async id => {
   try {
-    const hashID = window.location.hash.slice(1);
     const res = await fetch(`http://127.0.0.1:3000/api/v1/artworks/${id}`);
     const data = await res.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const search = async (type, keyword) => {
+  try {
   } catch (err) {
     console.log(err);
   }

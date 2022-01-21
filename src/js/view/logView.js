@@ -128,6 +128,9 @@ class LogView extends View {
     );
   };
 
+  getSearchInput() {
+    return this._searchInput.value;
+  }
   search(data, type, keyword) {
     let inputKeyword;
     if (!keyword) {
