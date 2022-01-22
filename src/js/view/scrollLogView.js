@@ -70,6 +70,7 @@ class ScrollLogView extends View {
   }
   renderActiveScroll(img) {
     const active = document.querySelector('.scroll--active .artwork-frame');
+    if (!active) return;
     active.style.backgroundImage = `url(${img})`;
   }
   //

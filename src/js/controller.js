@@ -1,5 +1,6 @@
 import titleView from './view/titleView.js';
 import * as model from './model.js';
+import { api } from './api.js';
 import * as config from './config.js';
 import renderView from './view/renderView.js';
 import descriptionView from './view/descriptionView.js';
@@ -9,12 +10,9 @@ import detailView from './view/detailView.js';
 import animationView from './view/animationView.js';
 import scrollLogView from './view/scrollLogView.js';
 
-const artworkContainer = document.querySelector('.render-artwork');
-
 let resultAccurate;
 let resultProximate;
 
-// const aang = document.querySelector('.aang');
 if (module.hot) {
   module.hot.accept();
 }
@@ -57,20 +55,7 @@ const controlGenerateArtwork = async function (renderImage) {
     console.error(`${err} - admin 2`);
   }
 };
-// const _updateArtwork = function (log) {
-//   if (!log) return;
-//   renderView.artworkRender(log.imgURL);
-//   // Insert ID to artwork on view
-//   renderView.artworkID(log.id);
-//   // latest log data to artwork title for render
-//   titleView.addTitles(log);
-//   // load latest log data to description
-//   descriptionView.addDescription(log);
-//   // render logs
-//   logView.renderLogs(model.state.artworks);
-//   // highlight
-//   logView.highlightActiveLog();
-// };
+
 const _update = async function (log, location = 'artwork') {
   try {
     // Selects location (artwork or artworkInfo)
@@ -78,7 +63,7 @@ const _update = async function (log, location = 'artwork') {
     // Renders artwork
     if (!log) return;
 
-    renderView.artworkRender(await model.fetchImage(log.imgURL));
+    renderView.artworkRender(await api('getImage', log.imgURL));
 
     // Insert ID to artwork on view
     renderView.artworkID(log._id);
@@ -100,8 +85,6 @@ const controlLatestArtwork = async () => {
     // set has location
     window.location.hash = `#${model.state.current._id}`;
 
-    // render logs
-    // logView.renderLogs(model.state.artworks);
     // load latest log data to description
     descriptionView.addDescription(model.state.current);
   } catch (err) {
@@ -112,11 +95,8 @@ const controlLatestArtwork = async () => {
 const controlLogRender = async () => {
   try {
     // Gets imgURL of selected log
-    // const selectedArtwork = logView.getImageHashChange(model.state.artworks);
-
     const hashID = window.location.hash.slice(1);
-    // await _search(hashID, 'id');
-    const selectedArtwork = await model.getOne(hashID);
+    const selectedArtwork = await api('getOne', hashID);
     // Guard Clause
     if (!resultProximate) return;
     scrollLogView.moveToActiveScroll(
@@ -128,7 +108,7 @@ const controlLogRender = async () => {
     model.updateProperties(model.state.current, selectedArtwork);
 
     scrollLogView.renderActiveScroll(
-      await model.fetchImage(selectedArtwork.imgURL)
+      await api('getImage', selectedArtwork.imgURL)
     );
   } catch (err) {
     console.log(err);
@@ -164,14 +144,8 @@ const _search = async (keyword, type) => {
   if (!keyword) {
     searchKeyword = logView.getSearchInput();
   }
-  // const [[resultAccu], resultProx] = logView.search(
-  //   model.state.artworks,
-  //   type,
-  //   keyword
-  // );
 
-  const { resultAccu, resultProx } = await model.search(keyword, type);
-  // const [[resultAccu], resultProx] = model.search(type, searchKeyword);
+  const { resultAccu, resultProx } = await api('getSearch', keyword, type);
 
   if (!resultAccu || !resultProx) {
     resultProximate = [];
@@ -199,7 +173,7 @@ const controlSerachView = async () => {
     );
 
     scrollLogView.renderActiveScroll(
-      await model.fetchImage(resultAccurate.imgURL)
+      await api('getImage', resultAccurate.imgURL)
     );
 
     logView.renderLogs(resultProximate);
