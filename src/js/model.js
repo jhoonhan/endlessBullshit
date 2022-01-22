@@ -3,7 +3,7 @@ import html2canvas from 'html2canvas';
 import { OGARTWORK } from './config.js';
 import { text } from 'body-parser';
 
-import { api } from './api.js';
+import * as api from './api.js';
 
 export const state = {
   current: {
@@ -34,7 +34,7 @@ export const logArtwork = async (inputData, imgBlob) => {
   try {
     // save new log
     // get the order of the latest artwork from database
-    const latestArtwork = await api('getLatest');
+    const latestArtwork = await api.getLatest();
 
     let imageID = `${Date.now()}-${+latestArtwork.order + 1}`;
 
@@ -51,8 +51,8 @@ export const logArtwork = async (inputData, imgBlob) => {
 
     // state.current.imgCache = imgCache;
     // await submitArtwork(data);
-    await api('postLog', data);
-    await api('postImage', image);
+    await api.postLog(data);
+    await api.postImage(image);
   } catch (err) {
     console.error(err);
   }
@@ -60,12 +60,9 @@ export const logArtwork = async (inputData, imgBlob) => {
 
 export const loadLatest = async () => {
   try {
-    const latestArtwork = await api('getLatest');
+    const latestArtwork = await api.getLatest();
     if (latestArtwork.order < 1) return;
-    if (latestArtwork.order.length > 0) {
-      // Sets latest artwork
-      updateProperties(state.current, latestArtwork);
-    }
+    updateProperties(state.current, latestArtwork);
   } catch (err) {
     console.log(err);
   }

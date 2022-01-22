@@ -1,8 +1,6 @@
-import axios from 'axios';
-
 import titleView from './view/titleView.js';
 import * as model from './model.js';
-import { api } from './api.js';
+import * as api from './api.js';
 import * as config from './config.js';
 import renderView from './view/renderView.js';
 import descriptionView from './view/descriptionView.js';
@@ -65,7 +63,8 @@ const _update = async function (log, location = 'artwork') {
     // Renders artwork
     if (!log) return;
 
-    renderView.artworkRender(await api('getImage', log.imgURL));
+    // renderView.artworkRender(await api.api('getImage', log.imgURL));
+    renderView.artworkRender(await api.getImage(log.imgURL));
 
     // Insert ID to artwork on view
     renderView.artworkID(log._id);
@@ -98,7 +97,7 @@ const controlLogRender = async () => {
   try {
     // Gets imgURL of selected log
     const hashID = window.location.hash.slice(1);
-    const selectedArtwork = await api('getOne', hashID);
+    const selectedArtwork = await api.getOne(hashID);
     // Guard Clause
     if (!resultProximate) return;
     scrollLogView.moveToActiveScroll(
@@ -110,7 +109,7 @@ const controlLogRender = async () => {
     model.updateProperties(model.state.current, selectedArtwork);
 
     scrollLogView.renderActiveScroll(
-      await api('getImage', selectedArtwork.imgURL)
+      await api.getImage(selectedArtwork.imgURL)
     );
   } catch (err) {
     console.log(err);
@@ -147,7 +146,7 @@ const _search = async (keyword, type) => {
     searchKeyword = logView.getSearchInput();
   }
 
-  const { resultAccu, resultProx } = await api('getSearch', keyword, type);
+  const { resultAccu, resultProx } = await api.getSearch(keyword, type);
 
   if (!resultAccu || !resultProx) {
     resultProximate = [];
@@ -174,9 +173,7 @@ const controlSerachView = async () => {
       resultProximate.length
     );
 
-    scrollLogView.renderActiveScroll(
-      await api('getImage', resultAccurate.imgURL)
-    );
+    scrollLogView.renderActiveScroll(await api.getImage(resultAccurate.imgURL));
 
     logView.renderLogs(resultProximate);
     window.location.hash = `#${resultAccurate._id}`;
