@@ -73,7 +73,7 @@ class LogView extends View {
     // });
     if (!artworkInfo) return;
     logs.forEach(function (log) {
-      if (log.href.slice(-36) === artworkInfo.dataset.id) {
+      if (log.href.slice(-24) === artworkInfo.dataset.id) {
         log.classList.add('highlighted-text');
       } else {
         log.classList.remove('highlighted-text');
@@ -128,35 +128,44 @@ class LogView extends View {
     );
   };
 
-  search(data, type, keyword) {
-    let inputKeyword;
-    if (!keyword) {
-      inputKeyword = this._searchInput.value.toLowerCase();
-    } else {
-      inputKeyword = keyword;
-    }
-
-    if (type === 'order' || this._searchType === 'order') {
-      const resultAccu = data.filter(el => el.index === +inputKeyword);
-      const resultProx = this._getResultProx(data, inputKeyword);
-
-      return [resultAccu, resultProx];
-    }
-    if (!type && this._searchType === 'name') {
-      const resultAccu = data.filter(el => el.name.includes(inputKeyword));
-      const resultProx = resultAccu;
-
-      return [[resultAccu[0]], resultProx];
-    }
-    if (!type && this._searchType === 'id') {
-      const resultAccu = data.filter(el => el.id === inputKeyword);
-      if (!resultAccu[0]) return;
-      const keyIndex = resultAccu[0].index;
-      const resultProx = this._getResultProx(data, keyIndex);
-
-      return [resultAccu, resultProx];
-    }
+  getSearchInput() {
+    return this._searchInput.value;
   }
+<<<<<<< HEAD
+=======
+  getSearchType() {
+    return this._searchType;
+  }
+  // search(data, type, keyword) {
+  //   let inputKeyword;
+  //   if (!keyword) {
+  //     inputKeyword = this._searchInput.value.toLowerCase();
+  //   } else {
+  //     inputKeyword = keyword;
+  //   }
+
+  //   if (type === 'order' || this._searchType === 'order') {
+  //     const resultAccu = data.filter(el => el.index === +inputKeyword);
+  //     const resultProx = this._getResultProx(data, inputKeyword);
+
+  //     return [resultAccu, resultProx];
+  //   }
+  //   if (!type && this._searchType === 'name') {
+  //     const resultAccu = data.filter(el => el.name.includes(inputKeyword));
+  //     const resultProx = resultAccu;
+
+  //     return [[resultAccu[0]], resultProx];
+  //   }
+  //   if (!type && this._searchType === 'id') {
+  //     const resultAccu = data.filter(el => el.id === inputKeyword);
+  //     if (!resultAccu[0]) return;
+  //     const keyIndex = resultAccu[0].index;
+  //     const resultProx = this._getResultProx(data, keyIndex);
+
+  //     return [resultAccu, resultProx];
+  //   }
+  // }
+>>>>>>> a5aba602f12f43e6bb936eed494a1f0828a479d1
 
   // getImageHashChange(data) {
   //   const hashID = window.location.hash.slice(1);

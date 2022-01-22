@@ -28,7 +28,6 @@ class BetweenView extends View {
   }
 
   _generateMarkup(data) {
-    console.log(data);
     const { name, _id, order } = data;
     const formattedName = `${name
       .split(' ')

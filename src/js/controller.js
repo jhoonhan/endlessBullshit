@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import titleView from './view/titleView.js';
 import * as model from './model.js';
+import { api } from './api.js';
 import * as config from './config.js';
 import renderView from './view/renderView.js';
 import descriptionView from './view/descriptionView.js';
@@ -11,12 +12,9 @@ import detailView from './view/detailView.js';
 import animationView from './view/animationView.js';
 import scrollLogView from './view/scrollLogView.js';
 
-const artworkContainer = document.querySelector('.render-artwork');
-
 let resultAccurate;
 let resultProximate;
 
-// const aang = document.querySelector('.aang');
 if (module.hot) {
   module.hot.accept();
 }
@@ -59,20 +57,7 @@ const controlGenerateArtwork = async function (renderImage) {
     console.error(`${err} - admin 2`);
   }
 };
-// const _updateArtwork = function (log) {
-//   if (!log) return;
-//   renderView.artworkRender(log.imgURL);
-//   // Insert ID to artwork on view
-//   renderView.artworkID(log.id);
-//   // latest log data to artwork title for render
-//   titleView.addTitles(log);
-//   // load latest log data to description
-//   descriptionView.addDescription(log);
-//   // render logs
-//   logView.renderLogs(model.state.artworks);
-//   // highlight
-//   logView.highlightActiveLog();
-// };
+
 const _update = async function (log, location = 'artwork') {
   try {
     // Selects location (artwork or artworkInfo)
@@ -80,7 +65,7 @@ const _update = async function (log, location = 'artwork') {
     // Renders artwork
     if (!log) return;
 
-    await renderView.artworkRender(log.imgURL);
+    renderView.artworkRender(await api('getImage', log.imgURL));
 
     // Insert ID to artwork on view
     renderView.artworkID(log._id);
@@ -102,8 +87,6 @@ const controlLatestArtwork = async () => {
     // set has location
     window.location.hash = `#${model.state.current._id}`;
 
-    // render logs
-    // logView.renderLogs(model.state.artworks);
     // load latest log data to description
     descriptionView.addDescription(model.state.current);
   } catch (err) {
@@ -114,8 +97,14 @@ const controlLatestArtwork = async () => {
 const controlLogRender = async () => {
   try {
     // Gets imgURL of selected log
+<<<<<<< HEAD
     const selectedArtwork = model.getOne();
 
+=======
+    const hashID = window.location.hash.slice(1);
+    const selectedArtwork = await api('getOne', hashID);
+    // Guard Clause
+>>>>>>> a5aba602f12f43e6bb936eed494a1f0828a479d1
     if (!resultProximate) return;
     scrollLogView.moveToActiveScroll(
       selectedArtwork.order,
@@ -124,31 +113,44 @@ const controlLogRender = async () => {
     logView.highlightActiveLog();
 
     model.updateProperties(model.state.current, selectedArtwork);
+<<<<<<< HEAD
+=======
+
+    scrollLogView.renderActiveScroll(
+      await api('getImage', selectedArtwork.imgURL)
+    );
+>>>>>>> a5aba602f12f43e6bb936eed494a1f0828a479d1
   } catch (err) {
     console.log(err);
   }
 };
 
-const controlSearch = function () {
-  // Get input text
-  _search();
+const controlSearch = async () => {
+  try {
+    // Get input text
+    console.log(logView.getSearchType());
+    await _search(undefined, logView.getSearchType());
 
-  // if (!resultAccurate) return;
-  scrollLogView.renderScrolls([resultProximate, model.state.current.order]);
+    // if (!resultAccurate) return;
+    scrollLogView.renderScrolls([resultProximate, model.state.current.order]);
 
-  scrollLogView.moveToActiveScroll(
-    resultAccurate.index,
-    resultProximate.length
-  );
+    scrollLogView.moveToActiveScroll(
+      resultAccurate.index,
+      resultProximate.length
+    );
 
-  logView.renderLogs(resultProximate);
-  logView.highlightActiveLog();
-  window.location.hash = `#${resultAccurate.id}`;
+    logView.renderLogs(resultProximate);
+    logView.highlightActiveLog();
+    window.location.hash = `#${resultAccurate._id}`;
 
-  model.updateProperties(model.state.current, resultAccurate);
+    model.updateProperties(model.state.current, resultAccurate);
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 const _search = async (keyword, type) => {
+<<<<<<< HEAD
   try {
     const [[resultAccu], resultProx] = logView.search(
       model.state.artworks,
@@ -173,22 +175,63 @@ const controlSerachView = function () {
   const selectedArtwork = model.getOne();
 
   _search(selectedArtwork.order, 'order');
+=======
+  let searchKeyword = keyword;
+  if (!keyword) {
+    searchKeyword = logView.getSearchInput();
+  }
 
-  if (!resultAccurate) return;
-  model.updateProperties(model.state.current, resultAccurate);
+  const { resultAccu, resultProx } = await api('getSearch', keyword, type);
 
+  if (!resultAccu || !resultProx) {
+    resultProximate = [];
+    return;
+  } else {
+    // Side effect
+    resultAccurate = resultAccu;
+    resultProximate = resultProx;
+  }
+};
+
+const controlSerachView = async () => {
+  try {
+    const hashID = window.location.hash.slice(1);
+    await _search(hashID, 'id');
+
+    if (!resultAccurate) return;
+    model.updateProperties(model.state.current, resultAccurate);
+>>>>>>> a5aba602f12f43e6bb936eed494a1f0828a479d1
+
+    scrollLogView.renderScrolls([resultProximate, model.state.current.order]);
+
+<<<<<<< HEAD
   scrollLogView.renderScrolls([resultProximate, model.state.current.order]);
   scrollLogView.moveToActiveScroll(
     selectedArtwork.order,
     resultProximate.length
   );
+=======
+    scrollLogView.moveToActiveScroll(
+      resultAccurate.order,
+      resultProximate.length
+    );
+>>>>>>> a5aba602f12f43e6bb936eed494a1f0828a479d1
 
-  logView.renderLogs(resultProximate);
+    scrollLogView.renderActiveScroll(
+      await api('getImage', resultAccurate.imgURL)
+    );
 
+<<<<<<< HEAD
   window.location.hash = `#${resultAccurate._id}`;
   logView.highlightActiveLog();
+=======
+    logView.renderLogs(resultProximate);
+    window.location.hash = `#${resultAccurate._id}`;
+    logView.highlightActiveLog();
+>>>>>>> a5aba602f12f43e6bb936eed494a1f0828a479d1
 
-  animationView.animateToggleSearchView();
+    animationView.animateToggleSearchView();
+  } catch (err) {}
 };
 
 const init = function () {
@@ -201,10 +244,16 @@ const init = function () {
 
 init();
 
-// const testAPI = async function () {
-//   const res = await fetch('http://127.0.0.1:3000/api/v1/artworks/latest');
-//   const data = await res.json();
-//   console.log(data);
+// const testAPI = async () => {
+//   try {
+//     const res = await fetch(
+//       `http://127.0.0.1:3000/api/v1/artworks/search/id/61eb2886c50d3f7bd0419289`
+//     );
+//     const data = await res.json();
+//     console.log(data);
+//   } catch (err) {
+//     console.log(err);
+//   }
 // };
 
 // const testAPI = async (req, res) => {

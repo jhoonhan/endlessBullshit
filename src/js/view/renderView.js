@@ -53,6 +53,7 @@ class RenderView extends View {
     if (location === 'artworkInfo') this._locationHTML = this._artworkInfo;
   }
 
+<<<<<<< HEAD
   async artworkRender(imgURL) {
     try {
       //API call for imgURL
@@ -97,6 +98,13 @@ class RenderView extends View {
     } catch (err) {
       console.log(err);
     }
+=======
+  artworkRender(img) {
+    this._locationHTML.style.backgroundImage = `url(${img})`;
+    // only fireds when location is set to artwork
+    if (this._locationHTML === this._artwork)
+      this._renderOriginalImage.style.backgroundImage = `url(${img})`;
+>>>>>>> a5aba602f12f43e6bb936eed494a1f0828a479d1
   }
 
   artworkID(id) {

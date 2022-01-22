@@ -56,7 +56,6 @@ class AnimationView extends View {
     this._animateSearchBoxListeners();
     this._animateIntroListeners();
     this._animateIntro();
-    this._getWidthWhenResize();
   }
 
   _animateIntroListeners() {
@@ -173,8 +172,10 @@ class AnimationView extends View {
         this.leftSectionWidth =
           this._logContainer.getBoundingClientRect().width;
 
+        // if (this.leftSectionWidth > 1000) return;
+        // this._logContainer.style.left = `-${this.leftSectionWidth + 1}px`;
         if (this.leftSectionWidth > 1000) return;
-        this._logContainer.style.left = `-${this.leftSectionWidth + 1}px`;
+        this._logContainer.style.left = 0;
       }.bind(this)
     );
   }
