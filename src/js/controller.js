@@ -97,14 +97,9 @@ const controlLatestArtwork = async () => {
 const controlLogRender = async () => {
   try {
     // Gets imgURL of selected log
-<<<<<<< HEAD
-    const selectedArtwork = model.getOne();
-
-=======
     const hashID = window.location.hash.slice(1);
     const selectedArtwork = await api('getOne', hashID);
     // Guard Clause
->>>>>>> a5aba602f12f43e6bb936eed494a1f0828a479d1
     if (!resultProximate) return;
     scrollLogView.moveToActiveScroll(
       selectedArtwork.order,
@@ -113,13 +108,10 @@ const controlLogRender = async () => {
     logView.highlightActiveLog();
 
     model.updateProperties(model.state.current, selectedArtwork);
-<<<<<<< HEAD
-=======
 
     scrollLogView.renderActiveScroll(
       await api('getImage', selectedArtwork.imgURL)
     );
->>>>>>> a5aba602f12f43e6bb936eed494a1f0828a479d1
   } catch (err) {
     console.log(err);
   }
@@ -150,32 +142,6 @@ const controlSearch = async () => {
 };
 
 const _search = async (keyword, type) => {
-<<<<<<< HEAD
-  try {
-    const [[resultAccu], resultProx] = logView.search(
-      model.state.artworks,
-      type,
-      keyword
-    );
-    if (!resultAccu || !resultProx) {
-      resultProximate = [];
-      return;
-    } else {
-      // Side effect
-      resultAccurate = resultAccu;
-      resultProximate = resultProx;
-    }
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-const controlSerachView = function () {
-  const btn = document.querySelector('.log--toggle-view');
-  const selectedArtwork = model.getOne();
-
-  _search(selectedArtwork.order, 'order');
-=======
   let searchKeyword = keyword;
   if (!keyword) {
     searchKeyword = logView.getSearchInput();
@@ -200,35 +166,21 @@ const controlSerachView = async () => {
 
     if (!resultAccurate) return;
     model.updateProperties(model.state.current, resultAccurate);
->>>>>>> a5aba602f12f43e6bb936eed494a1f0828a479d1
 
     scrollLogView.renderScrolls([resultProximate, model.state.current.order]);
 
-<<<<<<< HEAD
-  scrollLogView.renderScrolls([resultProximate, model.state.current.order]);
-  scrollLogView.moveToActiveScroll(
-    selectedArtwork.order,
-    resultProximate.length
-  );
-=======
     scrollLogView.moveToActiveScroll(
       resultAccurate.order,
       resultProximate.length
     );
->>>>>>> a5aba602f12f43e6bb936eed494a1f0828a479d1
 
     scrollLogView.renderActiveScroll(
       await api('getImage', resultAccurate.imgURL)
     );
 
-<<<<<<< HEAD
-  window.location.hash = `#${resultAccurate._id}`;
-  logView.highlightActiveLog();
-=======
     logView.renderLogs(resultProximate);
     window.location.hash = `#${resultAccurate._id}`;
     logView.highlightActiveLog();
->>>>>>> a5aba602f12f43e6bb936eed494a1f0828a479d1
 
     animationView.animateToggleSearchView();
   } catch (err) {}

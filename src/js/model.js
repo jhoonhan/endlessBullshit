@@ -70,66 +70,6 @@ export const loadLatest = async () => {
     console.log(err);
   }
 };
-<<<<<<< HEAD
-
-export const getOne = async () => {
-  try {
-    const hashID = window.location.hash.slice(1);
-    const res = await axios({
-      method: 'GET',
-      url: `http://127.0.0.1:3000/api/v1/artworks/${hashID}`,
-    });
-    if (res.data.status === 'success') {
-      return res.data.data.data;
-    }
-  } catch (err) {
-    console.error(err.response);
-  }
-};
-
-export const getAll = async () => {
-  try {
-    const res = await axios({
-      method: 'GET',
-      url: `http://127.0.0.1:3000/api/v1/artworks/all`,
-    });
-    if (res.data.status === 'success') {
-      return res.data.data.data;
-    }
-  } catch (err) {
-    console.error(err.response);
-  }
-};
-
-export const getSearched = async keyword => {
-  try {
-    const res = await axios({
-      method: 'GET',
-      url: `http://127.0.0.1:3000/api/v1/artworks/search/${keyword}`,
-    });
-    if (res.data.status === 'success') {
-      return res.data.data.data;
-    }
-  } catch (err) {
-    console.error(err.response);
-  }
-};
-
-// const saveToStorage = function () {
-//   localStorage.setItem('artworks', JSON.stringify(state.artworks));
-// };
-// const getFromStorage = function () {
-//   const storage = localStorage.getItem('artworks');
-//   if (storage) {
-//     state.artworks = JSON.parse(storage);
-//   }
-// };
-
-// const init = function () {
-//   getFromStorage();
-// };
-
-=======
 export const updateProperties = function (to, from) {
   Object.keys(to).forEach(function (key) {
     to[key] = from[key];
@@ -150,5 +90,4 @@ export const updateProperties = function (to, from) {
 //   getFromStorage();
 // };
 
->>>>>>> a5aba602f12f43e6bb936eed494a1f0828a479d1
 // init();

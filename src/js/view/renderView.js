@@ -53,58 +53,11 @@ class RenderView extends View {
     if (location === 'artworkInfo') this._locationHTML = this._artworkInfo;
   }
 
-<<<<<<< HEAD
-  async artworkRender(imgURL) {
-    try {
-      //API call for imgURL
-      //DYNAMIC
-      // let img;
-      // const data = Object.entries(images).find(arr => arr[0] === `${imgURL}`);
-      // if (data) {
-      //   img = data[1];
-      // } else {
-      console.log(imgURL);
-      let imgBlob;
-      let img;
-      const res = await fetch(`http://127.0.0.1:3000/archive/${imgURL}`);
-      console.log(res);
-      if (res.ok === 'success') {
-        imgBlob = await res.blob();
-        img = URL.createObjectURL(imgBlob);
-      }
-
-      if (res.ok === false) {
-        console.log(`img not found`);
-        img = require('../../archive/test.png');
-      }
-
-      console.log(img);
-      // Option 1
-      // const reader = new FileReader();
-      // reader.readAsDataURL(imgBlob);
-      // reader.onloadend = () => {
-      //   const img64 = reader.result;
-      // };
-      // console.log(reader.result);
-
-      // Option 2
-
-      // const img =
-
-      this._locationHTML.style.backgroundImage = `url(${img})`;
-      // only fireds when location is set to artwork
-      if (this._locationHTML === this._artwork)
-        this._renderOriginalImage.style.backgroundImage = `url(${img})`;
-    } catch (err) {
-      console.log(err);
-    }
-=======
   artworkRender(img) {
     this._locationHTML.style.backgroundImage = `url(${img})`;
     // only fireds when location is set to artwork
     if (this._locationHTML === this._artwork)
       this._renderOriginalImage.style.backgroundImage = `url(${img})`;
->>>>>>> a5aba602f12f43e6bb936eed494a1f0828a479d1
   }
 
   artworkID(id) {

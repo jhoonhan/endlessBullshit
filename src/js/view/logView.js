@@ -131,8 +131,6 @@ class LogView extends View {
   getSearchInput() {
     return this._searchInput.value;
   }
-<<<<<<< HEAD
-=======
   getSearchType() {
     return this._searchType;
   }
@@ -165,7 +163,6 @@ class LogView extends View {
   //     return [resultAccu, resultProx];
   //   }
   // }
->>>>>>> a5aba602f12f43e6bb936eed494a1f0828a479d1
 
   // getImageHashChange(data) {
   //   const hashID = window.location.hash.slice(1);
