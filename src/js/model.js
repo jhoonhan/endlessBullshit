@@ -147,7 +147,6 @@ export const loadLatest = async () => {
     const res = await fetch('http://127.0.0.1:3000/api/v1/artworks/latest');
     const data = await res.json();
     const latestArtwork = data.data;
-    console.log(latestArtwork);
     if (latestArtwork.order < 1) return;
 
     if (latestArtwork.order.length > 0) {
@@ -164,13 +163,19 @@ export const getOne = async id => {
   try {
     const res = await fetch(`http://127.0.0.1:3000/api/v1/artworks/${id}`);
     const data = await res.json();
+    return data;
   } catch (err) {
     console.log(err);
   }
 };
 
-export const search = async (type, keyword) => {
+export const search = async (keyword, type) => {
   try {
+    const res = await fetch(
+      `http://127.0.0.1:3000/api/v1/artworks/search/${type}/${keyword}`
+    );
+    const data = await res.json();
+    return data;
   } catch (err) {
     console.log(err);
   }

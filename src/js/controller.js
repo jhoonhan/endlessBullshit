@@ -109,53 +109,64 @@ const controlLatestArtwork = async () => {
   }
 };
 
-const controlLogRender = function () {
-  // Gets imgURL of selected log
-  // const selectedArtwork = logView.getImageHashChange(model.state.artworks);
+const controlLogRender = async () => {
+  try {
+    // Gets imgURL of selected log
+    // const selectedArtwork = logView.getImageHashChange(model.state.artworks);
 
-  const hashID = window.location.hash.slice(1);
-  const selectedArtwork = model.getOne(hashID);
-  console.log(resultProximate);
-  if (!resultProximate) return;
-  scrollLogView.moveToActiveScroll(
-    selectedArtwork.order,
-    resultProximate.length
-  );
-  logView.highlightActiveLog();
+    const hashID = window.location.hash.slice(1);
+    await _search(hashID, 'id');
+    console.log(resultAccurate);
+    console.log(resultProximate);
+    if (!resultProximate) return;
+    scrollLogView.moveToActiveScroll(
+      resultAccurate.order,
+      resultProximate.length
+    );
+    logView.highlightActiveLog();
 
-  model.updateProperties(model.state.current, selectedArtwork);
+    model.updateProperties(model.state.current, resultAccurate);
+  } catch (err) {
+    console.log(err);
+  }
 };
 
-const controlSearch = function () {
-  // Get input text
-  _search();
+const controlSearch = async () => {
+  try {
+    // Get input text
+    console.log(logView.getSearchType());
+    await _search(undefined, logView.getSearchType());
 
-  // if (!resultAccurate) return;
-  scrollLogView.renderScrolls([resultProximate, model.state.current.order]);
+    // if (!resultAccurate) return;
+    scrollLogView.renderScrolls([resultProximate, model.state.current.order]);
 
-  scrollLogView.moveToActiveScroll(
-    resultAccurate.index,
-    resultProximate.length
-  );
+    scrollLogView.moveToActiveScroll(
+      resultAccurate.index,
+      resultProximate.length
+    );
 
-  logView.renderLogs(resultProximate);
-  logView.highlightActiveLog();
-  window.location.hash = `#${resultAccurate.id}`;
+    logView.renderLogs(resultProximate);
+    logView.highlightActiveLog();
+    window.location.hash = `#${resultAccurate._id}`;
 
-  model.updateProperties(model.state.current, resultAccurate);
+    model.updateProperties(model.state.current, resultAccurate);
+  } catch (err) {
+    console.log(err);
+  }
 };
 
-const _search = function (keyword, type) {
+const _search = async (keyword, type) => {
   let searchKeyword = keyword;
   if (!keyword) {
     searchKeyword = logView.getSearchInput();
   }
-  const [[resultAccu], resultProx] = logView.search(
-    model.state.artworks,
-    type,
-    keyword
-  );
+  // const [[resultAccu], resultProx] = logView.search(
+  //   model.state.artworks,
+  //   type,
+  //   keyword
+  // );
 
+  const { resultAccu, resultProx } = await model.search(keyword, type);
   // const [[resultAccu], resultProx] = model.search(type, searchKeyword);
 
   if (!resultAccu || !resultProx) {
@@ -168,28 +179,28 @@ const _search = function (keyword, type) {
   }
 };
 
-const controlSerachView = function () {
-  const btn = document.querySelector('.log--toggle-view');
-  const hashID = window.location.hash.slice(1);
-  const selectedArtwork = model.getOne(hashID);
+const controlSerachView = async () => {
+  try {
+    const hashID = window.location.hash.slice(1);
+    await _search(hashID, 'id');
+    console.log(resultAccurate);
 
-  _search(selectedArtwork.order, 'order');
+    if (!resultAccurate) return;
+    model.updateProperties(model.state.current, resultAccurate);
 
-  if (!resultAccurate) return;
-  model.updateProperties(model.state.current, resultAccurate);
+    scrollLogView.renderScrolls([resultProximate, model.state.current.order]);
+    scrollLogView.moveToActiveScroll(
+      resultAccurate.order,
+      resultProximate.length
+    );
 
-  scrollLogView.renderScrolls([resultProximate, model.state.current.order]);
-  scrollLogView.moveToActiveScroll(
-    selectedArtwork.order,
-    resultProximate.length
-  );
+    logView.renderLogs(resultProximate);
 
-  logView.renderLogs(resultProximate);
+    window.location.hash = `#${resultAccurate._id}`;
+    logView.highlightActiveLog();
 
-  window.location.hash = `#${resultAccurate.id}`;
-  logView.highlightActiveLog();
-
-  animationView.animateToggleSearchView();
+    animationView.animateToggleSearchView();
+  } catch (err) {}
 };
 
 const init = function () {
@@ -204,8 +215,9 @@ init();
 
 // const testAPI = async () => {
 //   try {
-//     const hashID = window.location.hash.slice(1);
-//     const res = await fetch(`http://127.0.0.1:3000/api/v1/artworks/${hashID}`);
+//     const res = await fetch(
+//       `http://127.0.0.1:3000/api/v1/artworks/search/id/61eb2886c50d3f7bd0419289`
+//     );
 //     const data = await res.json();
 //     console.log(data);
 //   } catch (err) {

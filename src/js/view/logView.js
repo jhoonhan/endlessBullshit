@@ -131,35 +131,38 @@ class LogView extends View {
   getSearchInput() {
     return this._searchInput.value;
   }
-  search(data, type, keyword) {
-    let inputKeyword;
-    if (!keyword) {
-      inputKeyword = this._searchInput.value.toLowerCase();
-    } else {
-      inputKeyword = keyword;
-    }
-
-    if (type === 'order' || this._searchType === 'order') {
-      const resultAccu = data.filter(el => el.index === +inputKeyword);
-      const resultProx = this._getResultProx(data, inputKeyword);
-
-      return [resultAccu, resultProx];
-    }
-    if (!type && this._searchType === 'name') {
-      const resultAccu = data.filter(el => el.name.includes(inputKeyword));
-      const resultProx = resultAccu;
-
-      return [[resultAccu[0]], resultProx];
-    }
-    if (!type && this._searchType === 'id') {
-      const resultAccu = data.filter(el => el.id === inputKeyword);
-      if (!resultAccu[0]) return;
-      const keyIndex = resultAccu[0].index;
-      const resultProx = this._getResultProx(data, keyIndex);
-
-      return [resultAccu, resultProx];
-    }
+  getSearchType() {
+    return this._searchType;
   }
+  // search(data, type, keyword) {
+  //   let inputKeyword;
+  //   if (!keyword) {
+  //     inputKeyword = this._searchInput.value.toLowerCase();
+  //   } else {
+  //     inputKeyword = keyword;
+  //   }
+
+  //   if (type === 'order' || this._searchType === 'order') {
+  //     const resultAccu = data.filter(el => el.index === +inputKeyword);
+  //     const resultProx = this._getResultProx(data, inputKeyword);
+
+  //     return [resultAccu, resultProx];
+  //   }
+  //   if (!type && this._searchType === 'name') {
+  //     const resultAccu = data.filter(el => el.name.includes(inputKeyword));
+  //     const resultProx = resultAccu;
+
+  //     return [[resultAccu[0]], resultProx];
+  //   }
+  //   if (!type && this._searchType === 'id') {
+  //     const resultAccu = data.filter(el => el.id === inputKeyword);
+  //     if (!resultAccu[0]) return;
+  //     const keyIndex = resultAccu[0].index;
+  //     const resultProx = this._getResultProx(data, keyIndex);
+
+  //     return [resultAccu, resultProx];
+  //   }
+  // }
 
   // getImageHashChange(data) {
   //   const hashID = window.location.hash.slice(1);
@@ -202,8 +205,8 @@ class LogView extends View {
       .map(
         function (el) {
           const convtName = this._convertName(el.name);
-          return `<li><a href="#${el.id}" class="log--logs" data-index="${
-            el.index
+          return `<li><a href="#${el._id}" class="log--logs" data-index="${
+            el.order
           }">${this.capitalizeName(convtName)}</a></li>`;
         }.bind(this)
       )
