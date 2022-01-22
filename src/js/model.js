@@ -163,7 +163,7 @@ export const getOne = async id => {
   try {
     const res = await fetch(`http://127.0.0.1:3000/api/v1/artworks/${id}`);
     const data = await res.json();
-    return data;
+    return data.data;
   } catch (err) {
     console.log(err);
   }
@@ -176,6 +176,17 @@ export const search = async (keyword, type) => {
     );
     const data = await res.json();
     return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const fetchImage = async imgURL => {
+  try {
+    const res = await fetch(`http://127.0.0.1:3000/archive/${imgURL}`);
+    const imgBlob = await res.blob();
+    const img = URL.createObjectURL(imgBlob);
+    return img;
   } catch (err) {
     console.log(err);
   }

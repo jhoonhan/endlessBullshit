@@ -64,7 +64,13 @@ class ScrollLogView extends View {
     const active = document.querySelector('.scroll--active');
     if (!active) return;
     const moveValue = qtScroll * 100 - active.dataset.order * 100;
+    // console.log(`(${qtScroll} * 100) - (${active.dataset.order} * 100)`);
+    // console.log(moveValue);
     this._parentElement.style.top = `-${moveValue}vh`;
+  }
+  renderActiveScroll(img) {
+    const active = document.querySelector('.scroll--active .artwork-frame');
+    active.style.backgroundImage = `url(${img})`;
   }
   //
   //
@@ -82,26 +88,32 @@ class ScrollLogView extends View {
           </span>
         </div>`;
     }
+    // const year = data.date.slice(0, 4);
+    // console.log(year);
+    // const date = data.date.slice(0, 7);
+    // console.log(date);
 
     const generatedHTML = resultProx
       .map(
         function (el, i) {
+          const year = el.date.slice(0, 4);
+          const date = el.date.slice(0, 10);
           return `
           <div class="scroll scroll--${i}" data-order="${i}" data-index="${
-            el.index
+            el.order
           }"">
           <div class="column column--4">
               <div class="cell cell--1 container-outer outer-shadow">
               <div class="container-artwork">
                   <div class="artwork-info artwork-frame" data-id="${
-                    el.id
-                  }" style="background-image: url(${el.imgURL})"></div>
+                    el._id
+                  }" style="background-image: url(${config.OGARTWORK})"></div>
               </div>
               </div>
               <div class="cell cell--2 artwork-tag log-tag">
-              <span><i>Endless Bullshit</i>, ${this.capitalizeName(el.name)}, ${
-            el.year
-          }</span>
+              <span><i>Endless Bullshit</i>, ${this.capitalizeName(
+                el.name
+              )}, ${year}</span>
               </div>
           </div>
           <div class="column column--5">
@@ -110,18 +122,18 @@ class ScrollLogView extends View {
               </div>
               <div class="detail-information information">
                   <div class="cell cell--2 artwork-subtitle">
-                  <h3>by ${this.capitalizeName(el.name)}, ${el.year}</h3>
+                  <h3>by ${this.capitalizeName(el.name)}, ${year}</h3>
                   </div>
                   <div class="cell cell--3 artwork-description">
                     <ul class="detail-data">
                       <label>Statement :</label>
                       <li>${el.statement}</li>
                       <label>Date :</label>
-                      <li>${el.date}/${el.year}</li>
+                      <li>${date}/${year}</li>
                       <label>Order :</label>
-                      <li>${el.index} out of ${totalNumber}</li>
+                      <li>${el.order} out of ${totalNumber}</li>
                       <label>ID :</label>
-                      <li>${el.id}</li>
+                      <li>${el._id}</li>
                     </ul>
                   </div>
               </div>

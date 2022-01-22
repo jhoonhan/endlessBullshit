@@ -78,7 +78,7 @@ const _update = async function (log, location = 'artwork') {
     // Renders artwork
     if (!log) return;
 
-    await renderView.artworkRender(log.imgURL);
+    renderView.artworkRender(await model.fetchImage(log.imgURL));
 
     // Insert ID to artwork on view
     renderView.artworkID(log._id);
@@ -115,17 +115,21 @@ const controlLogRender = async () => {
     // const selectedArtwork = logView.getImageHashChange(model.state.artworks);
 
     const hashID = window.location.hash.slice(1);
-    await _search(hashID, 'id');
-    console.log(resultAccurate);
-    console.log(resultProximate);
+    // await _search(hashID, 'id');
+    const selectedArtwork = await model.getOne(hashID);
+    // Guard Clause
     if (!resultProximate) return;
     scrollLogView.moveToActiveScroll(
-      resultAccurate.order,
+      selectedArtwork.order,
       resultProximate.length
     );
     logView.highlightActiveLog();
 
-    model.updateProperties(model.state.current, resultAccurate);
+    model.updateProperties(model.state.current, selectedArtwork);
+
+    scrollLogView.renderActiveScroll(
+      await model.fetchImage(selectedArtwork.imgURL)
+    );
   } catch (err) {
     console.log(err);
   }
@@ -183,19 +187,22 @@ const controlSerachView = async () => {
   try {
     const hashID = window.location.hash.slice(1);
     await _search(hashID, 'id');
-    console.log(resultAccurate);
 
     if (!resultAccurate) return;
     model.updateProperties(model.state.current, resultAccurate);
 
     scrollLogView.renderScrolls([resultProximate, model.state.current.order]);
+
     scrollLogView.moveToActiveScroll(
       resultAccurate.order,
       resultProximate.length
     );
 
-    logView.renderLogs(resultProximate);
+    scrollLogView.renderActiveScroll(
+      await model.fetchImage(resultAccurate.imgURL)
+    );
 
+    logView.renderLogs(resultProximate);
     window.location.hash = `#${resultAccurate._id}`;
     logView.highlightActiveLog();
 

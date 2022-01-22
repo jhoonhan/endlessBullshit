@@ -53,41 +53,11 @@ class RenderView extends View {
     if (location === 'artworkInfo') this._locationHTML = this._artworkInfo;
   }
 
-  async artworkRender(imgURL) {
-    try {
-      //API call for imgURL
-      //DYNAMIC
-      // let img;
-      // const data = Object.entries(images).find(arr => arr[0] === `${imgURL}`);
-      // if (data) {
-      //   img = data[1];
-      // } else {
-
-      const res = await fetch(`http://127.0.0.1:3000/archive/${imgURL}`);
-      // const img = await res.json();
-      // console.log(res);
-      const imgBlob = await res.blob();
-
-      // Option 1
-      // const reader = new FileReader();
-      // reader.readAsDataURL(imgBlob);
-      // reader.onloadend = () => {
-      //   const img64 = reader.result;
-      // };
-      // console.log(reader.result);
-
-      // Option 2
-      const img = URL.createObjectURL(imgBlob);
-
-      // const img = require('../../archive/test.png');
-
-      this._locationHTML.style.backgroundImage = `url(${img})`;
-      // only fireds when location is set to artwork
-      if (this._locationHTML === this._artwork)
-        this._renderOriginalImage.style.backgroundImage = `url(${img})`;
-    } catch (err) {
-      console.log(err);
-    }
+  artworkRender(img) {
+    this._locationHTML.style.backgroundImage = `url(${img})`;
+    // only fireds when location is set to artwork
+    if (this._locationHTML === this._artwork)
+      this._renderOriginalImage.style.backgroundImage = `url(${img})`;
   }
 
   artworkID(id) {

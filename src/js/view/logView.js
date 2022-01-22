@@ -73,7 +73,7 @@ class LogView extends View {
     // });
     if (!artworkInfo) return;
     logs.forEach(function (log) {
-      if (log.href.slice(-36) === artworkInfo.dataset.id) {
+      if (log.href.slice(-24) === artworkInfo.dataset.id) {
         log.classList.add('highlighted-text');
       } else {
         log.classList.remove('highlighted-text');
