@@ -88,45 +88,45 @@ class LogView extends View {
   //   });
   // }
 
-  _getProximiyIndex = function (data, keyIndex) {
-    let prox = [];
-    for (let i = 0; i < config.MAXSEARCHRESULT; i++) {
-      prox.push(keyIndex - Math.floor(config.MAXSEARCHRESULT / 2) + i);
-    }
-    const largestNum = prox.slice(-1)[0];
-    const largestIndex = data.length - 1;
-    const smallestNum = prox[0];
+  // _getProximiyIndex = function (data, keyIndex) {
+  //   let prox = [];
+  //   for (let i = 0; i < config.MAXSEARCHRESULT; i++) {
+  //     prox.push(keyIndex - Math.floor(config.MAXSEARCHRESULT / 2) + i);
+  //   }
+  //   const largestNum = prox.slice(-1)[0];
+  //   const largestIndex = data.length - 1;
+  //   const smallestNum = prox[0];
 
-    // When there is no element after
-    if (largestNum > largestIndex) {
-      const discrepancy = largestNum - largestIndex;
-      const filteredProx = prox.filter(index => index <= largestIndex);
+  //   // When there is no element after
+  //   if (largestNum > largestIndex) {
+  //     const discrepancy = largestNum - largestIndex;
+  //     const filteredProx = prox.filter(index => index <= largestIndex);
 
-      for (let i = 1; i <= discrepancy; i++) {
-        filteredProx.unshift(smallestNum - i);
-      }
-      prox = filteredProx;
-    }
+  //     for (let i = 1; i <= discrepancy; i++) {
+  //       filteredProx.unshift(smallestNum - i);
+  //     }
+  //     prox = filteredProx;
+  //   }
 
-    // When there is no element before
-    if (smallestNum < 0) {
-      const filteredProx = prox.filter(index => index >= 0);
-      const discrepancy = config.MAXSEARCHRESULT - filteredProx.length;
+  //   // When there is no element before
+  //   if (smallestNum < 0) {
+  //     const filteredProx = prox.filter(index => index >= 0);
+  //     const discrepancy = config.MAXSEARCHRESULT - filteredProx.length;
 
-      for (let i = 0; i <= discrepancy; i++) {
-        filteredProx.push(largestNum + i);
-      }
-      prox = filteredProx;
-    }
-    return prox;
-  };
+  //     for (let i = 0; i <= discrepancy; i++) {
+  //       filteredProx.push(largestNum + i);
+  //     }
+  //     prox = filteredProx;
+  //   }
+  //   return prox;
+  // };
 
-  _getResultProx = function (data, keyIndex) {
-    const proximity = this._getProximiyIndex(data, keyIndex);
-    return data.filter(
-      el => el.index >= proximity[0] && el.index <= proximity.slice(-1)
-    );
-  };
+  // _getResultProx = function (data, keyIndex) {
+  //   const proximity = this._getProximiyIndex(data, keyIndex);
+  //   return data.filter(
+  //     el => el.index >= proximity[0] && el.index <= proximity.slice(-1)
+  //   );
+  // };
 
   getSearchInput() {
     return this._searchInput.value;

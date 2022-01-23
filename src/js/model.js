@@ -12,7 +12,6 @@ export const state = {
     date: '',
     _id: '',
     order: '',
-    img: '',
     imgURL: '',
   },
   view: '',
@@ -61,7 +60,7 @@ export const logArtwork = async (inputData, imgBlob) => {
 export const loadLatest = async () => {
   try {
     const latestArtwork = await api.getLatest();
-    if (latestArtwork.order < 1) return;
+    if (!latestArtwork) return;
     updateProperties(state.current, latestArtwork);
   } catch (err) {
     console.log(err);

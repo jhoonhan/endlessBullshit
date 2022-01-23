@@ -1,0 +1,63 @@
+/* BELOW width 1200px*/
+@media (max-width: 80em) {
+  $font-size--s: 1em;
+  $font-size--p: 1.3em;
+  $font-size--h1: 2.5em;
+  $font-size--h3: 1em;
+  h1 {
+    font-size: $font-size--h1;
+  }
+  h3 {
+    font-size: $font-size--h3;
+  }
+  p {
+    font-size: $font-size--p;
+  }
+  label {
+    font-size: $font-size--p;
+  }
+  span {
+    font-size: $font-size--p;
+  }
+  button {
+    font-size: $font-size--p;
+  }
+  .lable-checkbox {
+    $font-size--s: 1em;
+  }
+  .log--results {
+    font-size: $font-size--p;
+  }
+  .scroll {
+    column-gap: 3%;
+  }
+  .log--logs {
+    padding-right: 0;
+  }
+  .column {
+    padding-right: 0;
+  }
+  .btn--right-arrow {
+    padding: 7px;
+    left: 100%;
+  }
+  .input-form-textarea {
+    height: 25vh;
+  }
+  .form-artwork {
+    margin-top: 0;
+    row-gap: 0.75vw;
+  }
+  .btn--submit {
+    margin-top: 1em;
+  }
+  .information {
+    max-width: 32vw;
+  }
+  .form-artwork {
+    max-width: 32vw;
+  }
+  .section--2 {
+    left: -7%;
+  }
+}

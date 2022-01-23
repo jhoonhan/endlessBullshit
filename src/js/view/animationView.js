@@ -186,15 +186,16 @@ class AnimationView extends View {
   }
 
   _toggleSerachView(rect) {
-    if (rect.x < 0) {
-      this._logContainer.style.left = `0px`;
-      this._section2.classList.toggle('left0');
-    }
-    if (rect.x >= 0) {
-      this._logContainer.style.left = `-${rect.width + 1}px`;
-
-      this._section2.classList.toggle('left0');
-    }
+    // if (rect.x < 0) {
+    //   this._logContainer.classList.toggle('right0');
+    //   this._section2.classList.toggle('left0');
+    // }
+    // if (rect.x >= 0) {
+    //   this._logContainer.classList.toggle('right0');
+    //   this._section2.classList.toggle('left0');
+    // }
+    this._logContainer.classList.toggle('right0');
+    this._section2.classList.toggle('left0');
   }
   _toggleScrollView(rect) {
     if (rect.x < 0) {
@@ -229,6 +230,12 @@ class AnimationView extends View {
 
       this._scrollContainer.style.top = '0';
     }
+
+    // this._row1.classList.toggle('left100vw');
+    // // this._row2.classList.toggle('top100vh');
+    // this._expandSearchBtn.classList.toggle('arrow-rotate');
+
+    // this._scrollContainer.classList.toggle('top0');
   }
 
   animateToggleSearchView() {
@@ -238,6 +245,7 @@ class AnimationView extends View {
     //   this._row2.classList.toggle('top100vh');
     //   this._expandSearchBtn.classList.toggle('arrow-rotate');
     // }.bind(this);
+    console.log(rect);
 
     this._toggleSerachView(rect);
     this._toggleScrollView(rect);

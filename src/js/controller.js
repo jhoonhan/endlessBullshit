@@ -126,9 +126,10 @@ const controlSearch = async () => {
     scrollLogView.renderScrolls([resultProximate, model.state.current.order]);
 
     scrollLogView.moveToActiveScroll(
-      resultAccurate.index,
+      resultAccurate.order,
       resultProximate.length
     );
+    scrollLogView.renderActiveScroll(await api.getImage(resultAccurate.imgURL));
 
     logView.renderLogs(resultProximate);
     logView.highlightActiveLog();
@@ -141,20 +142,24 @@ const controlSearch = async () => {
 };
 
 const _search = async (keyword, type) => {
-  let searchKeyword = keyword;
-  if (!keyword) {
-    searchKeyword = logView.getSearchInput();
-  }
+  try {
+    let searchKeyword = keyword;
+    if (!keyword) {
+      searchKeyword = logView.getSearchInput();
+    }
 
-  const { resultAccu, resultProx } = await api.getSearch(keyword, type);
+    const { resultAccu, resultProx } = await api.getSearch(searchKeyword, type);
 
-  if (!resultAccu || !resultProx) {
-    resultProximate = [];
-    return;
-  } else {
-    // Side effect
-    resultAccurate = resultAccu;
-    resultProximate = resultProx;
+    if (!resultAccu || !resultProx) {
+      resultProximate = [];
+      return;
+    } else {
+      // Side effect
+      resultAccurate = resultAccu;
+      resultProximate = resultProx;
+    }
+  } catch (err) {
+    console.log(err);
   }
 };
 

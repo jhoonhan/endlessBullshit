@@ -112,14 +112,14 @@ class ScrollLogView extends View {
               </div>
               </div>
               <div class="cell cell--2 artwork-tag log-tag">
-              <span><i>Endless Bullshit</i>, ${this.capitalizeName(
+              <span><i>This Is Bullshit</i>, ${this.capitalizeName(
                 el.name
               )}, ${year}</span>
               </div>
           </div>
           <div class="column column--5">
               <div class="cell cell--1 artwork-title">
-              <h1>Endless Bullshit</h1>
+              <h1>This Is Bullshit</h1>
               </div>
               <div class="detail-information information">
                   <div class="cell cell--2 artwork-subtitle">
@@ -128,13 +128,13 @@ class ScrollLogView extends View {
                   <div class="cell cell--3 artwork-description">
                     <ul class="detail-data">
                       <label>Statement :</label>
-                      <li>${el.statement}</li>
+                      <li><p>${el.statement}</p></li>
                       <label>Date :</label>
-                      <li>${date}/${year}</li>
+                      <li><p>${date}/${year}</p></li>
                       <label>Order :</label>
-                      <li>${el.order} out of ${totalNumber}</li>
+                      <li><p>${el.order} out of ${totalNumber}</p></li>
                       <label>ID :</label>
-                      <li>${el._id}</li>
+                      <li><p>${el._id}</p></li>
                     </ul>
                   </div>
               </div>
