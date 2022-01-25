@@ -127,8 +127,10 @@ class ScrollLogView extends View {
                   </div>
                   <div class="cell cell--3 artwork-description">
                     <ul class="detail-data">
-                      <label>Statement :</label>
-                      <li><p>${el.statement}</p></li>
+                      <label class="scroll__label">Statement :</label>
+                      <li></li>
+                      <li class="scroll__statement"><p>${el.statement}</p></li>
+                      
                       <label>Date :</label>
                       <li><p>${date}/${year}</p></li>
                       <label>Order :</label>
