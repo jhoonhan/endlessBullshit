@@ -22,6 +22,9 @@
   button {
     font-size: $font-size--p;
   }
+  .row--1 {
+    column-gap: 3%;
+  }
   .row--2 {
     left: 0px;
     align-self: flex-end;
@@ -77,6 +80,25 @@
 // BELOW 900px//
 // Mobile Portrait Orientation//
 @media (max-width: 50em) {
+  .container-outer {
+    height: 90vw;
+    width: 90vw;
+    padding: 9vw;
+    justify-self: center;
+  }
+  .scroll .container-outer {
+    height: 90vw;
+    width: 90vw;
+  }
+  .column--2 {
+    max-width: 86vw;
+    justify-self: center;
+    align-self: flex-start;
+    margin-top: 2em;
+  }
+  .column--5 {
+    max-width: none;
+  }
   .row {
     margin: 0 2em;
   }
@@ -97,15 +119,15 @@
     grid-template-rows: auto auto;
     align-self: end;
   }
-  .column--2 {
-    align-self: start;
-  }
   .column--4 {
     grid-template-rows: auto auto;
     align-self: end;
   }
   .column--5 {
     align-self: start;
+  }
+  .section--1 {
+    display: none;
   }
   .section--2 {
     min-height: none;
