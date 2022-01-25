@@ -22,6 +22,10 @@
   button {
     font-size: $font-size--p;
   }
+  .row--2 {
+    left: 0px;
+    align-self: flex-end;
+  }
   .lable-checkbox {
     $font-size--s: 1em;
   }
@@ -30,9 +34,18 @@
   }
   .scroll {
     column-gap: 3%;
+    width: calc(100vw - 230px);
+  }
+  .container-outer {
+    height: min(80vh, 60vw);
+    width: min(80vh, 60vw);
+  }
+  .scroll .container-outer {
+    height: min(70vh, 50vw);
+    width: min(70vh, 50vw);
   }
   .log--logs {
-    padding-right: 0;
+    padding-right: 1em;
   }
   .column {
     padding-right: 0;
@@ -52,10 +65,10 @@
     margin-top: 1em;
   }
   .information {
-    max-width: 32vw;
+    // max-width: 32vw;
   }
   .form-artwork {
-    max-width: 32vw;
+    // max-width: 32vw;
   }
   .section--2 {
     // left: -7%;
@@ -63,7 +76,7 @@
 }
 // BELOW 900px//
 // Mobile Portrait Orientation//
-@media (max-width: 80em) {
+@media (max-width: 50em) {
   .row {
     margin: 0 2em;
   }

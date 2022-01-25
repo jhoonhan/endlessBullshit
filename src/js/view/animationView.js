@@ -245,8 +245,10 @@ class AnimationView extends View {
     //   this._row2.classList.toggle('top100vh');
     //   this._expandSearchBtn.classList.toggle('arrow-rotate');
     // }.bind(this);
-    console.log(rect);
+    // console.log(rect);
     // this._container.classList.toggle('grid-adjuster');
+
+    this._section1.classList.toggle('test22');
     this._toggleSerachView(rect);
     this._toggleScrollView(rect);
 
