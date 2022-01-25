@@ -45,7 +45,6 @@ button {
   width: 100%;
   min-height: 100vh;
   // animation
-  left: -5%; // !LC -5%
 }
 
 .container {
@@ -140,7 +139,7 @@ button {
   align-content: center;
   box-sizing: border-box;
   position: relative;
-  row-gap: 1rem;
+  // row-gap: 1rem;
 
   top: 0;
   left: 0;
@@ -253,6 +252,7 @@ button {
   border: 0rem solid white;
   position: relative;
   box-sizing: border-box;
+  height: 100%;
 }
 .container-outer {
   box-sizing: border-box;
@@ -308,7 +308,7 @@ button {
 
 .artwork-tag {
   text-align: right;
-  margin-top: -2.5%;
+  // margin-top: -2.5%;
   margin-right: 2%;
 }
 

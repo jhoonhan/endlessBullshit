@@ -246,7 +246,7 @@ class AnimationView extends View {
     //   this._expandSearchBtn.classList.toggle('arrow-rotate');
     // }.bind(this);
     console.log(rect);
-
+    // this._container.classList.toggle('grid-adjuster');
     this._toggleSerachView(rect);
     this._toggleScrollView(rect);
 

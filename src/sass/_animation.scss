@@ -26,7 +26,7 @@
   left: 0 !important;
 }
 .right0 {
-  right: 0;
+  right: 0 !important;
 }
 .right-100vw {
   right: 100vw !important;
@@ -36,4 +36,7 @@
 }
 .top0 {
   top: 0;
+}
+.grid-adjuster {
+  grid-template-columns: 1fr 7fr;
 }
