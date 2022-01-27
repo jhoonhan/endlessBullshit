@@ -4,6 +4,8 @@ import View from './View.js';
 class LogView extends View {
   _parentElement = document.querySelector('.log--container');
   _logResultContainer = document.querySelector('.log--results');
+  _logMobileResultContainer = document.querySelector('.log--mobile-results');
+
   _logs = document.querySelectorAll('.log--logs');
   _btnToggleView = document.querySelector('.log--toggle-view');
   _btnSearchDropdown = document.querySelector('.log--search--dropdown');
@@ -54,9 +56,14 @@ class LogView extends View {
     this._byID.addEventListener('click', this._searchByID.bind(this));
   }
 
-  renderLogs(data) {
+  renderLogs(data, orientation) {
     if (!data) return;
-    super.insertHTML(data, this._logResultContainer);
+    if (orientation === 'landscape') {
+      super.insertHTML(data, this._logResultContainer);
+    }
+    if (orientation === 'portrait') {
+      super.insertHTML(data, this._logMobileResultContainer);
+    }
   }
 
   highlightActiveLog() {

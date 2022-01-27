@@ -9,6 +9,7 @@ import logView from './view/logView.js';
 import detailView from './view/detailView.js';
 import animationView from './view/animationView.js';
 import scrollLogView from './view/scrollLogView.js';
+import mobileView from './view/mobileView.js';
 
 let resultAccurate;
 let resultProximate;
@@ -107,10 +108,19 @@ const controlLogRender = async () => {
     logView.highlightActiveLog();
 
     model.updateProperties(model.state.current, selectedArtwork);
-
+    // Non- mobile
     scrollLogView.renderActiveScroll(
       await api.getImage(selectedArtwork.imgURL)
     );
+    //Mobile
+    // console.log(selectedArtwork);
+    mobileView.renderLog([
+      selectedArtwork,
+      await api.getImage(selectedArtwork.imgURL),
+      model.state.current.order,
+    ]);
+
+    // animationView.animateToggleMobileSearchView();
   } catch (err) {
     console.log(err);
   }
@@ -180,12 +190,35 @@ const controlSerachView = async () => {
 
     scrollLogView.renderActiveScroll(await api.getImage(resultAccurate.imgURL));
 
-    logView.renderLogs(resultProximate);
+    logView.renderLogs(resultProximate, 'landscape');
     window.location.hash = `#${resultAccurate._id}`;
     logView.highlightActiveLog();
 
     animationView.animateToggleSearchView();
   } catch (err) {}
+};
+
+const controlMobileSearchView = async () => {
+  try {
+    // !LC DRY
+    const hashID = window.location.hash.slice(1);
+    await _search(hashID, 'id');
+
+    if (!resultAccurate) return;
+    model.updateProperties(model.state.current, resultAccurate);
+
+    // Mobile render option
+    logView.renderLogs(resultProximate, 'portrait');
+    // console.log(resultAccurate);
+    mobileView.renderLog([
+      resultAccurate,
+      await api.getImage(resultAccurate.imgURL),
+      model.state.current.order,
+    ]);
+    animationView.animateToggleMobileSearchView();
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 const init = function () {
@@ -194,6 +227,7 @@ const init = function () {
   logView.addHandlerLogRender(controlLogRender);
   logView.addHandlerSearch(controlSearch);
   logView.addHandlerToggleView(controlSerachView);
+  mobileView.addHandlerToggleView(controlMobileSearchView);
 };
 
 init();

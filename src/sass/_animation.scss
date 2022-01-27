@@ -7,8 +7,22 @@
   -webkit-transform: rotate(-225deg);
   margin-left: 15px;
 }
-.top100vh {
+.arrow-rotate--top {
+  transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+}
+.arrow-bottom {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+.top-100vh {
   top: -100vh;
+}
+.bottom-40vh {
+  bottom: -40vh;
+}
+.bottom0 {
+  bottom: 0;
 }
 .left100vw {
   left: 100vw !important;
@@ -37,6 +51,15 @@
 .top0 {
   top: 0;
 }
-.test22 {
+.toggle-log-panel {
   right: calc(100% - 200px);
+}
+.overflow-hidden {
+  overflow: hidden;
+}
+.overflow-visible {
+  overflow: visible;
+}
+.overflow-scroll {
+  overflow: scroll;
 }

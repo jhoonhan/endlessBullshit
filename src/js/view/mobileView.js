@@ -1,0 +1,63 @@
+import View from './View.js';
+
+class MobileView extends View {
+  _parentElement = document.querySelector('.section--m');
+  _btnToggleView = document.querySelector('.btn--mobile-log');
+  _artworkFrame = document.querySelector('.artwork-frame--mobile');
+  _artworkContainer = document.querySelector('.mobile-artwork-container');
+
+  addHandlerToggleView(handler) {
+    this._btnToggleView.addEventListener('click', handler);
+  }
+
+  renderLog(data) {
+    super.insertHTML(data, this._artworkContainer);
+  }
+  renderArtwork(img) {
+    console.log(img);
+    const artworkFrame = document.querySelector('.artwork-frame--mobile');
+    artworkFrame.style.backgroundImage = `url(${img})`;
+  }
+  _generateMarkup(data) {
+    const [log, img, totalNumber] = data;
+    const year = log.date.slice(0, 4);
+    const date = log.date.slice(0, 10);
+    return `
+      <div class="column column--m--1">
+        <div class="cell cell--1 container-outer outer-shadow">
+          <div class="container-artwork">
+            <div class="artwork-frame artwork-frame--mobile" data-id="${
+              log._id
+            }" style="background-image: url(${img})"
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      <div class="column--m--2">
+        <div class="cell cell--1 artwork-title">
+          <h1>This Is Bullshit</h1>
+        </div>
+        <div class="detail-information information">
+          <div class="cell cell--2 artwork-subtitle">
+            <h3>by ${this.capitalizeName(log.name)}, ${year}</h3>
+          </div>
+          <div class="cell cell--3 artwork-description">
+            <ul class="detail-data">
+              <label class="scroll__label">Statement :</label>
+              <li></li>
+              <li class="scroll__statement"><p>${log.statement}</p></li>
+              <label>Date :</label>
+              <li><p>${date}/${year}</p></li>
+              <label>Order :</label>
+              <li><p>${log.order} out of ${totalNumber}</p></li>
+              <label>ID :</label>
+              <li><p>${log._id}</p></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+          `;
+  }
+}
+export default new MobileView();

@@ -4,11 +4,13 @@ import View from './View.js';
 class AnimationView extends View {
   _section1 = document.querySelector('.section--1');
   _section2 = document.querySelector('.section--2');
+  _sectionM = document.querySelector('.section--m');
   _column1 = document.querySelector('.column--1');
   _column2 = document.querySelector('.column--2');
   _column3 = document.querySelector('.column--3');
   _column4 = document.querySelector('.column--4');
   _column5 = document.querySelector('.column--5');
+  _columnM3 = document.querySelector('.column--m--3');
   _row1 = document.querySelector('.row--1');
   _row2 = document.querySelector('.row--2');
   _row3 = document.querySelector('.row--3');
@@ -23,7 +25,6 @@ class AnimationView extends View {
   _scrollContainer = document.querySelector('.scroll-log-container');
   _description = document.querySelector('.description');
   _form = document.querySelector('.form-artwork');
-  _btnToggleView = document.querySelector('.log--toggle-view');
   //
   // Serach view
   _expandSearchBtn = document.querySelector('.log--toggle-view');
@@ -48,7 +49,12 @@ class AnimationView extends View {
   _introStatement = document.querySelector('.intro--statement');
   //
 
+  // Mobile
+  _btnMobileResultToggle = document.querySelector('.mobile-results--toggle');
+  _btnToggleView = document.querySelector('.btn--mobile-log');
+
   leftSectionWidth;
+  archiveOpened = true;
 
   constructor() {
     super();
@@ -56,8 +62,44 @@ class AnimationView extends View {
     this._animateSearchBoxListeners();
     this._animateIntroListeners();
     this._animateIntro();
+    this._animateMobileResultListener();
+    this._animateMobileArchiveListener();
   }
 
+  _animateMobileArchiveListener() {
+    this._btnToggleView.addEventListener(
+      'click',
+      function () {
+        this._animateMobileArchive();
+      }.bind(this)
+    );
+  }
+  _animateMobileArchive() {
+    const rect = this._sectionM.getBoundingClientRect();
+    // closed so open
+    if (rect.y < 0) {
+      this._columnM3.classList.remove('bottom-40vh');
+    }
+    // opened so close
+    if (rect.y >= 0) {
+      this._columnM3.classList.add('bottom-40vh');
+    }
+  }
+  _animateMobileResultListener() {
+    this._btnMobileResultToggle.addEventListener(
+      'click',
+      function () {
+        this._animateMobileResult();
+      }.bind(this)
+    );
+  }
+  _animateMobileResult() {
+    this._columnM3.classList.toggle('bottom-40vh');
+
+    this._btnMobileResultToggle.classList.toggle('bottom0');
+    this._btnMobileResultToggle.classList.toggle('arrow-bottom');
+    this._btnMobileResultToggle.classList.toggle('arrow-rotate--top');
+  }
   _animateIntroListeners() {
     this._introCloseBtn.addEventListener(
       'click',
@@ -202,21 +244,21 @@ class AnimationView extends View {
       // this._row1.classList.toggle('left100vw');
       // setTimeout(
       //   function () {
-      //     this._row2.classList.toggle('top100vh');
+      //     this._row2.classList.toggle('top-100vh');
       //   }.bind(this),
       //   1000
       // );
       // this._expandSearchBtn.classList.toggle('arrow-rotate');
       //
       this._row1.classList.toggle('left100vw');
-      this._row2.classList.toggle('top100vh');
+      this._row2.classList.toggle('top-100vh');
       this._expandSearchBtn.classList.toggle('arrow-rotate');
     }
     if (rect.x >= 0) {
       // this._row1.classList.toggle('left100vw');
       // setTimeout(
       //   function () {
-      //     this._row2.classList.toggle('top100vh');
+      //     this._row2.classList.toggle('top-100vh');
       //   }.bind(this),
       //   1000
       // );
@@ -225,36 +267,41 @@ class AnimationView extends View {
       // this._scrollContainer.style.top = '0';
       //
       this._row1.classList.toggle('left100vw');
-      this._row2.classList.toggle('top100vh');
+      this._row2.classList.toggle('top-100vh');
       this._expandSearchBtn.classList.toggle('arrow-rotate');
 
       this._scrollContainer.style.top = '0';
     }
 
     // this._row1.classList.toggle('left100vw');
-    // // this._row2.classList.toggle('top100vh');
+    // // this._row2.classList.toggle('top-100vh');
     // this._expandSearchBtn.classList.toggle('arrow-rotate');
 
     // this._scrollContainer.classList.toggle('top0');
   }
+  _toggleSerachMobileView() {}
 
   animateToggleSearchView() {
     const rect = this._logContainer.getBoundingClientRect();
     // const sequence0 = function () {
     //   this._row1.classList.toggle('left100vw');
-    //   this._row2.classList.toggle('top100vh');
+    //   this._row2.classList.toggle('top-100vh');
     //   this._expandSearchBtn.classList.toggle('arrow-rotate');
     // }.bind(this);
     // console.log(rect);
     // this._container.classList.toggle('grid-adjuster');
 
-    this._section1.classList.toggle('test22');
+    this._section1.classList.toggle('toggle-log-panel');
     this._toggleSerachView(rect);
     this._toggleScrollView(rect);
 
     // opening search will hide form
     this._description.classList.remove('hidden');
     this._form.classList.add('hidden');
+  }
+  animateToggleMobileSearchView() {
+    // this._toggleSerachMobileView();
+    this._sectionM.classList.toggle('top0');
   }
 }
 

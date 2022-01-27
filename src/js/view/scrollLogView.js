@@ -108,7 +108,8 @@ class ScrollLogView extends View {
               <div class="container-artwork">
                   <div class="artwork-info artwork-frame" data-id="${
                     el._id
-                  }" style="background-image: url(${config.OGARTWORK})"></div>
+                  }" style="background-image: url(${config.OGARTWORK})">
+                  </div>
               </div>
               </div>
               <div class="cell cell--2 artwork-tag log-tag">
@@ -119,7 +120,7 @@ class ScrollLogView extends View {
           </div>
           <div class="column column--5">
               <div class="cell cell--1 artwork-title">
-              <h1>This Is Bullshit</h1>
+                <h1>This Is Bullshit</h1>
               </div>
               <div class="detail-information information">
                   <div class="cell cell--2 artwork-subtitle">
