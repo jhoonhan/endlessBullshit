@@ -104,7 +104,9 @@
     max-width: none;
   }
   .row {
-    margin: 0 2em;
+    // margin: 0 2em;
+    padding-top: 2rem;
+    padding-bottom: 4rem;
   }
   .row--1 {
     grid-template-columns: 1fr;

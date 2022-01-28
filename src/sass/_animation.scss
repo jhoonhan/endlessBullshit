@@ -8,8 +8,8 @@
   margin-left: 15px;
 }
 .arrow-rotate--top {
-  transform: rotate(-135deg);
-  -webkit-transform: rotate(-135deg);
+  transform: rotate(-135deg) translateY(1rem);
+  -webkit-transform: rotate(-135deg) translateY(-1rem) translateX(-1rem);
 }
 .arrow-bottom {
   transform: rotate(45deg);
@@ -23,6 +23,12 @@
 }
 .bottom0 {
   bottom: 0;
+}
+.bottomMobileArchiveToggle {
+  bottom: calc(-1 * (40vh - 4rem));
+}
+.bottomArrowRotateY {
+  transform: translateY(1rem);
 }
 .left100vw {
   left: 100vw !important;

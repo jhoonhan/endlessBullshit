@@ -58,7 +58,6 @@
     </div>
     <div class="container artworkPage">
       <btn class="btn--mobile-log">
-        <a class="">Archive</a>
         <div class="btn--bottom--arrow arrow-bottom mobile-archive--toggle"></div>
       </btn>
       <div class="section section--m">
@@ -89,11 +88,13 @@
             </div>
           </div>
         </div>     
-        <div class="btn--bottom--arrow arrow-bottom mobile-results--toggle">
-        </div>
+        
         <div class="column--m--3 bottom-40vh">
+          <div class="btn--bottom--arrow arrow-bottom mobile-results--toggle">
+          </div>
           <div class="log--mobile-container">
             <h2>Archive</h2>
+            <h2>Search</h2>
             <ul class="log--mobile-results">
               <li><a href="#" class="log--logs">aaang</a></li>
               <li><a href="#" class="log--logs">aaang</a></li>
@@ -113,6 +114,19 @@
               <li><a href="#" class="log--logs">aaang</a></li>
               <li><a href="#" class="log--logs">aaang</a></li>
             </ul>
+            <div class="log-mobile-search-box">
+              <select name="searchBy" class="log--mobile--searchby">
+                <option value="name">by name</option>
+                <option value="order">by order</option>
+                <option value="id">by ID</option>
+              </select>
+              <form class="log--mobile-search--form">
+                <input name="search" class="log--mobile-search--input" placeholder="search keyword"  type="text"></input>
+                <input type="submit" value="Submit" class="log--mobile-search--button"></input>
+              </form>
+              
+            </div>
+            
 
             <!-- <div class="log--search--container">
               <div class="log--search--dropdown log--search--box">

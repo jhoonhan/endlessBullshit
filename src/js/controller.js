@@ -128,24 +128,43 @@ const controlLogRender = async () => {
 
 const controlSearch = async () => {
   try {
-    // Get input text
-    console.log(logView.getSearchType());
-    await _search(undefined, logView.getSearchType());
+    // Mobile
+    if (window.innerWidth <= 800) {
+      console.log(`mobile going`);
+      const options = document.querySelector('.log--mobile--searchby');
+      const input = document.querySelector('.log--mobile-search--input');
+      const searchType = options.value;
+      const searchKeyword = input.value;
+      console.log(searchType, searchKeyword);
 
-    // if (!resultAccurate) return;
-    scrollLogView.renderScrolls([resultProximate, model.state.current.order]);
+      await _search(searchKeyword, searchType);
+      logView.renderLogs(resultProximate, 'portrait');
 
-    scrollLogView.moveToActiveScroll(
-      resultAccurate.order,
-      resultProximate.length
-    );
-    scrollLogView.renderActiveScroll(await api.getImage(resultAccurate.imgURL));
+      window.location.hash = `#${resultAccurate._id}`;
+    }
+    // Web
+    if (window.innerWidth > 800) {
+      console.log(logView.getSearchType());
 
-    logView.renderLogs(resultProximate);
-    logView.highlightActiveLog();
-    window.location.hash = `#${resultAccurate._id}`;
+      await _search(undefined, logView.getSearchType());
 
-    model.updateProperties(model.state.current, resultAccurate);
+      // if (!resultAccurate) return;
+      scrollLogView.renderScrolls([resultProximate, model.state.current.order]);
+
+      scrollLogView.moveToActiveScroll(
+        resultAccurate.order,
+        resultProximate.length
+      );
+      scrollLogView.renderActiveScroll(
+        await api.getImage(resultAccurate.imgURL)
+      );
+
+      logView.renderLogs(resultProximate, 'landscape');
+      logView.highlightActiveLog();
+      window.location.hash = `#${resultAccurate._id}`;
+
+      model.updateProperties(model.state.current, resultAccurate);
+    }
   } catch (err) {
     console.log(err);
   }
@@ -215,7 +234,10 @@ const controlMobileSearchView = async () => {
       await api.getImage(resultAccurate.imgURL),
       model.state.current.order,
     ]);
-    animationView.animateToggleMobileSearchView();
+    window.location.hash = `#${model.state.current._id}`;
+    console.log(model.state.current);
+
+    animationView.animateMobileArchive();
   } catch (err) {
     console.log(err);
   }

@@ -13,6 +13,8 @@ class LogView extends View {
     '.log--search--dropdown-options'
   );
   _searchForm = document.querySelector('.log--search--form');
+  _searchMobileForm = document.querySelector('.log--mobile-search--form');
+
   _searchInput = document.querySelector('.log--search--input');
   _byName = document.querySelector('.by-name');
   _byOrder = document.querySelector('.by-order');
@@ -39,6 +41,10 @@ class LogView extends View {
   }
   addHandlerSearch(handler) {
     this._searchForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      handler();
+    });
+    this._searchMobileForm.addEventListener('submit', function (e) {
       e.preventDefault();
       handler();
     });
@@ -141,43 +147,6 @@ class LogView extends View {
   getSearchType() {
     return this._searchType;
   }
-  // search(data, type, keyword) {
-  //   let inputKeyword;
-  //   if (!keyword) {
-  //     inputKeyword = this._searchInput.value.toLowerCase();
-  //   } else {
-  //     inputKeyword = keyword;
-  //   }
-
-  //   if (type === 'order' || this._searchType === 'order') {
-  //     const resultAccu = data.filter(el => el.index === +inputKeyword);
-  //     const resultProx = this._getResultProx(data, inputKeyword);
-
-  //     return [resultAccu, resultProx];
-  //   }
-  //   if (!type && this._searchType === 'name') {
-  //     const resultAccu = data.filter(el => el.name.includes(inputKeyword));
-  //     const resultProx = resultAccu;
-
-  //     return [[resultAccu[0]], resultProx];
-  //   }
-  //   if (!type && this._searchType === 'id') {
-  //     const resultAccu = data.filter(el => el.id === inputKeyword);
-  //     if (!resultAccu[0]) return;
-  //     const keyIndex = resultAccu[0].index;
-  //     const resultProx = this._getResultProx(data, keyIndex);
-
-  //     return [resultAccu, resultProx];
-  //   }
-  // }
-
-  // getImageHashChange(data) {
-  //   const hashID = window.location.hash.slice(1);
-  //   const [resultID] = data.filter(obj => {
-  //     return obj.id === hashID;
-  //   });
-  //   return resultID;
-  // }
 
   _searchBtnSQ1() {
     // super.controlHidden(this._btnSearchDropdown, 'toggle');

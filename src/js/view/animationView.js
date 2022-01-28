@@ -51,6 +51,7 @@ class AnimationView extends View {
 
   // Mobile
   _btnMobileResultToggle = document.querySelector('.mobile-results--toggle');
+  _btnMobileArchiveToggle = document.querySelector('.mobile-archive--toggle');
   _btnToggleView = document.querySelector('.btn--mobile-log');
 
   leftSectionWidth;
@@ -63,27 +64,37 @@ class AnimationView extends View {
     this._animateIntroListeners();
     this._animateIntro();
     this._animateMobileResultListener();
-    this._animateMobileArchiveListener();
+    // this._animateMobileArchiveListener();
   }
 
-  _animateMobileArchiveListener() {
-    this._btnToggleView.addEventListener(
-      'click',
-      function () {
-        this._animateMobileArchive();
-      }.bind(this)
-    );
-  }
-  _animateMobileArchive() {
+  // _animateMobileArchiveListener() {
+  //   this._btnToggleView.addEventListener(
+  //     'click',
+  //     function () {
+  //       this._animateMobileArchive();
+  //     }.bind(this)
+  //   );
+  // }
+  // animateToggleMobileSearchView() {
+  //   // this._toggleSerachMobileView();
+  // }
+  animateMobileArchive() {
+    this._sectionM.classList.toggle('top0');
+
     const rect = this._sectionM.getBoundingClientRect();
     // closed so open
     if (rect.y < 0) {
       this._columnM3.classList.remove('bottom-40vh');
+      this._columnM3.classList.remove('bottomMobileArchiveToggle');
     }
     // opened so close
     if (rect.y >= 0) {
+      this._columnM3.classList.remove('bottomMobileArchiveToggle');
       this._columnM3.classList.add('bottom-40vh');
     }
+    this._btnMobileArchiveToggle.classList.toggle('arrow-bottom');
+    this._btnMobileArchiveToggle.classList.toggle('arrow-rotate--top');
+    // this._btnMobileArchiveToggle.classList.toggle('bottomArrowRotateY');
   }
   _animateMobileResultListener() {
     this._btnMobileResultToggle.addEventListener(
@@ -94,9 +105,9 @@ class AnimationView extends View {
     );
   }
   _animateMobileResult() {
-    this._columnM3.classList.toggle('bottom-40vh');
+    this._columnM3.classList.toggle('bottomMobileArchiveToggle');
 
-    this._btnMobileResultToggle.classList.toggle('bottom0');
+    // this._btnMobileResultToggle.classList.toggle('bottom0');
     this._btnMobileResultToggle.classList.toggle('arrow-bottom');
     this._btnMobileResultToggle.classList.toggle('arrow-rotate--top');
   }
@@ -298,10 +309,6 @@ class AnimationView extends View {
     // opening search will hide form
     this._description.classList.remove('hidden');
     this._form.classList.add('hidden');
-  }
-  animateToggleMobileSearchView() {
-    // this._toggleSerachMobileView();
-    this._sectionM.classList.toggle('top0');
   }
 }
 
