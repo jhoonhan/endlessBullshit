@@ -107,7 +107,7 @@ const controlLogRender = async () => {
     );
     logView.highlightActiveLog();
 
-    model.updateProperties(model.state.current, selectedArtwork);
+    // model.updateProperties(model.state.current, selectedArtwork);
     // Non- mobile
     scrollLogView.renderActiveScroll(
       await api.getImage(selectedArtwork.imgURL)
@@ -119,7 +119,9 @@ const controlLogRender = async () => {
       await api.getImage(selectedArtwork.imgURL),
       model.state.current.order,
     ]);
-
+    document
+      .querySelector('.highlighted-text')
+      .scrollIntoView({ behavior: 'smooth' });
     // animationView.animateToggleMobileSearchView();
   } catch (err) {
     console.log(err);
@@ -194,8 +196,12 @@ const _search = async (keyword, type) => {
 
 const controlSerachView = async () => {
   try {
-    const hashID = window.location.hash.slice(1);
-    await _search(hashID, 'id');
+    // const hashID = window.location.hash.slice(1);
+    // await _search(hashID, 'id');
+
+    await model.loadLatest();
+    await _update(model.state.current);
+    await _search(model.state.current._id, 'id');
 
     if (!resultAccurate) return;
     model.updateProperties(model.state.current, resultAccurate);
@@ -210,8 +216,12 @@ const controlSerachView = async () => {
     scrollLogView.renderActiveScroll(await api.getImage(resultAccurate.imgURL));
 
     logView.renderLogs(resultProximate, 'landscape');
-    window.location.hash = `#${resultAccurate._id}`;
+    // window.location.hash = `#${resultAccurate._id}`;
     logView.highlightActiveLog();
+
+    document
+      .querySelector('.highlighted-text')
+      .scrollIntoView({ behavior: 'smooth' });
 
     animationView.animateToggleSearchView();
   } catch (err) {}
@@ -220,8 +230,12 @@ const controlSerachView = async () => {
 const controlMobileSearchView = async () => {
   try {
     // !LC DRY
-    const hashID = window.location.hash.slice(1);
-    await _search(hashID, 'id');
+    // const hashID = window.location.hash.slice(1);
+    // await _search(hashID, 'id');
+
+    await model.loadLatest();
+    await _update(model.state.current);
+    await _search(model.state.current._id, 'id');
 
     if (!resultAccurate) return;
     model.updateProperties(model.state.current, resultAccurate);
@@ -234,8 +248,8 @@ const controlMobileSearchView = async () => {
       await api.getImage(resultAccurate.imgURL),
       model.state.current.order,
     ]);
-    window.location.hash = `#${model.state.current._id}`;
-    console.log(model.state.current);
+    // window.location.hash = `#${model.state.current._id}`;
+    // console.log(model.state.current);
 
     animationView.animateMobileArchive();
   } catch (err) {

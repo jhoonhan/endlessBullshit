@@ -65,7 +65,7 @@ class ScrollLogView extends View {
     if (!active) return;
     const moveValue = qtScroll * 100 - active.dataset.order * 100;
     // console.log(`(${qtScroll} * 100) - (${active.dataset.order} * 100)`);
-    // console.log(moveValue);
+    console.log(moveValue);
     this._parentElement.style.top = `-${moveValue}vh`;
   }
   renderActiveScroll(img) {
