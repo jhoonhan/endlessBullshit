@@ -145,7 +145,7 @@ const controlSearch = async () => {
       const input = document.querySelector('.log__search__input--mobile');
       const searchType = options.value;
       const searchKeyword = input.value;
-      console.log(searchType, searchKeyword);
+      // console.log(searchType, searchKeyword);
 
       await _search(searchKeyword, searchType);
       logView.renderLogs(resultProximate, 'portrait');
@@ -183,10 +183,18 @@ const controlSearch = async () => {
 const _search = async (keyword, type) => {
   try {
     let searchKeyword = keyword;
-    if (!keyword) {
+    if (!keyword && type !== 'latest') {
       searchKeyword = logView.getSearchInput();
     }
-
+    if (type === 'latest') {
+      const { resultAccu, resultProx } = await api.getSearch(
+        searchKeyword,
+        type
+      );
+      resultAccurate = resultAccu;
+      resultProximate = resultProx;
+      return;
+    }
     const { resultAccu, resultProx } = await api.getSearch(searchKeyword, type);
 
     if (!resultAccu || !resultProx) {

@@ -3,7 +3,7 @@ import View from './View.js';
 
 class DescriptionView extends View {
   _parentElement = document.querySelector('.description');
-  _form = document.querySelector('.form__artwork');
+  _form = document.querySelector('.artwork__form');
   _textarea = document.querySelector('.input-form--textarea');
   _errorMessage = document.querySelector('.error-message--form');
 

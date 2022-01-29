@@ -24,7 +24,7 @@ class AnimationView extends View {
   _logContainer = document.querySelector('.log__container');
   _scrollContainer = document.querySelector('.scroll-log-container');
   _description = document.querySelector('.description');
-  _form = document.querySelector('.form__artwork');
+  _form = document.querySelector('.artwork__form');
   //
   // Serach view
   _expandSearchBtn = document.querySelector('.log__view--toggle');

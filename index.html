@@ -58,7 +58,7 @@
     </div>
     <div class="container artworkPage">
       <btn class="log__btn--mobile">
-        <div class="btn--arrow--bottom arrow-bottom log__archive--mobile--toggle"></div>
+        <div class="btn--arrow--bottom arrow-bottom log__archive--mobile--toggle arrow-bottom"></div>
       </btn>
       <div class="section section--m">
         <div class="mobile-artwork-container">
@@ -119,8 +119,9 @@
                 <option value="name">by name</option>
                 <option value="order">by order</option>
                 <option value="id">by ID</option>
+                <option value="latest">latest</option>
               </select>
-              <form class="log--mobile-search--form">
+              <form class="log__search__form--mobile">
                 <input name="search" class="log__search__input--mobile" placeholder="search keyword"  type="text"></input>
                 <input type="submit" value="Submit" class="log__btn--search"></input>
               </form>
@@ -211,7 +212,7 @@
           
             
             <!-- This gets fired -->
-            <form class="form__artwork hidden">
+            <form class="artwork__form hidden">
               <div class="cell cell--2">
                 <label class="label-form">Your Name :</label>
                 <input name="name" class="input--text input-form" placeholder="artist name"  type="text" required></input>
@@ -345,6 +346,7 @@
 
     <!-- <div class="render__box"> -->
       <div class="render__box render__element--hide">
+      <!-- <div class="render__box"> -->
       <div class="render__box--inner">
         <div class="render__artwork shadow--inner">
           <div class="render__origial-image">

@@ -34,7 +34,7 @@ class BetweenView extends View {
       .map(el => el.slice(0, 1).toUpperCase() + el.slice(1))
       .join(' ')}`;
     return `
-      <div class="fullsize-between">
+      <div class="between--fullsize">
         <div class="between__container">
           <span class="message">Your artwork has been submitted.</span>
           <ul class="between__information">

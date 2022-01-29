@@ -15,8 +15,16 @@ export const getImage = async imgURL => {
 
 export const getSearch = async (keyword, type) => {
   try {
-    const res = await fetch(`${APIBASEURL}/search/${type}/${keyword}`);
-    const data = await res.json();
+    let data;
+    if (type !== 'latest') {
+      const res = await fetch(`${APIBASEURL}/search/${type}/${keyword}`);
+      data = await res.json();
+    }
+    if (type === 'latest') {
+      const res = await fetch(`${APIBASEURL}/search/${type}/latest`);
+      data = await res.json();
+    }
+
     return data;
   } catch (err) {
     console.log(err);

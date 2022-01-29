@@ -12,8 +12,13 @@ class LogView extends View {
   _searchDropdownOptions = document.querySelector(
     '.log--search--dropdown-options'
   );
+  _searchDropdownOptionsMobile = document.querySelector(
+    '.log__searchby--mobile'
+  );
+  _searchInputMobile = document.querySelector('.log__search__input--mobile');
+
   _searchForm = document.querySelector('.log--search--form');
-  _searchMobileForm = document.querySelector('.log--mobile-search--form');
+  _searchMobileForm = document.querySelector('.log__search__form--mobile');
 
   _searchInput = document.querySelector('.log__search__input');
   _byName = document.querySelector('.by-name');
@@ -21,7 +26,7 @@ class LogView extends View {
   _byID = document.querySelector('.by-id');
 
   _description = document.querySelector('.description');
-  _form = document.querySelector('.form__artwork');
+  _form = document.querySelector('.artwork__form');
 
   _searchType = 'name';
   _view = '';
@@ -31,6 +36,18 @@ class LogView extends View {
     super();
     this.renderLogs();
     this._addHandlerSearchOption();
+    this.addHandlerSearchByOption();
+  }
+
+  addHandlerSearchByOption() {
+    this._searchDropdownOptionsMobile.addEventListener('change', e => {
+      const selectedOption = e.target.value;
+      if (selectedOption === 'latest') {
+        this._searchInputMobile.classList.add('hidden');
+      } else {
+        this._searchInputMobile.classList.remove('hidden');
+      }
+    });
   }
 
   addHandlerToggleView(handler) {
@@ -75,7 +92,8 @@ class LogView extends View {
   highlightActiveLog() {
     const logs = document.querySelectorAll('.log__logs');
     const artworkInfo = document.querySelector('.scroll--active .artwork-info');
-
+    console.log(logs);
+    console.log(artworkInfo);
     // if (window.location.hash === '') return;
     // logs.forEach(function (log) {
     //   if (log.href.includes(window.location.hash)) {
