@@ -301,7 +301,7 @@ button {
 .btn--mobile-log {
   cursor: pointer;
   // border-bottom: solid black;
-  display: flex;
+  display: none;
   flex-direction: column;
   // justify-content: center;
   align-items: center;
@@ -440,7 +440,8 @@ button {
   justify-content: flex-start;
 
   height: calc(100vh - 7rem);
-  padding-top: 0rem;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
   box-sizing: border-box;
 
   overflow-y: scroll;
