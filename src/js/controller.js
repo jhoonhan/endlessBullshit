@@ -119,10 +119,15 @@ const controlLogRender = async () => {
       await api.getImage(selectedArtwork.imgURL),
       model.state.current.order,
     ]);
-    document
-      .querySelector('.highlighted-text')
-      .scrollIntoView({ behavior: 'smooth' });
-    // animationView.animateToggleMobileSearchView();
+    console.log(`sss`);
+    if (window.innerWidth > 800) {
+      document
+        .querySelector('.highlighted-text')
+        .scrollIntoView({ behavior: 'smooth' });
+    }
+    if (window.innerWidth <= 800) {
+      logView.highlightActiveLogMobile();
+    }
   } catch (err) {
     console.log(err);
   }
@@ -250,6 +255,7 @@ const controlMobileSearchView = async () => {
     ]);
     // window.location.hash = `#${model.state.current._id}`;
     // console.log(model.state.current);
+    logView.highlightActiveLogMobile();
 
     animationView.animateMobileArchive();
   } catch (err) {

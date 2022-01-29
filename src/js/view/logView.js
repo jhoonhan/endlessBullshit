@@ -94,6 +94,18 @@ class LogView extends View {
     });
   }
 
+  highlightActiveLogMobile() {
+    const logs = document.querySelectorAll('.log--mobile-results .log--logs');
+    const activeArtwork = document.querySelector('.artwork-frame--mobile');
+    logs.forEach(log => {
+      if (log.href.slice(-24) === activeArtwork.dataset.id) {
+        log.classList.add('highlighted-text--mobile');
+      } else {
+        log.classList.remove('highlighted-text--mobile');
+      }
+    });
+  }
+
   // _addHandlerSearchSelector() {
   //   this._byName.addEventListener('click', function () {
   //     this._searchType = 'name';

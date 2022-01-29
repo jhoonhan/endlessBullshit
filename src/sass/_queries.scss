@@ -96,6 +96,7 @@
   }
   .column--2 {
     max-width: 86vw;
+    min-width: 86vw;
     justify-self: center;
     align-self: flex-start;
     margin-top: 2em;
@@ -111,6 +112,7 @@
   .row--1 {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;
+    align-content: flex-start;
     margin-top: 5vw;
   }
   .row--2 {
@@ -143,6 +145,7 @@
     // display: none;
     min-height: none;
     overflow: hidden;
+    // height: 100vh;
   }
   .section--m {
     display: block;

@@ -143,13 +143,29 @@ button {
 .log--mobile--searchby {
   text-align: center;
 }
+
 .log--mobile-results {
   display: grid;
-  grid-template-rows: auto;
+  // grid-template-rows: auto;
+  grid-auto-rows: minmax(min-content, max-content);
+  max-height: 40vh;
+  width: calc(100% - 2rem);
+  // background-color: red;
+  overflow: hidden scroll;
+  padding-bottom: 4rem;
   & li {
     list-style-type: none;
     padding: 0.5em 0;
     font-size: 1.3rem;
+  }
+  &::after {
+    content: '';
+    box-shadow: 0 0 4rem 4rem white;
+    position: absolute;
+    width: 100%;
+    height: 0px;
+    bottom: 0;
+    left: 0;
   }
 }
 .mobile-results--toggle {
@@ -180,7 +196,7 @@ button {
   height: 40vh;
   max-height: 40vh;
   max-width: 100vw;
-  padding: 4rem 7vw;
+  padding: 4rem 7vw 0rem 7vw;
   background-color: $mobileArchiveBackground;
   // border-top: 1px solid black;
   box-sizing: border-box;
@@ -751,6 +767,9 @@ button {
 
 .highlighted-text {
   color: red;
+}
+.highlighted-text--mobile {
+  @extend .highlighted-text;
 }
 
 .detail-data {
