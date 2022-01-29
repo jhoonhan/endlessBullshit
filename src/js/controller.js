@@ -141,8 +141,8 @@ const controlSearch = async () => {
     // Mobile
     if (window.innerWidth <= 800) {
       console.log(`mobile going`);
-      const options = document.querySelector('.log--mobile--searchby');
-      const input = document.querySelector('.log--mobile-search--input');
+      const options = document.querySelector('.log__searchby--mobile');
+      const input = document.querySelector('.log__search__input--mobile');
       const searchType = options.value;
       const searchKeyword = input.value;
       console.log(searchType, searchKeyword);

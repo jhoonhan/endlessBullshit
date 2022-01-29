@@ -9,7 +9,7 @@ import detailView from './view/detailView.js';
 import animationView from './view/animationView.js';
 import scrollLogView from './view/scrollLogView.js';
 
-const artworkContainer = document.querySelector('.render-artwork');
+const artworkContainer = document.querySelector('.render__artwork');
 
 let resultAccurate, resultProximate;
 
@@ -148,7 +148,7 @@ const _search = function (keyword, type) {
 };
 
 const controlSerachView = function () {
-  const btn = document.querySelector('.log--toggle-view');
+  const btn = document.querySelector('.log__view--toggle');
   const selectedArtwork = logView.getImageHashChange(model.state.artworks);
 
   _search(selectedArtwork.index, 'order');

@@ -2,12 +2,12 @@ import * as config from '../config.js';
 import View from './View.js';
 
 class LogView extends View {
-  _parentElement = document.querySelector('.log--container');
-  _logResultContainer = document.querySelector('.log--results');
-  _logMobileResultContainer = document.querySelector('.log--mobile-results');
+  _parentElement = document.querySelector('.log__container');
+  _logResultContainer = document.querySelector('.log__results');
+  _logMobileResultContainer = document.querySelector('.log__results--mobile');
 
-  _logs = document.querySelectorAll('.log--logs');
-  _btnToggleView = document.querySelector('.log--toggle-view');
+  _logs = document.querySelectorAll('.log__logs');
+  _btnToggleView = document.querySelector('.log__view--toggle');
   _btnSearchDropdown = document.querySelector('.log--search--dropdown');
   _searchDropdownOptions = document.querySelector(
     '.log--search--dropdown-options'
@@ -15,13 +15,13 @@ class LogView extends View {
   _searchForm = document.querySelector('.log--search--form');
   _searchMobileForm = document.querySelector('.log--mobile-search--form');
 
-  _searchInput = document.querySelector('.log--search--input');
+  _searchInput = document.querySelector('.log__search__input');
   _byName = document.querySelector('.by-name');
   _byOrder = document.querySelector('.by-order');
   _byID = document.querySelector('.by-id');
 
   _description = document.querySelector('.description');
-  _form = document.querySelector('.form-artwork');
+  _form = document.querySelector('.form__artwork');
 
   _searchType = 'name';
   _view = '';
@@ -73,7 +73,7 @@ class LogView extends View {
   }
 
   highlightActiveLog() {
-    const logs = document.querySelectorAll('.log--logs');
+    const logs = document.querySelectorAll('.log__logs');
     const artworkInfo = document.querySelector('.scroll--active .artwork-info');
 
     // if (window.location.hash === '') return;
@@ -95,7 +95,7 @@ class LogView extends View {
   }
 
   highlightActiveLogMobile() {
-    const logs = document.querySelectorAll('.log--mobile-results .log--logs');
+    const logs = document.querySelectorAll('.log__results--mobile .log__logs');
     const activeArtwork = document.querySelector('.artwork-frame--mobile');
     logs.forEach(log => {
       if (log.href.slice(-24) === activeArtwork.dataset.id) {
@@ -193,7 +193,7 @@ class LogView extends View {
       .map(
         function (el) {
           const convtName = this._convertName(el.name);
-          return `<li><a href="#${el._id}" class="log--logs" data-index="${
+          return `<li><a href="#${el._id}" class="log__logs" data-index="${
             el.order
           }">${this.capitalizeName(convtName)}</a></li>`;
         }.bind(this)

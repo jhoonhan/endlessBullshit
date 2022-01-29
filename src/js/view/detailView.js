@@ -12,10 +12,10 @@ class DetailView extends View {
 
   _generateMarkup(data) {
     return `
-    <div class="cell cell--2 artwork-subtitle">
+    <div class="cell cell--2 artwork__subtitle">
         <h3>by ${this.capitalizeName(data.name)}, ${data.year}</h3>
     </div>
-    <div class="cell cell--3 artwork-description">
+    <div class="cell cell--3 artwork__description">
         <p>
         &quot${data.statement}&quot
         </p>

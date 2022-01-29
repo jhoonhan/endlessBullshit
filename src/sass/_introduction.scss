@@ -1,0 +1,79 @@
+.introduction {
+  // display: flex;
+  position: fixed;
+  height: 100vh;
+  width: 100%;
+  top: 0;
+  left: 0;
+
+  display: none;
+  justify-content: center;
+  align-content: center;
+  background-color: $color--main;
+
+  z-index: 2;
+
+  //animation
+  opacity: 1;
+}
+.intro__container {
+  left: 0;
+
+  transition: all 0.5s;
+}
+.intro__text {
+  position: relative;
+  right: 0;
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  transition: all 0.5s;
+  & h1 {
+    right: 0;
+    position: relative;
+    transition: all 0.5s;
+  }
+  & h3 {
+    right: 0;
+    position: relative;
+    align-self: flex-end;
+    transition: all 0.5s;
+  }
+  & span {
+    right: 0;
+    position: relative;
+    margin-top: 1rem;
+    margin-bottom: 4rem;
+    transition: all 0.5s;
+  }
+}
+.intro__tag {
+  position: absolute;
+  right: 2%;
+  margin-top: 5rem;
+
+  text-align: right;
+}
+.intro__container--center {
+  width: 70vw;
+  height: 100%;
+
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  justify-content: center;
+  align-content: center;
+  column-gap: 3vw;
+}
+.intro__artwork {
+  @extend .artwork-frame;
+  max-height: 100%;
+  max-width: 100%;
+
+  aspect-ratio: 1 / 1;
+
+  box-sizing: border-box;
+
+  background-image: url(../img/comedian.jpg);
+}

@@ -3,8 +3,8 @@ import View from './View.js';
 
 class DescriptionView extends View {
   _parentElement = document.querySelector('.description');
-  _form = document.querySelector('.form-artwork');
-  _textarea = document.querySelector('.input-form-textarea');
+  _form = document.querySelector('.form__artwork');
+  _textarea = document.querySelector('.input-form--textarea');
   _errorMessage = document.querySelector('.error-message--form');
 
   constructor() {
@@ -95,7 +95,7 @@ class DescriptionView extends View {
   }
 
   _attachEventHandler() {
-    const btnClose = document.querySelector('.btn--hide-description');
+    const btnClose = document.querySelector('.btn__description--hide');
     btnClose.addEventListener('click', this.toggleWindow.bind(this));
   }
 
@@ -103,15 +103,15 @@ class DescriptionView extends View {
     const year = data.date.slice(0, 4);
 
     return `
-    <div class="cell cell--2 artwork-subtitle">
+    <div class="cell cell--2 artwork__subtitle">
         <h3>by ${this.capitalizeName(data.name)}, ${year}</h3>
     </div>
-    <div class="cell cell--3 artwork-description">
+    <div class="cell cell--3 artwork__description">
         <p>
         &quot${data.statement}&quot
         </p>
     </div>
-    <button class="btn--hide-description">This is bullshit</button>
+    <button class="btn__description--hide">This is bullshit</button>
     `;
   }
 }

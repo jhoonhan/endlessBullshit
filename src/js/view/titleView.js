@@ -2,7 +2,7 @@ import * as config from '../config.js';
 import View from './View.js';
 
 class TitleView extends View {
-  _renderTitle = document.querySelector('.render-text-title');
+  _renderTitle = document.querySelector('.render__text--title');
   _latestTag = document.querySelector('.latest-tag');
   _logTag = document.querySelector('.scroll--1 .log-tag');
 

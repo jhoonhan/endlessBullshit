@@ -3,15 +3,15 @@ import View from './View.js';
 // import images from '../../archive/*.png';
 
 class RenderView extends View {
-  _renderReceiver = document.querySelector('.render-receiver');
-  _renderImage = document.querySelector('.render-artwork');
-  _renderOriginalImage = document.querySelector('.render-origial-image');
-  _form = document.querySelector('.form-artwork');
+  _renderReceiver = document.querySelector('.render__receiver');
+  _renderImage = document.querySelector('.render__artwork');
+  _renderOriginalImage = document.querySelector('.render__origial-image');
+  _form = document.querySelector('.form__artwork');
   _artwork = document.querySelector('.artwork');
   _artworkInfo = document.querySelector('.artwork-info--1');
 
-  _renderTitle = document.querySelector('.render-text-title');
-  _latestTitle = document.querySelector('.artwork-tag');
+  _renderTitle = document.querySelector('.render__text--title');
+  _latestTitle = document.querySelector('.artwork__tag');
 
   _locationHTML = '';
 
@@ -68,11 +68,11 @@ class RenderView extends View {
   artworkReducer(type) {
     // Adds CSS values to renderImage to be conveted to canvas
     if (type === 'add') {
-      this._renderOriginalImage.classList.add('render-reduce');
+      this._renderOriginalImage.classList.add('render--reduce');
       this._renderOriginalImage.style.opacity = config.OPACITY;
     }
     if (type === 'remove') {
-      this._renderOriginalImage.classList.remove('render-reduce');
+      this._renderOriginalImage.classList.remove('render--reduce');
       this._renderOriginalImage.style.opacity = 1;
     }
   }

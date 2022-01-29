@@ -2,7 +2,7 @@ import View from './View.js';
 
 class MobileView extends View {
   _parentElement = document.querySelector('.section--m');
-  _btnToggleView = document.querySelector('.btn--mobile-log');
+  _btnToggleView = document.querySelector('.log__btn--mobile');
   _artworkFrame = document.querySelector('.artwork-frame--mobile');
   _artworkContainer = document.querySelector('.mobile-artwork-container');
 
@@ -24,8 +24,8 @@ class MobileView extends View {
     const date = log.date.slice(0, 10);
     return `
       <div class="column column--m--1">
-        <div class="cell cell--1 container-outer outer-shadow">
-          <div class="container-artwork">
+        <div class="cell cell--1 artwork__container--outer shadow--outer">
+          <div class="artwork__container">
             <div class="artwork-frame artwork-frame--mobile" data-id="${
               log._id
             }" style="background-image: url(${img})"
@@ -35,14 +35,14 @@ class MobileView extends View {
         
       </div>
       <div class="column--m--2">
-        <div class="cell cell--1 artwork-title">
+        <div class="cell cell--1 artwork__title">
           <h1>This Is Bullshit</h1>
         </div>
         <div class="detail-information information">
-          <div class="cell cell--2 artwork-subtitle">
+          <div class="cell cell--2 artwork__subtitle">
             <h3>by ${this.capitalizeName(log.name)}, ${year}</h3>
           </div>
-          <div class="cell cell--3 artwork-description">
+          <div class="cell cell--3 artwork__description">
             <ul class="detail-data">
               <label class="scroll__label">Statement :</label>
               <li></li>

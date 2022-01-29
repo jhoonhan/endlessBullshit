@@ -3,7 +3,7 @@ import View from './View.js';
 
 class ScrollLogView extends View {
   _parentElement = document.querySelector('.scroll-log-container');
-  _logResultContainer = document.querySelector('.log--results');
+  _logResultContainer = document.querySelector('.log__results');
   _scroll0 = document.querySelector('.scroll--0');
   _scroll1 = document.querySelector('.scroll--1');
   _scroll2 = document.querySelector('.scroll--2');
@@ -104,29 +104,29 @@ class ScrollLogView extends View {
             el.order
           }"">
           <div class="column column--4">
-              <div class="cell cell--1 container-outer outer-shadow">
-              <div class="container-artwork">
+              <div class="cell cell--1 artwork__container--outer shadow--outer">
+              <div class="artwork__container">
                   <div class="artwork-info artwork-frame" data-id="${
                     el._id
                   }" style="background-image: url(${config.OGARTWORK})">
                   </div>
               </div>
               </div>
-              <div class="cell cell--2 artwork-tag log-tag">
+              <div class="cell cell--2 artwork__tag log-tag">
               <span><i>This Is Bullshit</i>, ${this.capitalizeName(
                 el.name
               )}, ${year}</span>
               </div>
           </div>
           <div class="column column--5">
-              <div class="cell cell--1 artwork-title">
+              <div class="cell cell--1 artwork__title">
                 <h1>This Is Bullshit</h1>
               </div>
               <div class="detail-information information">
-                  <div class="cell cell--2 artwork-subtitle">
+                  <div class="cell cell--2 artwork__subtitle">
                   <h3>by ${this.capitalizeName(el.name)}, ${year}</h3>
                   </div>
-                  <div class="cell cell--3 artwork-description">
+                  <div class="cell cell--3 artwork__description">
                     <ul class="detail-data">
                       <label class="scroll__label">Statement :</label>
                       <li></li>

@@ -1,16 +1,19 @@
 %btn {
+  cursor: pointer;
+
+  color: black;
+
+  display: flex;
+  align-items: center;
+
   background-color: transparent;
   border-radius: 0rem;
   border: 1px solid #666;
   // text-transform: lowercase;
-  color: black;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
   transition: all 0.2s;
 
   &:hover {
-    background-color: red;
+    background-color: $color--accent;
   }
   &:focus {
     outline: none;
@@ -18,15 +21,16 @@
 }
 .btn--large {
   @extend %btn;
-  padding: 1.5rem;
-  // font-size: 1.5rem;
-  font-weight: 600;
-  width: 100%;
-  justify-content: center;
   position: relative;
   right: 0;
+  width: 100%;
+  padding: 1.5rem;
+
+  font-weight: 600;
+
+  justify-content: center;
 }
-.btn--hide-description {
+.btn__description--hide {
   @extend .btn--large;
   margin-top: 2rem;
 }
@@ -35,31 +39,43 @@
   @extend .btn--large;
   margin-top: 2rem;
 }
-.btn--right-arrow {
+.btn--arrow--right {
   cursor: pointer;
+  padding: 1rem;
+
   background-color: transparent;
 
   border: solid black;
   border-width: 0 1px 1px 0;
-  padding: 1rem;
+
   transition: all 0.2s;
   &:hover {
-    border: solid red;
+    border: solid $color--accent;
     border-width: 0 1px 1px 0;
   }
 }
+.btn--arrow--bottom {
+  cursor: pointer;
+  padding: 1rem;
+  border: solid black;
+  border-width: 0 1px 1px 0;
+  background-color: transparent;
+
+  transition: all 0.2s;
+}
 
 %input {
-  box-sizing: border-box;
   padding: 10px;
+
+  box-sizing: border-box;
   border: 1px solid black;
   border-radius: 0rem;
 
   &:hover {
-    border: 1px solid red;
+    border: 1px solid $color--accent;
   }
   &:focus {
-    border: 1px solid red;
+    border: 1px solid $color--accent;
     outline: none;
   }
 }
@@ -67,46 +83,51 @@
   @extend %input;
   width: 100%;
 }
-.input-form-textarea {
+.input-form--textarea {
   @extend %input;
   width: 100%;
-  line-height: 1.6rem;
   height: 30rem;
+
+  line-height: 1.6rem;
 }
 
 .checkbox {
-  border: 1px solid black;
-  outline: none;
-  appearance: none;
-  width: 2rem;
-  height: 2rem;
   cursor: pointer;
 
+  width: 2rem;
+  height: 2rem;
+
+  border: 1px solid black;
+
+  outline: none;
+  appearance: none;
+
   &:hover {
-    border: 1px solid red;
+    border: 1px solid $color--accent;
   }
 
   &:active {
-    background-color: red;
-    border: 1px solid red;
+    background-color: $color--accent;
+    border: 1px solid $color--accent;
   }
 
   &:checked {
-    background-color: red;
-    border: 1px solid red;
     text-align: center;
+
+    background-color: $color--accent;
+    border: 1px solid $color--accent;
   }
   &:checked::after {
     content: 'X';
     line-height: 2rem;
-    color: white;
+    color: $color--main;
   }
 }
 
 %label {
   color: black;
 }
-.label-checkbox {
+.label--checkbox {
   @extend %label;
   font-size: 1rem;
 }
@@ -114,4 +135,6 @@
   font-size: 2rem;
 }
 
-///dlkasjdlsajdljsaldjlsajdljsaldal
+.hidden {
+  display: none !important;
+}

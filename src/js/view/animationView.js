@@ -21,38 +21,42 @@ class AnimationView extends View {
   //
 
   // Log view
-  _logContainer = document.querySelector('.log--container');
+  _logContainer = document.querySelector('.log__container');
   _scrollContainer = document.querySelector('.scroll-log-container');
   _description = document.querySelector('.description');
-  _form = document.querySelector('.form-artwork');
+  _form = document.querySelector('.form__artwork');
   //
   // Serach view
-  _expandSearchBtn = document.querySelector('.log--toggle-view');
+  _expandSearchBtn = document.querySelector('.log__view--toggle');
   //
   // Search box
-  _searchContainer = document.querySelector('.log--search--container');
-  _searchExpandBtn = document.querySelector('.log--search--expand');
+  _searchContainer = document.querySelector('.log__search__container');
+  _searchExpandBtn = document.querySelector('.log__search--expand');
   _searchDropdown = document.querySelector('.log--search--dropdown');
-  _searchOptionContainer = document.querySelector('.log--search--options');
-  _searchOptions = document.querySelectorAll('.log--search--option a');
+  _searchOptionContainer = document.querySelector('.log__search__options');
+  _searchOptions = document.querySelectorAll('.log__search__option a');
   _searchForm = document.querySelector('.log--search--form');
-  _searchInput = document.querySelector('.log--search--input');
+  _searchInput = document.querySelector('.log__search__input');
   //
 
   // Introduction
   _intro = document.querySelector('.introduction');
   _introCloseBtn = document.querySelector('.btn--close--intro');
-  _introArtworkContainer = document.querySelector('.intro--container');
-  _introDescription = document.querySelector('.intro--text');
-  _introTitle = document.querySelector('.introduction .artwork-title');
-  _introSubtitle = document.querySelector('.introduction .artwork-subtitle');
+  _introArtworkContainer = document.querySelector('.intro__container');
+  _introDescription = document.querySelector('.intro__text');
+  _introTitle = document.querySelector('.introduction .artwork__title');
+  _introSubtitle = document.querySelector('.introduction .artwork__subtitle');
   _introStatement = document.querySelector('.intro--statement');
   //
 
   // Mobile
-  _btnMobileResultToggle = document.querySelector('.mobile-results--toggle');
-  _btnMobileArchiveToggle = document.querySelector('.mobile-archive--toggle');
-  _btnToggleView = document.querySelector('.btn--mobile-log');
+  _btnMobileResultToggle = document.querySelector(
+    '.log__results--mobile--toggle'
+  );
+  _btnMobileArchiveToggle = document.querySelector(
+    '.log__archive--mobile--toggle'
+  );
+  _btnToggleView = document.querySelector('.log__btn--mobile');
 
   leftSectionWidth;
   archiveOpened = true;

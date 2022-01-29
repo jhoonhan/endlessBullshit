@@ -32,39 +32,39 @@
   .lable-checkbox {
     $font-size--s: 1em;
   }
-  .log--results {
+  .log__results {
     font-size: $font-size--p;
   }
   .scroll {
-    column-gap: 3%;
     width: calc(100vw - 230px);
+    column-gap: 3%;
   }
-  .container-outer {
-    height: min(80vh, 60vw);
+  .artwork__container--outer {
     width: min(80vh, 60vw);
+    height: min(80vh, 60vw);
   }
-  .scroll .container-outer {
+  .scroll .artwork__container--outer {
     height: min(70vh, 50vw);
     width: min(70vh, 50vw);
     padding: 7vh;
   }
-  .log--logs {
+  .log__logs {
     padding-right: 1em;
   }
   .column {
     padding-right: 0;
   }
-  .log--toggle-view {
-    padding: 7px;
+  .log__view--toggle {
     left: 100%;
+    padding: 7px;
   }
   .log__mobile-view--toggle {
     padding: 7px;
   }
-  .input-form-textarea {
+  .input-form--textarea {
     height: 25vh;
   }
-  .form-artwork {
+  .form__artwork {
     margin-top: 0;
     row-gap: 0.75vw;
   }
@@ -74,7 +74,7 @@
   .information {
     // max-width: 32vw;
   }
-  .form-artwork {
+  .form__artwork {
     // max-width: 32vw;
   }
   .section--2 {
@@ -84,22 +84,24 @@
 // BELOW 900px//
 // Mobile Portrait Orientation//
 @media (max-width: 50em) {
-  .container-outer {
-    height: 90vw;
+  .artwork__container--outer {
     width: 90vw;
+    height: 90vw;
     padding: 9vw;
+
     justify-self: center;
   }
-  .scroll .container-outer {
-    height: 90vw;
+  .scroll .artwork__container--outer {
     width: 90vw;
+    height: 90vw;
   }
   .column--2 {
-    max-width: 86vw;
     min-width: 86vw;
+    max-width: 86vw;
+    margin-top: 2em;
+
     justify-self: center;
     align-self: flex-start;
-    margin-top: 2em;
   }
   .column--5 {
     max-width: none;
@@ -110,10 +112,11 @@
     padding-bottom: 4rem;
   }
   .row--1 {
+    margin-top: 5vw;
+
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;
     align-content: flex-start;
-    margin-top: 5vw;
   }
   .row--2 {
     grid-template-columns: 1fr;
@@ -144,6 +147,7 @@
   .section--2 {
     // display: none;
     min-height: none;
+
     overflow: hidden;
     // height: 100vh;
   }
@@ -157,20 +161,20 @@
   .information {
     max-width: none;
   }
-  .form-artwork {
+  .form__artwork {
     max-width: none;
   }
   .container {
     grid-template-columns: 150px calc(100vw - 3% - 150px);
   }
-  .log--container {
+  .log__container {
     right: 150px;
   }
   .scroll {
     grid-template-columns: auto;
     grid-template-rows: auto auto;
   }
-  .btn--mobile-log {
+  .log__btn--mobile {
     display: flex;
   }
 }
