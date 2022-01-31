@@ -84,6 +84,8 @@ class AnimationView extends View {
   // }
   animateMobileArchive() {
     this._sectionM.classList.toggle('top0');
+    // this._section2.classList.toggle('overflow--hidden');
+    document.body.classList.toggle('overflow--hidden');
 
     const rect = this._sectionM.getBoundingClientRect();
     // closed so open
@@ -248,12 +250,12 @@ class AnimationView extends View {
   _toggleScrollView(rect) {
     if (rect.x < 0) {
       this._row1.classList.toggle('transfrom-x__100vw');
-      this._row2.classList.toggle('top-100vh');
+      this._row2.classList.toggle('transfrom-y__-100vh');
       this._expandSearchBtn.classList.toggle('arrow-rotate');
     }
     if (rect.x >= 0) {
       this._row1.classList.toggle('transfrom-x__100vw');
-      this._row2.classList.toggle('top-100vh');
+      this._row2.classList.toggle('transfrom-y__-100vh');
       this._expandSearchBtn.classList.toggle('arrow-rotate');
 
       // this._scrollContainer.style.top = '0';
@@ -261,10 +263,8 @@ class AnimationView extends View {
     }
 
     // this._row1.classList.toggle('transfrom-x__100vw');
-    // // this._row2.classList.toggle('top-100vh');
+    // // this._row2.classList.toggle('transfrom-y__-100vh');
     // this._expandSearchBtn.classList.toggle('arrow-rotate');
-
-    // this._scrollContainer.classList.toggle('top0');
   }
   _toggleSerachMobileView() {}
 
@@ -272,7 +272,7 @@ class AnimationView extends View {
     const rect = this._logContainer.getBoundingClientRect();
     // const sequence0 = function () {
     //   this._row1.classList.toggle('transfrom-x__100vw');
-    //   this._row2.classList.toggle('top-100vh');
+    //   this._row2.classList.toggle('transfrom-y__-100vh');
     //   this._expandSearchBtn.classList.toggle('arrow-rotate');
     // }.bind(this);
     // console.log(rect);

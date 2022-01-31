@@ -10,6 +10,7 @@ import detailView from './view/detailView.js';
 import animationView from './view/animationView.js';
 import scrollLogView from './view/scrollLogView.js';
 import mobileView from './view/mobileView.js';
+import { isMobile } from './helper.js';
 
 let resultAccurate;
 let resultProximate;
@@ -17,6 +18,27 @@ let resultProximate;
 if (module.hot) {
   module.hot.accept();
 }
+
+const _update = async function (log, location = 'artwork') {
+  try {
+    // Selects location (artwork or artworkInfo)
+    renderView.locationDecider(location);
+    // Renders artwork
+    if (!log) return;
+
+    // renderView.artworkRender(await api.api('getImage', log.imgURL));
+    renderView.artworkRender(await api.getImage(log.imgURL));
+
+    // Insert ID to artwork on view
+    renderView.artworkID(log._id);
+    // latest log data to artwork title for render
+    titleView.addTitles(log, location);
+    // highlight
+    // logView.highlightActiveLog();
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 const controlGenerateArtwork = async function (renderImage) {
   // @renderImage = html node to be converted to image
@@ -27,7 +49,8 @@ const controlGenerateArtwork = async function (renderImage) {
 
     // reduce dummy to fit in the center with 70%
     renderView.artworkReducer('add');
-    //
+
+    //ERR
     await model.loadArtwork(renderImage);
 
     // use current IMG to render to the canvas
@@ -58,27 +81,6 @@ const controlGenerateArtwork = async function (renderImage) {
   }
 };
 
-const _update = async function (log, location = 'artwork') {
-  try {
-    // Selects location (artwork or artworkInfo)
-    renderView.locationDecider(location);
-    // Renders artwork
-    if (!log) return;
-
-    // renderView.artworkRender(await api.api('getImage', log.imgURL));
-    renderView.artworkRender(await api.getImage(log.imgURL));
-
-    // Insert ID to artwork on view
-    renderView.artworkID(log._id);
-    // latest log data to artwork title for render
-    titleView.addTitles(log, location);
-    // highlight
-    // logView.highlightActiveLog();
-  } catch (err) {
-    console.log(err);
-  }
-};
-
 const controlLatestArtwork = async () => {
   try {
     await model.loadLatest();
@@ -102,35 +104,31 @@ const controlLogRender = async () => {
     const selectedArtwork = await api.getOne(hashID);
     // Guard Clause
     if (!resultProximate) return;
-    scrollLogView.moveToActiveScroll(
-      selectedArtwork.order,
-      resultProximate.length
-    );
-    logView.highlightActiveLog();
 
-    // model.updateProperties(model.state.current, selectedArtwork);
-    // Non- mobile
-    scrollLogView.renderActiveScroll(
-      await api.getImage(selectedArtwork.imgURL)
-    );
-    //Mobile
-    // console.log(selectedArtwork);
-    mobileView.renderLog([
-      selectedArtwork,
-      await api.getImage(selectedArtwork.imgURL),
-      model.state.current.order,
-    ]);
-    // console.log(`sss`);
-    if (window.innerWidth > 800) {
-      document
-        .querySelector('.highlighted-text')
-        .scrollIntoView({ behavior: 'smooth' });
+    // Web
+    if (!isMobile()) {
+      scrollLogView.moveToActiveScroll(
+        selectedArtwork.order,
+        resultProximate.length
+      );
+      logView.highlightActiveLog();
+      logView.scrollIntoView('.highlighted-text');
+
+      scrollLogView.renderActiveScroll(
+        await api.getImage(selectedArtwork.imgURL)
+      );
     }
-    if (window.innerWidth <= 800) {
+
+    //Mobile
+    if (isMobile()) {
+      mobileView.renderDetail([
+        selectedArtwork,
+        await api.getImage(selectedArtwork.imgURL),
+        model.state.current.order,
+      ]);
+
       logView.highlightActiveLogMobile();
-      document
-        .querySelector('.highlighted-text--mobile')
-        .scrollIntoView({ behavior: 'smooth' });
+      logView.scrollIntoView('.highlighted-text--mobile');
     }
   } catch (err) {
     console.log(err);
@@ -139,29 +137,12 @@ const controlLogRender = async () => {
 
 const controlSearch = async () => {
   try {
-    // Mobile
-    if (window.innerWidth <= 800) {
-      console.log(`mobile going`);
-      const options = document.querySelector('.log__searchby--mobile');
-      const input = document.querySelector('.log__search__input--mobile');
-      const searchType = options.value;
-      const searchKeyword = input.value;
-      // console.log(searchType, searchKeyword);
-
-      await _search(searchKeyword, searchType);
-      logView.renderLogs(resultProximate, 'portrait');
-
-      window.location.hash = `#${resultAccurate._id}`;
-    }
     // Web
-    if (window.innerWidth > 800) {
-      console.log(logView.getSearchType());
-
+    if (!isMobile()) {
       await _search(undefined, logView.getSearchType());
 
       // if (!resultAccurate) return;
       scrollLogView.renderScrolls([resultProximate, model.state.current.order]);
-
       scrollLogView.moveToActiveScroll(
         resultAccurate.order,
         resultProximate.length
@@ -175,6 +156,20 @@ const controlSearch = async () => {
       window.location.hash = `#${resultAccurate._id}`;
 
       model.updateProperties(model.state.current, resultAccurate);
+    }
+
+    // Mobile
+    if (isMobile()) {
+      console.log(`mobile going`);
+      const options = document.querySelector('.log__searchby--mobile');
+      const input = document.querySelector('.log__search__input--mobile');
+      const searchType = options.value;
+      const searchKeyword = input.value;
+
+      await _search(searchKeyword, searchType);
+      logView.renderLogs(resultProximate, 'portrait');
+
+      window.location.hash = `#${resultAccurate._id}`;
     }
   } catch (err) {
     console.log(err);
@@ -213,9 +208,6 @@ const _search = async (keyword, type) => {
 
 const controlSerachView = async () => {
   try {
-    // const hashID = window.location.hash.slice(1);
-    // await _search(hashID, 'id');
-
     await model.loadLatest();
     await _update(model.state.current);
     await _search(model.state.current._id, 'id');
@@ -223,60 +215,42 @@ const controlSerachView = async () => {
     if (!resultAccurate) return;
     model.updateProperties(model.state.current, resultAccurate);
 
-    scrollLogView.renderScrolls([resultProximate, model.state.current.order]);
+    // Web
+    if (!isMobile()) {
+      scrollLogView.renderScrolls([resultProximate, model.state.current.order]);
+      scrollLogView.moveToActiveScroll(
+        resultAccurate.order,
+        resultProximate.length
+      );
+      scrollLogView.renderActiveScroll(
+        await api.getImage(resultAccurate.imgURL)
+      );
 
-    scrollLogView.moveToActiveScroll(
-      resultAccurate.order,
-      resultProximate.length
-    );
+      logView.renderLogs(resultProximate, 'landscape');
+      // window.location.hash = `#${resultAccurate._id}`;
+      logView.highlightActiveLog();
+      logView.scrollIntoView('.highlighted-text');
 
-    scrollLogView.renderActiveScroll(await api.getImage(resultAccurate.imgURL));
+      animationView.animateToggleSearchView();
+    }
 
-    logView.renderLogs(resultProximate, 'landscape');
-    // window.location.hash = `#${resultAccurate._id}`;
-    logView.highlightActiveLog();
+    // Mobile
+    if (isMobile()) {
+      // Mobile render option
+      logView.renderLogs(resultProximate, 'portrait');
+      // console.log(resultAccurate);
+      mobileView.renderDetail([
+        resultAccurate,
+        await api.getImage(resultAccurate.imgURL),
+        model.state.current.order,
+      ]);
 
-    document
-      .querySelector('.highlighted-text')
-      .scrollIntoView({ behavior: 'smooth' });
+      logView.highlightActiveLogMobile();
+      logView.scrollIntoView('.highlighted-text--mobile');
 
-    animationView.animateToggleSearchView();
+      animationView.animateMobileArchive();
+    }
   } catch (err) {}
-};
-
-const controlMobileSearchView = async () => {
-  try {
-    // !LC DRY
-    // const hashID = window.location.hash.slice(1);
-    // await _search(hashID, 'id');
-
-    await model.loadLatest();
-    await _update(model.state.current);
-    await _search(model.state.current._id, 'id');
-
-    if (!resultAccurate) return;
-    model.updateProperties(model.state.current, resultAccurate);
-
-    // Mobile render option
-    logView.renderLogs(resultProximate, 'portrait');
-    // console.log(resultAccurate);
-    mobileView.renderLog([
-      resultAccurate,
-      await api.getImage(resultAccurate.imgURL),
-      model.state.current.order,
-    ]);
-    // window.location.hash = `#${model.state.current._id}`;
-    // console.log(model.state.current);
-    logView.highlightActiveLogMobile();
-
-    document
-      .querySelector('.highlighted-text--mobile')
-      .scrollIntoView({ behavior: 'smooth' });
-
-    animationView.animateMobileArchive();
-  } catch (err) {
-    console.log(err);
-  }
 };
 
 const init = function () {
@@ -285,7 +259,7 @@ const init = function () {
   logView.addHandlerLogRender(controlLogRender);
   logView.addHandlerSearch(controlSearch);
   logView.addHandlerToggleView(controlSerachView);
-  mobileView.addHandlerToggleView(controlMobileSearchView);
+  mobileView.addHandlerToggleView(controlSerachView);
 };
 
 init();

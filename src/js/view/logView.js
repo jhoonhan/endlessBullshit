@@ -78,7 +78,6 @@ class LogView extends View {
 
     this._byID.addEventListener('click', this._searchByID.bind(this));
   }
-
   renderLogs(data, orientation) {
     if (!data) return;
     if (orientation === 'landscape') {
@@ -96,6 +95,12 @@ class LogView extends View {
 
     location.scrollTo({ top: y, behavior: 'smooth' });
   }
+
+  scrollIntoView(reference) {
+    const ref = document.querySelector(reference);
+    ref.scrollIntoView({ behavior: 'smooth' });
+  }
+
   highlightActiveLog() {
     const logs = document.querySelectorAll('.log__logs');
     const artworkInfo = document.querySelector('.scroll--active .artwork-info');

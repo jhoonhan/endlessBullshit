@@ -108,7 +108,7 @@ class ScrollLogView extends View {
               <div class="artwork__container">
                   <div class="artwork-info artwork-frame" data-id="${
                     el._id
-                  }" style="background-image: url(${config.OGARTWORK})">
+                  }" style="background-image: none">
                   </div>
               </div>
               </div>

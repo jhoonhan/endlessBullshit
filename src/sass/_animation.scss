@@ -20,10 +20,6 @@
 .top0 {
   top: 0;
 }
-.top-100vh {
-  transform: translateY(-100vh);
-  // top: -100vh;
-}
 
 .transfrom-x__0 {
   // left: 0 !important;
@@ -45,6 +41,11 @@
   // right: calc(100% - 200px);
   transform: translateX(200px);
 }
+
+.transfrom-y__0 {
+  // top: 0;
+  transform: translateY(0);
+}
 .transfrom-y__1rem {
   transform: translateY(1rem);
 }
@@ -55,13 +56,21 @@
   // bottom: calc(-1 * (40vh - 4rem));
   transform: translateY(calc(40vh - 4rem));
 }
-.overflow-hidden {
+.transfrom-y__100vh {
+  transform: translateY(100vh);
+  // top: -100vh;
+}
+.transfrom-y__-100vh {
+  transform: translateY(-100vh);
+  // top: -100vh;
+}
+.overflow--hidden {
   overflow: hidden;
 }
-.overflow-visible {
+.overflow--visible {
   overflow: visible;
 }
-.overflow-scroll {
+.overflow--scroll {
   overflow: scroll;
 }
 

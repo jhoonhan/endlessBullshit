@@ -10,11 +10,10 @@ class MobileView extends View {
     this._btnToggleView.addEventListener('click', handler);
   }
 
-  renderLog(data) {
+  renderDetail(data) {
     super.insertHTML(data, this._artworkContainer);
   }
   renderArtwork(img) {
-    console.log(img);
     const artworkFrame = document.querySelector('.artwork-frame--mobile');
     artworkFrame.style.backgroundImage = `url(${img})`;
   }
