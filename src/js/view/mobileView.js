@@ -46,9 +46,9 @@ class MobileView extends View {
             <ul class="detail-data">
               <label class="scroll__label">Statement :</label>
               <li></li>
-              <li class="scroll__statement"><p>${log.statement}</p></li>
+              <li class="scroll__statement"><p>"${log.statement}"</p></li>
               <label>Date :</label>
-              <li><p>${date}/${year}</p></li>
+              <li><p>${date}</p></li>
               <label>Order :</label>
               <li><p>${log.order} out of ${totalNumber}</p></li>
               <label>ID :</label>

@@ -26,13 +26,30 @@ class BetweenView extends View {
       }.bind(this)
     );
   }
+  render(data) {
+    super.insertHTML(data, this._parentElement);
+  }
+  addDownloadButton(id, img64) {
+    const locationHTML = document.querySelector('.between__container__buttons');
+    const dataHTML = `
+    <a class="button btn--50 btn--download" download="test.png" href="${img64}">download
+    </a>
+    <button class="btn--large btn--close-between">next</button>
+    `;
+    locationHTML.innerHTML = '';
+    locationHTML.insertAdjacentHTML('afterbegin', dataHTML);
+  }
 
   _generateMarkup(data) {
-    const { name, _id, order } = data;
+    const img64 = data[1];
+
+    const log = data[0];
+    const { name, _id, order } = log;
     const formattedName = `${name
       .split(' ')
       .map(el => el.slice(0, 1).toUpperCase() + el.slice(1))
       .join(' ')}`;
+    const fileName = `${name.split(' ').join('-')}--${_id}.png`;
     return `
       <div class="between--fullsize">
         <div class="between__container">
@@ -48,7 +65,11 @@ class BetweenView extends View {
             <label class="column">:</label>
             <li>${_id}</li>
           </ul>
-          <button class="btn--large btn--close-between">next</button>
+          <div class="between__container__buttons">
+            <a class="button btn--50 btn--download" download="${fileName}" href="${img64}">download
+            </a>  
+            <button class="btn--large btn--close-between">next</button>
+          </div>
         </div>
       </div>
       `;

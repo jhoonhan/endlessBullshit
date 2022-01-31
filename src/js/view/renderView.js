@@ -39,8 +39,12 @@ class RenderView extends View {
     );
   }
   async artworkImgURL() {
-    const blob = await new Promise(res => this._renderReceiver.toBlob(res));
-    return blob;
+    const imgBlob = await new Promise(res => this._renderReceiver.toBlob(res));
+
+    const img64 = this._renderReceiver.toDataURL();
+    // console.log(img64);
+
+    return [imgBlob, img64];
 
     // const imgURL = this._renderReceiver.toBlob(blob => {
     //   URL.createObjectURL(blob);

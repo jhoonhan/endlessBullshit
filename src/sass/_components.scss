@@ -5,6 +5,7 @@
 
   display: flex;
   align-items: center;
+  justify-content: center;
 
   background-color: transparent;
   border-radius: 0rem;
@@ -19,26 +20,53 @@
     outline: none;
   }
 }
+.btn--small {
+  @extend %btn;
+  // position: absolute;
+  width: 3rem;
+  height: 3rem;
+  top: 0;
+  right: 0;
+  // padding: 1.5rem;
+
+  align-self: center;
+
+  text-align: center;
+}
+.btn--50 {
+  @extend %btn;
+  width: auto;
+  max-width: 100%;
+  right: 0;
+
+  font-weight: bold;
+
+  padding: 1rem;
+}
 .btn--large {
   @extend %btn;
   position: relative;
-  right: 0;
   width: 100%;
+  right: 0;
   padding: 1.5rem;
 
   font-weight: 600;
 
   justify-content: center;
 }
+.btn--submit {
+  @extend .btn--large;
+  margin-top: 2rem;
+}
+.btn--download {
+  font-size: $font-size--p;
+  text-decoration: none;
+}
 .btn__description--hide {
   @extend .btn--large;
   margin-top: 2rem;
 }
 
-.btn--submit {
-  @extend .btn--large;
-  margin-top: 2rem;
-}
 .btn--arrow--right {
   cursor: pointer;
   padding: 1rem;
@@ -129,7 +157,7 @@
 }
 .label--checkbox {
   @extend %label;
-  font-size: 1rem;
+  font-size: 1.2rem;
 }
 .message {
   font-size: 2rem;

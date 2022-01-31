@@ -6,10 +6,12 @@ class DescriptionView extends View {
   _form = document.querySelector('.artwork__form');
   _textarea = document.querySelector('.input-form--textarea');
   _errorMessage = document.querySelector('.error-message--form');
+  _btnFormHide = document.querySelector('.btn__form--hide');
 
   constructor() {
     super();
     this._characterCount();
+    this._closeForm();
   }
 
   artworkInputData() {
@@ -92,11 +94,23 @@ class DescriptionView extends View {
   toggleWindow() {
     super.controlHidden(this._parentElement, 'toggle');
     super.controlHidden(this._form, 'toggle');
+    super.controlHidden(this._btnFormHide, 'toggle');
+  }
+
+  _closeForm() {
+    this._btnFormHide.addEventListener(
+      'click',
+      function () {
+        this.toggleWindow();
+      }.bind(this)
+    );
   }
 
   _attachEventHandler() {
-    const btnClose = document.querySelector('.btn__description--hide');
-    btnClose.addEventListener('click', this.toggleWindow.bind(this));
+    const btnHideDescription = document.querySelector(
+      '.btn__description--hide'
+    );
+    btnHideDescription.addEventListener('click', this.toggleWindow.bind(this));
   }
 
   _generateMarkup(data) {

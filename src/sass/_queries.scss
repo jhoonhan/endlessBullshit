@@ -23,6 +23,9 @@ $font-size--m--h3: 1em;
   button {
     font-size: $font-size--m--p;
   }
+  .button {
+    font-size: $font-size--m--p;
+  }
   .row--1 {
     column-gap: 3%;
   }
@@ -45,9 +48,10 @@ $font-size--m--h3: 1em;
   .log__logs {
     padding-right: 1em;
   }
-  .lable-checkbox {
-    $font-size--m--s: 1em;
+  .log__btn--search {
+    font-size: $font-size--m--p;
   }
+
   .log__results {
     font-size: $font-size--m--p;
   }
@@ -83,7 +87,7 @@ $font-size--m--h3: 1em;
     // height: 1000px;
   }
   label {
-    font-size: $font-size--m--s;
+    font-size: $font-size--m--p;
   }
   span {
     font-size: $font-size--m--s;
@@ -182,8 +186,15 @@ $font-size--m--h3: 1em;
     max-width: 90vw;
 
     column-gap: 1rem;
+    & label {
+      font-size: $font-size--m--s;
+    }
   }
   .information {
     max-width: none;
+  }
+
+  .label--checkbox {
+    font-size: $font-size--m--s;
   }
 }

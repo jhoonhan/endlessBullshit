@@ -37,7 +37,7 @@ const controlGenerateArtwork = async function (renderImage) {
     renderView.artworkReducer('remove');
 
     // Get rendered blob from the canvas
-    const imgBlob = await renderView.artworkImgURL();
+    const [imgBlob, img64] = await renderView.artworkImgURL();
 
     // Save the imgURL data
     await model.logArtwork(inputData, imgBlob);
@@ -48,7 +48,8 @@ const controlGenerateArtwork = async function (renderImage) {
 
     // Prompt between page
     betweenView.showBetween();
-    betweenView.update(model.state.current);
+    // Update between page
+    betweenView.update([model.state.current, img64]);
 
     // hide form
     descriptionView.toggleWindow();

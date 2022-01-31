@@ -97,9 +97,10 @@
   width: 100%;
   padding: 0rem;
 
-  font-size: 1.2rem;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: $font-size--p;
   text-align: center;
-  line-height: 3.6rem;
+  line-height: 4.8rem;
 
   box-sizing: border-box;
   background-color: $color--main;
