@@ -89,8 +89,10 @@
   right: 10%;
   bottom: calc(10% - 4rem);
 
-  font-size: 3rem;
-  line-height: 3rem;
+  & span {
+    font-size: 3rem;
+    line-height: 3rem;
+  }
 }
 .render__text--overlay {
   position: absolute;

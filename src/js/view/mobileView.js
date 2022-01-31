@@ -24,7 +24,7 @@ class MobileView extends View {
     const date = log.date.slice(0, 10);
     return `
       <div class="column column--m--1">
-        <div class="cell cell--1 artwork__container--outer shadow--outer">
+        <div class="artwork__container--outer shadow--outer">
           <div class="artwork__container">
             <div class="artwork-frame artwork-frame--mobile" data-id="${
               log._id

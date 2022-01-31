@@ -89,11 +89,17 @@ class LogView extends View {
     }
   }
 
+  scrollToY(loc, ref, offset) {
+    const reference = document.querySelector(ref);
+    const location = document.querySelector(loc);
+    const y = reference.getBoundingClientRect().top + offset;
+
+    location.scrollTo({ top: y, behavior: 'smooth' });
+  }
   highlightActiveLog() {
     const logs = document.querySelectorAll('.log__logs');
     const artworkInfo = document.querySelector('.scroll--active .artwork-info');
-    console.log(logs);
-    console.log(artworkInfo);
+
     // if (window.location.hash === '') return;
     // logs.forEach(function (log) {
     //   if (log.href.includes(window.location.hash)) {

@@ -64,9 +64,9 @@ class ScrollLogView extends View {
     const active = document.querySelector('.scroll--active');
     if (!active) return;
     const moveValue = qtScroll * 100 - active.dataset.order * 100;
-    // console.log(`(${qtScroll} * 100) - (${active.dataset.order} * 100)`);
-    console.log(moveValue);
-    this._parentElement.style.top = `-${moveValue}vh`;
+
+    // this._parentElement.style.top = `-${moveValue}vh`;
+    this._parentElement.style.transform = `translateY(-${moveValue}vh)`;
   }
   renderActiveScroll(img) {
     const active = document.querySelector('.scroll--active .artwork-frame');
@@ -104,7 +104,7 @@ class ScrollLogView extends View {
             el.order
           }"">
           <div class="column column--4">
-              <div class="cell cell--1 artwork__container--outer shadow--outer">
+              <div class="artwork__container--outer shadow--outer">
               <div class="artwork__container">
                   <div class="artwork-info artwork-frame" data-id="${
                     el._id

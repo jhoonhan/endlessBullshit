@@ -88,17 +88,17 @@ class AnimationView extends View {
     const rect = this._sectionM.getBoundingClientRect();
     // closed so open
     if (rect.y < 0) {
-      this._columnM3.classList.remove('bottom-40vh');
-      this._columnM3.classList.remove('bottomMobileArchiveToggle');
+      this._columnM3.classList.remove('transfrom-y__40vh');
+      this._columnM3.classList.remove('transfrom-y__40vh-4rem');
     }
     // opened so close
     if (rect.y >= 0) {
-      this._columnM3.classList.remove('bottomMobileArchiveToggle');
-      this._columnM3.classList.add('bottom-40vh');
+      this._columnM3.classList.remove('transfrom-y__40vh-4rem');
+      this._columnM3.classList.add('transfrom-y__40vh');
     }
     this._btnMobileArchiveToggle.classList.toggle('arrow-bottom');
     this._btnMobileArchiveToggle.classList.toggle('arrow-rotate--top');
-    // this._btnMobileArchiveToggle.classList.toggle('bottomArrowRotateY');
+    // this._btnMobileArchiveToggle.classList.toggle('transfrom-y__1rem');
   }
   _animateMobileResultListener() {
     this._btnMobileResultToggle.addEventListener(
@@ -109,9 +109,8 @@ class AnimationView extends View {
     );
   }
   _animateMobileResult() {
-    this._columnM3.classList.toggle('bottomMobileArchiveToggle');
+    this._columnM3.classList.toggle('transfrom-y__40vh-4rem');
 
-    // this._btnMobileResultToggle.classList.toggle('bottom0');
     this._btnMobileResultToggle.classList.toggle('arrow-bottom');
     this._btnMobileResultToggle.classList.toggle('arrow-rotate--top');
   }
@@ -126,35 +125,35 @@ class AnimationView extends View {
   _animateIntro(sequence) {
     setTimeout(
       function () {
-        this._introTitle.classList.toggle('right-100vw');
+        this._introTitle.classList.toggle('transfrom-x__200vw');
       }.bind(this),
       100
     );
 
     setTimeout(
       function () {
-        this._introArtworkContainer.classList.toggle('left-100vw');
+        this._introArtworkContainer.classList.toggle('transfrom-x__-100vw');
       }.bind(this),
       500
     );
 
     setTimeout(
       function () {
-        this._introSubtitle.classList.toggle('right-100vw');
+        this._introSubtitle.classList.toggle('transfrom-x__200vw');
       }.bind(this),
       700
     );
 
     setTimeout(
       function () {
-        this._introStatement.classList.toggle('right-100vw');
+        this._introStatement.classList.toggle('transfrom-x__200vw');
       }.bind(this),
       800
     );
 
     setTimeout(
       function () {
-        this._introCloseBtn.classList.toggle('right-100vw');
+        this._introCloseBtn.classList.toggle('transfrom-x__200vw');
       }.bind(this),
       1000
     );
@@ -239,56 +238,29 @@ class AnimationView extends View {
   _initSearchView() {
     // const left = this._logContainer.getBoundingClientRect().width;
 
-    this._logContainer.classList.remove('left-100vw');
+    this._logContainer.classList.remove('transfrom-x__-100vw');
   }
 
   _toggleSerachView(rect) {
-    // if (rect.x < 0) {
-    //   this._logContainer.classList.toggle('right0');
-    //   this._section2.classList.toggle('left0');
-    // }
-    // if (rect.x >= 0) {
-    //   this._logContainer.classList.toggle('right0');
-    //   this._section2.classList.toggle('left0');
-    // }
-    this._logContainer.classList.toggle('right0');
-    this._section2.classList.toggle('left0');
+    this._logContainer.classList.toggle('transfrom-x__0');
+    this._section2.classList.toggle('transfrom-x__0');
   }
   _toggleScrollView(rect) {
     if (rect.x < 0) {
-      // this._row1.classList.toggle('left100vw');
-      // setTimeout(
-      //   function () {
-      //     this._row2.classList.toggle('top-100vh');
-      //   }.bind(this),
-      //   1000
-      // );
-      // this._expandSearchBtn.classList.toggle('arrow-rotate');
-      //
-      this._row1.classList.toggle('left100vw');
+      this._row1.classList.toggle('transfrom-x__100vw');
       this._row2.classList.toggle('top-100vh');
       this._expandSearchBtn.classList.toggle('arrow-rotate');
     }
     if (rect.x >= 0) {
-      // this._row1.classList.toggle('left100vw');
-      // setTimeout(
-      //   function () {
-      //     this._row2.classList.toggle('top-100vh');
-      //   }.bind(this),
-      //   1000
-      // );
-      // this._expandSearchBtn.classList.toggle('arrow-rotate');
-
-      // this._scrollContainer.style.top = '0';
-      //
-      this._row1.classList.toggle('left100vw');
+      this._row1.classList.toggle('transfrom-x__100vw');
       this._row2.classList.toggle('top-100vh');
       this._expandSearchBtn.classList.toggle('arrow-rotate');
 
-      this._scrollContainer.style.top = '0';
+      // this._scrollContainer.style.top = '0';
+      this._scrollContainer.style.transform = 'translateY(0)';
     }
 
-    // this._row1.classList.toggle('left100vw');
+    // this._row1.classList.toggle('transfrom-x__100vw');
     // // this._row2.classList.toggle('top-100vh');
     // this._expandSearchBtn.classList.toggle('arrow-rotate');
 
@@ -299,14 +271,14 @@ class AnimationView extends View {
   animateToggleSearchView() {
     const rect = this._logContainer.getBoundingClientRect();
     // const sequence0 = function () {
-    //   this._row1.classList.toggle('left100vw');
+    //   this._row1.classList.toggle('transfrom-x__100vw');
     //   this._row2.classList.toggle('top-100vh');
     //   this._expandSearchBtn.classList.toggle('arrow-rotate');
     // }.bind(this);
     // console.log(rect);
     // this._container.classList.toggle('grid-adjuster');
 
-    this._section1.classList.toggle('toggle-log-panel');
+    this._section1.classList.toggle('transfrom-x__200px');
     this._toggleSerachView(rect);
     this._toggleScrollView(rect);
 

@@ -5,6 +5,7 @@ $mobileArchiveBackground: rgba(255, 255, 255, 0.95);
 
 $font-size--p: 1.6rem;
 $font-size--h1: 3rem;
+$font-size--h3: 1.3rem;
 
 $transition--default: all 0.5s;
 
@@ -27,6 +28,9 @@ body {
 }
 h1 {
   font-size: $font-size--h1;
+}
+h3 {
+  font-size: $font-size--h3;
 }
 p {
   font-size: $font-size--p;
