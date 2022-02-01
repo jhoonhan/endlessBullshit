@@ -225,9 +225,21 @@ const controlSerachView = async () => {
   try {
     animationView.renderSpinner('add');
 
-    await model.loadLatest();
-    await _update(model.state.current);
-    await _search(model.state.current._id, 'id');
+    // DRY
+    const row1 = document.querySelector('.section--2 .row--1');
+    const rect = row1.getBoundingClientRect();
+
+    if (rect.x >= 300) {
+      animationView.animateToggleSearchView();
+      animationView.renderSpinner('remove');
+      return;
+    }
+
+    if (rect.x < 300) {
+      await model.loadLatest();
+      await _update(model.state.current);
+      await _search(model.state.current._id, 'id');
+    }
 
     if (!resultAccurate) return;
     model.updateProperties(model.state.current, resultAccurate);
@@ -249,7 +261,6 @@ const controlSerachView = async () => {
       logView.scrollIntoView('.highlighted-text');
 
       animationView.animateToggleSearchView();
-      animationView.renderSpinner('remove');
     }
 
     // Mobile
@@ -267,8 +278,8 @@ const controlSerachView = async () => {
       logView.scrollIntoView('.highlighted-text--mobile');
 
       animationView.animateMobileArchive();
-      animationView.renderSpinner('remove');
     }
+    animationView.renderSpinner('remove');
   } catch (err) {}
 };
 

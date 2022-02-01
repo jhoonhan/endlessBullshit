@@ -1,5 +1,6 @@
 import * as config from '../config.js';
 import View from './View.js';
+import icons from 'url:../../img/icons.svg';
 
 class AnimationView extends View {
   _section1 = document.querySelector('.section--1');
@@ -294,6 +295,15 @@ class AnimationView extends View {
   }
 
   renderSpinner(type = 'toggle') {
+    // const dataHTML = `
+    //   <div class="spinner">
+    //     <svg>
+    //       <use href="${icons}#icon-loader"></use>
+    //     </svg>
+    //   </div>
+    // `;
+    // this._loadingDiv.insertAdjacentHTML('afterbegin', dataHTML);
+
     if (type === 'add') {
       this._loadingDiv.classList.add('visibilityVisible');
     }

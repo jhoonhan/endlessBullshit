@@ -73,10 +73,13 @@ footer {
   width: 100vw;
   height: 100vh;
 
-  display: block;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+
   visibility: hidden;
 
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.85);
   opacity: 0;
 
   transition: $transition--default;
@@ -84,6 +87,26 @@ footer {
 
   z-index: 11;
 }
+.loading__spinner {
+  text-align: center;
+
+  svg {
+    height: 6rem;
+    width: 6rem;
+    fill: #ccc;
+    animation: rotate 2s infinite linear;
+  }
+}
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .container {
   max-width: 100vw;
   min-height: 100vh;
