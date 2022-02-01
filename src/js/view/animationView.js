@@ -253,6 +253,8 @@ class AnimationView extends View {
       this._row1.classList.toggle('transfrom-x__100vw');
       this._row2.classList.toggle('transfrom-y__-100vh');
       this._expandSearchBtn.classList.toggle('arrow-rotate');
+      // setTimeout(this.renderSpinner('remove'), 3000);
+      // this.renderSpinner('remove');
     }
     if (rect.x >= 0) {
       this._row1.classList.toggle('transfrom-x__100vw');
@@ -261,6 +263,9 @@ class AnimationView extends View {
 
       // this._scrollContainer.style.top = '0';
       this._scrollContainer.style.transform = 'translateY(0)';
+      // setTimeout(this.renderSpinner('remove'), 3000);
+
+      // this.renderSpinner('remove');
     }
 
     // this._row1.classList.toggle('transfrom-x__100vw');

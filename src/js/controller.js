@@ -189,7 +189,7 @@ const controlSearch = async () => {
 
 const _search = async (keyword, type) => {
   try {
-    animationView.renderSpinner('add');
+    // animationView.renderSpinner('add');
 
     let searchKeyword = keyword;
     if (!keyword && type !== 'latest') {
@@ -215,7 +215,7 @@ const _search = async (keyword, type) => {
       resultProximate = resultProx;
     }
 
-    animationView.renderSpinner('remove');
+    // animationView.renderSpinner('remove');
   } catch (err) {
     console.log(err);
   }
@@ -249,6 +249,7 @@ const controlSerachView = async () => {
       logView.scrollIntoView('.highlighted-text');
 
       animationView.animateToggleSearchView();
+      animationView.renderSpinner('remove');
     }
 
     // Mobile
@@ -266,8 +267,8 @@ const controlSerachView = async () => {
       logView.scrollIntoView('.highlighted-text--mobile');
 
       animationView.animateMobileArchive();
+      animationView.renderSpinner('remove');
     }
-    animationView.renderSpinner('remove');
   } catch (err) {}
 };
 
