@@ -3,6 +3,7 @@ $color--accent: red;
 
 $mobileArchiveBackground: rgba(255, 255, 255, 0.95);
 
+$font-family: 'Nunito Sans', sans-serif;
 $font-size--p: 1.6rem;
 $font-size--h1: 3rem;
 $font-size--h3: 1.3rem;
@@ -21,7 +22,7 @@ html {
 }
 
 body {
-  font-family: 'Nunito Sans', sans-serif;
+  font-family: $font-family;
   font-weight: 400;
   line-height: 1.6;
   overflow: hidden;
@@ -41,13 +42,12 @@ label {
 span {
   font-size: $font-size--p;
 }
-textarea {
-  font-family: 'Nunito Sans', sans-serif;
-}
+textarea,
+input,
 button {
+  font-family: $font-family;
   font-size: $font-size--p;
 }
-
 footer {
   position: fixed;
   width: 100vw;
