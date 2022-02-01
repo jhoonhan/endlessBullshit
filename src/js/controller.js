@@ -137,6 +137,7 @@ const controlLogRender = async () => {
       logView.highlightActiveLogMobile();
       logView.scrollIntoView('.highlighted-text--mobile');
     }
+
     animationView.renderSpinner('remove');
   } catch (err) {
     console.log(err);
@@ -181,6 +182,7 @@ const controlSearch = async () => {
 
       window.location.hash = `#${resultAccurate._id}`;
     }
+
     animationView.renderSpinner('remove');
   } catch (err) {
     console.log(err);
@@ -259,7 +261,6 @@ const controlSerachView = async () => {
       // window.location.hash = `#${resultAccurate._id}`;
       logView.highlightActiveLog();
       logView.scrollIntoView('.highlighted-text');
-
       animationView.animateToggleSearchView();
     }
 
