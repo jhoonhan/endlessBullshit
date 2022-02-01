@@ -26,6 +26,13 @@ $font-size--m--h3: 1em;
   .button {
     font-size: $font-size--m--p;
   }
+  textarea,
+  input,
+  button,
+  select {
+    font-size: $font-size--m--p;
+  }
+
   .row--1 {
     column-gap: 3%;
   }

@@ -43,6 +43,8 @@ const _update = async function (log, location = 'artwork') {
 const controlGenerateArtwork = async function (renderImage) {
   // @renderImage = html node to be converted to image
   try {
+    animationView.renderSpinner('add');
+
     // get and checks input data
     const inputData = descriptionView.artworkInputData();
     if (!inputData) return;
@@ -74,8 +76,7 @@ const controlGenerateArtwork = async function (renderImage) {
     // Update between page
     betweenView.update([model.state.current, img64]);
 
-    // hide form
-    descriptionView.toggleWindow();
+    animationView.renderSpinner('remove');
   } catch (err) {
     console.error(`${err} - admin 2`);
   }
@@ -83,6 +84,8 @@ const controlGenerateArtwork = async function (renderImage) {
 
 const controlLatestArtwork = async () => {
   try {
+    animationView.renderSpinner('add');
+
     await model.loadLatest();
     await _update(model.state.current);
     // _update(model.state.current, 'artworkInfo');
@@ -92,6 +95,8 @@ const controlLatestArtwork = async () => {
 
     // load latest log data to description
     descriptionView.addDescription(model.state.current);
+
+    animationView.renderSpinner('remove');
   } catch (err) {
     console.log(err);
   }
@@ -99,6 +104,8 @@ const controlLatestArtwork = async () => {
 
 const controlLogRender = async () => {
   try {
+    animationView.renderSpinner('add');
+
     // Gets imgURL of selected log
     const hashID = window.location.hash.slice(1);
     const selectedArtwork = await api.getOne(hashID);
@@ -130,6 +137,7 @@ const controlLogRender = async () => {
       logView.highlightActiveLogMobile();
       logView.scrollIntoView('.highlighted-text--mobile');
     }
+    animationView.renderSpinner('remove');
   } catch (err) {
     console.log(err);
   }
@@ -137,6 +145,8 @@ const controlLogRender = async () => {
 
 const controlSearch = async () => {
   try {
+    animationView.renderSpinner('add');
+
     // Web
     if (!isMobile()) {
       await _search(undefined, logView.getSearchType());
@@ -171,6 +181,7 @@ const controlSearch = async () => {
 
       window.location.hash = `#${resultAccurate._id}`;
     }
+    animationView.renderSpinner('remove');
   } catch (err) {
     console.log(err);
   }
@@ -178,6 +189,8 @@ const controlSearch = async () => {
 
 const _search = async (keyword, type) => {
   try {
+    animationView.renderSpinner('add');
+
     let searchKeyword = keyword;
     if (!keyword && type !== 'latest') {
       searchKeyword = logView.getSearchInput();
@@ -201,6 +214,8 @@ const _search = async (keyword, type) => {
       resultAccurate = resultAccu;
       resultProximate = resultProx;
     }
+
+    animationView.renderSpinner('remove');
   } catch (err) {
     console.log(err);
   }
@@ -208,6 +223,8 @@ const _search = async (keyword, type) => {
 
 const controlSerachView = async () => {
   try {
+    animationView.renderSpinner('add');
+
     await model.loadLatest();
     await _update(model.state.current);
     await _search(model.state.current._id, 'id');
@@ -250,6 +267,7 @@ const controlSerachView = async () => {
 
       animationView.animateMobileArchive();
     }
+    animationView.renderSpinner('remove');
   } catch (err) {}
 };
 
@@ -264,44 +282,26 @@ const init = function () {
 
 init();
 
-// const testAPI = async () => {
-//   try {
-//     const res = await fetch(
-//       `http://127.0.0.1:3000/api/v1/artworks/search/id/61eb2886c50d3f7bd0419289`
-//     );
-//     const data = await res.json();
-//     console.log(data);
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
+// const wait = (delay = 0) =>
+//   new Promise(resolve => setTimeout(resolve, delay));
 
-// const testAPI = async (req, res) => {
-//   try {
-//     const hashID = window.location.hash.slice(1);
-//     const res = await axios({
-//       method: 'GET',
-//       url: `http://127.0.0.1:3000/api/v1/artworks/61ea2e48d366052e10a56221`,
-//     });
-//     if (res.data.status === 'success') console.log(res.data.data.data);
-//   } catch (err) {
-//     console.error(err.response);
-//   }
-// };
+// const setVisible = (elementOrSelector, visible) =>
+//   (typeof elementOrSelector === 'string'
+//     ? document.querySelector(elementOrSelector)
+//     : elementOrSelector
+//   ).style.display = visible ? 'block' : 'none';
 
-// export const testAPI = async () => {
-//   try {
-//     const res = await axios({
-//       method: 'GET',
-//       url: `http://127.0.0.1:3000/api/v1/artworks/all`,
-//     });
-//     if (res.data.status === 'success') {
-//       console.log(res.data.data.data);
-//       return res.data.data;
-//     }
-//   } catch (err) {
-//     console.error(err.response);
-//   }
-// };
+// setVisible('.page', false);
+// setVisible('#loading', true);
 
-// testAPI();
+// document.addEventListener('DOMContentLoaded', () =>
+//   wait(1000).then(() => {
+//     setVisible('.page', true);
+//     setVisible('#loading', false);
+//   }));
+
+// const nugum = document.querySelector('.loading');
+// document.addEventListener('DOMContentLoaded', () => {
+//   nugum.classList.remove('visibilityVisible');
+//   console.log(`fucking loading done man`);
+// });

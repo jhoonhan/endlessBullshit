@@ -53,16 +53,4 @@ export default class View {
       .map(letter => `${letter.slice(0, 1).toUpperCase()}${letter.slice(1)}`)
       .join(' ');
   }
-
-  renderSpinner(locationHTML) {
-    const markup = `
-              <div class="spinner">
-                <svg>
-                  <use href="${icons}#icon-loader"></use>
-                </svg>
-              </div>
-            `;
-    this._clear(locationHTML);
-    locationHTML.insertAdjacentHTML('afterbegin', markup);
-  }
 }

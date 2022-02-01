@@ -1,5 +1,6 @@
 import * as config from '../config.js';
 import View from './View.js';
+import icons from 'url:../../img/icons.svg';
 
 class LogView extends View {
   _parentElement = document.querySelector('.log__container');

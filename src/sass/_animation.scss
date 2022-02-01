@@ -64,6 +64,7 @@
   transform: translateY(-100vh);
   // top: -100vh;
 }
+
 .overflow--hidden {
   overflow: hidden;
 }
@@ -78,5 +79,12 @@
 .opacity0 {
   opacity: 0;
 }
+.opacity100 {
+  opacity: 1;
+}
 
+.visibilityVisible {
+  visibility: visible;
+  opacity: 1;
+}
 //
