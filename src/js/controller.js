@@ -136,7 +136,7 @@ const controlLogRender = async () => {
       logView.scrollIntoView('.highlighted-text');
       scrollLogView.moveToActiveScroll(model.state.resultProximate.length);
     }
-
+    //
     //Mobile
     if (isMobile()) {
       mobileView.renderDetail([
