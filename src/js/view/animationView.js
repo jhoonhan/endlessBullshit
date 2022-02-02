@@ -215,6 +215,7 @@ class AnimationView extends View {
       }
     });
   }
+  //
 
   _getWidthWhenResize() {
     window.addEventListener(
