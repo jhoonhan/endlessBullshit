@@ -9,7 +9,7 @@ export const getImage = async imgURL => {
     const img = URL.createObjectURL(imgBlob);
     return img;
   } catch (err) {
-    console.log(err);
+    throw err;
   }
 };
 
@@ -27,7 +27,7 @@ export const getSearch = async (keyword, type) => {
 
     return data;
   } catch (err) {
-    console.log(err);
+    throw err;
   }
 };
 export const getOne = async id => {
@@ -36,7 +36,7 @@ export const getOne = async id => {
     const data = await res.json();
     return data.data;
   } catch (err) {
-    console.log(err);
+    throw err;
   }
 };
 export const getLatest = async () => {
@@ -45,7 +45,7 @@ export const getLatest = async () => {
     const data = await res.json();
     return data.data;
   } catch (err) {
-    console.log(err);
+    throw err;
   }
 };
 export const postImage = async img => {
@@ -59,7 +59,7 @@ export const postImage = async img => {
       console.log(`posted`);
     }
   } catch (err) {
-    console.log(err);
+    throw err;
   }
 };
 export const postLog = async data => {
@@ -73,7 +73,7 @@ export const postLog = async data => {
       console.log(`posted`);
     }
   } catch (err) {
-    console.log(err);
+    throw err;
   }
 };
 

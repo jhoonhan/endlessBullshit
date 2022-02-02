@@ -27,8 +27,9 @@ export const loadArtwork = async function (renderImage) {
   try {
     const img = await html2canvas(renderImage);
     state.current.img = img;
+    if (!img) console.log(`aaang`);
   } catch (err) {
-    console.error(`${err} - admin`);
+    throw err;
   }
 };
 
@@ -56,7 +57,7 @@ export const logArtwork = async (inputData, imgBlob) => {
     await api.postLog(data);
     await api.postImage(image);
   } catch (err) {
-    console.error(err);
+    throw err;
   }
 };
 
@@ -66,7 +67,7 @@ export const loadLatest = async () => {
     if (!latestArtwork) return;
     updateProperties(state.current, latestArtwork);
   } catch (err) {
-    console.log(err);
+    throw err;
   }
 };
 export const updateProperties = function (to, from) {
