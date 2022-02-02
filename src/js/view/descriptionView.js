@@ -40,7 +40,9 @@ class DescriptionView extends View {
   }
   _inputDataValidate(inputData) {
     const { name, statement } = inputData;
+    // get rid of special characters
     const cleanedName = name.replace(/[^0-9a-zA-Z]+/g, '');
+    console.log(cleanedName);
 
     // Name validate
     if (cleanedName.length > config.NAMEMAX) {
@@ -75,9 +77,6 @@ class DescriptionView extends View {
         currentCount.innerHTML = characterCount;
       }.bind(this)
     );
-  }
-  _invalidStatement() {
-    const message = `Statment has to be at least ${config.STATEMENTMIN} characters.`;
   }
 
   addDescription(data) {

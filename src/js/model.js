@@ -21,8 +21,11 @@ export const state = {
   searchedIMG: '',
 };
 
-const validateInput = text => {
-  const validatedText = text.replace(/[^0-9a-zA-Z]+/g, '');
+const validateInput = (text, hard) => {
+  let validatedText;
+  if (!hard) validatedText = text.replace(/[^0-9a-zA-Z. ]/g, '');
+  if (hard) validatedText = text.replace(/[^a-zA-Z0-9]/g, '');
+
   return validatedText;
 };
 
@@ -40,6 +43,9 @@ export const loadArtwork = async function (renderImage) {
 
 export const logArtwork = async (inputData, imgBlob) => {
   try {
+    // Clean out speical characters
+    const cleanedName = validateInput(inputData.name, false);
+
     // save new log
     // get the order of the latest artwork from database
     const latestArtwork = await api.getArtwork(false, 'latest');
@@ -47,7 +53,7 @@ export const logArtwork = async (inputData, imgBlob) => {
     let imageID = `${Date.now()}-${+latestArtwork.order + 1}`;
 
     const data = {
-      name: inputData.name.toLowerCase(),
+      name: cleanedName.toLowerCase(),
       statement: inputData.statement,
       order: +latestArtwork.order + 1,
       imgURL: `${imageID}.png`,
@@ -60,7 +66,6 @@ export const logArtwork = async (inputData, imgBlob) => {
     // state.current.imgCache = imgCache;
     // await submitArtwork(data);
     await api.post(true, data);
-    console.log(`divide`);
     await api.post(false, image);
   } catch (err) {
     throw err;
@@ -80,7 +85,7 @@ export const loadLatest = async () => {
 export const search = async values => {
   try {
     const [keyword, type] = values;
-    const valKeyword = validateInput(keyword);
+    const valKeyword = validateInput(keyword, false);
 
     if (type === 'latest') {
       const { resultAccu, resultProx } = await api.getSearch(type, valKeyword);

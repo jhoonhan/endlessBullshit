@@ -138,34 +138,20 @@
             </ul>
             <div class="log__search-box--mobile">
               <select name="searchBy" class="log__searchby--mobile">
+                <option value="latest">Latest</option>
                 <option value="name">By name</option>
                 <option value="order">By order</option>
                 <option value="id">By ID</option>
-                <option value="latest">Latest</option>
               </select>
               <form class="log__search__form--mobile">
                 <input name="search" class="log__search__input--mobile" placeholder="Search keyword"  type="text"></input>
-                <input type="submit" value="Submit" class="log__btn--search"></input>
+                <input type="submit" value="Submit" class="log__btn--submit--mobile"></input>
               </form>
               
             </div>
             
 
-            <!-- <div class="log__search__container">
-              <div class="log--search--dropdown log__search__box">
-                <a class="log__search--expand">search</a>
-  
-                <ul class="log__search__options hidden">
-                  <li class="log__search__option by-name"><a>by name</a></li>
-                  <li class="log__search__option by-order"><a>by order</a></li>
-                  <li class="log__search__option by-id"><a>by ID</a></li>
-                </ul>
-  
-                <form class="log--search--form hidden">
-                  <input name="search" class="log__search__input" placeholder="search keyword"  type="text"></input>
-                </form>
-              </div>
-            </div> -->
+            
           </div>
           
         </div>
@@ -179,17 +165,26 @@
           <button class="btn--arrow--right arrow-right log__view--toggle"><a class=""></a></button>
           
           <div class="log__search__container">
-            <div class="log--search--dropdown log__search__box">
+            <div class="log__search__dropdown log__search__box">
               <a class="log__search--expand">search</a>
 
-              <ul class="log__search__options hidden">
+              <!-- <ul class="log__searchby hidden">
                 <li class="log__search__option by-name"><a>by name</a></li>
                 <li class="log__search__option by-order"><a>by order</a></li>
                 <li class="log__search__option by-id"><a>by ID</a></li>
-              </ul>
+              </ul> -->
 
-              <form class="log--search--form hidden">
+              <select name="searchBy" class="log__searchby hidden">
+                <option value="latest">latest</option>
+                <option value="name">name</option>
+                <option value="order">order</option>
+                <option value="id">ID</option>
+              </select>
+
+              <form class="log__search__form hidden">
                 <input name="search" class="log__search__input" placeholder="search keyword"  type="text"></input>
+                <input type="submit" value="submit" class="log__btn--submit"></input>
+
               </form>
             </div>
           </div>
@@ -263,6 +258,7 @@
               </div>
               
               <button class="btn--submit">Create Artwork</button>
+              
             </form>
 
 

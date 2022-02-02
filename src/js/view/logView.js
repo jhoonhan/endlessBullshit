@@ -10,24 +10,22 @@ class LogView extends View {
 
   _logs = document.querySelectorAll('.log__logs');
 
-  _btnToggleView = document.querySelector('.log__view--toggle');
-  _btnSearchDropdown = document.querySelector('.log--search--dropdown');
+  _expandSearchBtn = document.querySelector('.log__view--toggle');
+  _searchDropdown = document.querySelector('.log__search__box');
 
-  _searchDropdownOptions = document.querySelector(
-    '.log--search--dropdown-options'
-  );
+  _searchDropdownOptions = document.querySelector('.log__searchby');
   _searchDropdownOptionsMobile = document.querySelector(
     '.log__searchby--mobile'
   );
 
-  _searchForm = document.querySelector('.log--search--form');
+  _searchForm = document.querySelector('.log__search__form');
   _searchMobileForm = document.querySelector('.log__search__form--mobile');
   _searchInput = document.querySelector('.log__search__input');
   _searchInputMobile = document.querySelector('.log__search__input--mobile');
 
-  _byName = document.querySelector('.by-name');
-  _byOrder = document.querySelector('.by-order');
-  _byID = document.querySelector('.by-id');
+  // _byName = document.querySelector('.by-name');
+  // _byOrder = document.querySelector('.by-order');
+  // _byID = document.querySelector('.by-id');
 
   _description = document.querySelector('.description');
   _form = document.querySelector('.artwork__form');
@@ -40,23 +38,20 @@ class LogView extends View {
   constructor() {
     super();
     this.renderLogs();
-    this._addHandlerSearchOption();
-    this.addHandlerSearchByOption();
+    // this._addHandlerSearchOption();
+    // this._addHandlerSearchByOption();
   }
 
-  addHandlerSearchByOption() {
-    this._searchDropdownOptionsMobile.addEventListener('change', e => {
-      const selectedOption = e.target.value;
-      if (selectedOption === 'latest') {
-        this._searchInputMobile.classList.add('hidden');
-      } else {
-        this._searchInputMobile.classList.remove('hidden');
-      }
-    });
-  }
+  // _addHandlerSearchOption() {
+  //   this._byName.addEventListener('click', this._searchByName.bind(this));
+
+  //   this._byOrder.addEventListener('click', this._searchByOrder.bind(this));
+
+  //   this._byID.addEventListener('click', this._searchByID.bind(this));
+  // }
 
   addHandlerToggleView(handler) {
-    this._btnToggleView.addEventListener('click', handler);
+    this._expandSearchBtn.addEventListener('click', handler);
   }
   addHandlerLogRender(handler) {
     window.addEventListener('hashchange', handler);
@@ -71,18 +66,7 @@ class LogView extends View {
       handler();
     });
   }
-  _addHandlerSearchOption() {
-    this._btnSearchDropdown.addEventListener(
-      'click',
-      this._searchBtnSQ1.bind(this)
-    );
 
-    this._byName.addEventListener('click', this._searchByName.bind(this));
-
-    this._byOrder.addEventListener('click', this._searchByOrder.bind(this));
-
-    this._byID.addEventListener('click', this._searchByID.bind(this));
-  }
   renderLogs(data, orientation) {
     if (!data) return;
     if (orientation === 'landscape') {
@@ -145,66 +129,14 @@ class LogView extends View {
     });
   }
 
-  // _addHandlerSearchSelector() {
-  //   this._byName.addEventListener('click', function () {
-  //     this._searchType = 'name';
-  //     console.log(`search type: name`);
-  //   });
-  // }
-
-  // _getProximiyIndex = function (data, keyIndex) {
-  //   let prox = [];
-  //   for (let i = 0; i < config.MAXSEARCHRESULT; i++) {
-  //     prox.push(keyIndex - Math.floor(config.MAXSEARCHRESULT / 2) + i);
-  //   }
-  //   const largestNum = prox.slice(-1)[0];
-  //   const largestIndex = data.length - 1;
-  //   const smallestNum = prox[0];
-
-  //   // When there is no element after
-  //   if (largestNum > largestIndex) {
-  //     const discrepancy = largestNum - largestIndex;
-  //     const filteredProx = prox.filter(index => index <= largestIndex);
-
-  //     for (let i = 1; i <= discrepancy; i++) {
-  //       filteredProx.unshift(smallestNum - i);
-  //     }
-  //     prox = filteredProx;
-  //   }
-
-  //   // When there is no element before
-  //   if (smallestNum < 0) {
-  //     const filteredProx = prox.filter(index => index >= 0);
-  //     const discrepancy = config.MAXSEARCHRESULT - filteredProx.length;
-
-  //     for (let i = 0; i <= discrepancy; i++) {
-  //       filteredProx.push(largestNum + i);
-  //     }
-  //     prox = filteredProx;
-  //   }
-  //   return prox;
-  // };
-
-  // _getResultProx = function (data, keyIndex) {
-  //   const proximity = this._getProximiyIndex(data, keyIndex);
-  //   return data.filter(
-  //     el => el.index >= proximity[0] && el.index <= proximity.slice(-1)
-  //   );
-  // };
-
   getSearchValue() {
-    return [this._searchInput.value, this._searchType];
+    return [this._searchInput.value, this._searchDropdownOptions.value];
   }
   getSearchValueMobile() {
     return [
       this._searchInputMobile.value,
       this._searchDropdownOptionsMobile.value,
     ];
-  }
-
-  _searchBtnSQ1() {
-    // super.controlHidden(this._btnSearchDropdown, 'toggle');
-    // super.controlHidden(this._searchDropdownOptions, 'toggle');
   }
 
   _searchByName() {

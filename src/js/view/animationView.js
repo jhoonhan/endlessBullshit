@@ -29,15 +29,22 @@ class AnimationView extends View {
   //
   // Serach view
   _expandSearchBtn = document.querySelector('.log__view--toggle');
+  _searchDropdown = document.querySelector('.log__search__box');
   //
   // Search box
   _searchContainer = document.querySelector('.log__search__container');
   _searchExpandBtn = document.querySelector('.log__search--expand');
-  _searchDropdown = document.querySelector('.log--search--dropdown');
-  _searchOptionContainer = document.querySelector('.log__search__options');
-  _searchOptions = document.querySelectorAll('.log__search__option a');
-  _searchForm = document.querySelector('.log--search--form');
+  _searchDropdownOptions = document.querySelector('.log__searchby');
+  _searchDropdownOptionsMobile = document.querySelector(
+    '.log__searchby--mobile'
+  );
+  // _searchOptions = document.querySelectorAll('.log__search__option a');
+
+  _searchForm = document.querySelector('.log__search__form');
+  _searchMobileForm = document.querySelector('.log__search__form--mobile');
   _searchInput = document.querySelector('.log__search__input');
+  _searchInputMobile = document.querySelector('.log__search__input--mobile');
+
   //
 
   // Introduction
@@ -177,51 +184,36 @@ class AnimationView extends View {
     }
   }
   _animateSearchBoxListeners() {
-    this._searchExpandBtn.addEventListener(
-      'click',
-      function () {
-        this.animateSearchBox(1);
-      }.bind(this)
-    );
-
-    this._searchOptions.forEach(
-      function (btn) {
-        btn.addEventListener(
-          'click',
-          function (e) {
-            this.animateSearchBox(2);
-            e.target.classList.toggle('highlighted-text');
-          }.bind(this)
-        );
-      }.bind(this)
-    );
-
-    this._searchForm.addEventListener(
-      'submit',
-      function (e) {
-        e.preventDefault();
-        this.animateSearchBox(3);
-      }.bind(this)
-    );
-  }
-
-  animateSearchBox(index) {
-    if (index === 1) {
-      this._searchOptionContainer.classList.toggle('hidden');
-      this._searchForm.classList.add('hidden');
-    }
-    if (index === 2) {
-      this._searchForm.classList.remove('hidden');
-      this._searchOptions.forEach(a => a.classList.remove('highlighted-text'));
-
-      this._searchInput.value = '';
+    this._searchExpandBtn.addEventListener('click', () => {
+      this._searchDropdownOptions.classList.toggle('hidden');
+      this._searchForm.classList.toggle('hidden');
+      // this._searchInput.value = '';
       this._searchInput.focus();
-    }
-    if (index === 3) {
-      this._searchOptionContainer.classList.add('hidden');
+    });
+
+    this._searchForm.addEventListener('submit', e => {
+      e.preventDefault();
+      this._searchDropdownOptions.classList.add('hidden');
       this._searchForm.classList.add('hidden');
-      this._searchOptions.forEach(a => a.classList.remove('highlighted-text'));
-    }
+    });
+
+    this._searchDropdownOptions.addEventListener('change', e => {
+      if (e.target.value === 'latest') {
+        this._searchForm.classList.remove('hidden');
+        this._searchInput.classList.add('hidden');
+      }
+      if (e.target.value !== 'latest') {
+        this._searchForm.classList.remove('hidden');
+        this._searchInput.classList.remove('hidden');
+      }
+    });
+    this._searchDropdownOptionsMobile.addEventListener('change', e => {
+      if (e.target.value === 'latest') {
+        this._searchInputMobile.classList.add('hidden');
+      } else {
+        this._searchInputMobile.classList.remove('hidden');
+      }
+    });
   }
 
   _getWidthWhenResize() {
