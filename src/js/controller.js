@@ -122,20 +122,19 @@ const controlLogRender = async () => {
 
     // Gets imgURL of selected log
     const hashID = window.location.hash.slice(1);
-    const selectedArtwork = await api.getArtwork('one', hashID);
+    const selectedArtwork = await api.getArtwork(true, hashID);
 
     // Web
     if (!isMobile()) {
-      scrollLogView.moveToActiveScroll(
-        selectedArtwork.order,
-        model.state.resultProximate.length
-      );
+      scrollLogView.highlightActiveScroll(selectedArtwork.order);
       logView.highlightActiveLog();
-      logView.scrollIntoView('.highlighted-text');
 
       scrollLogView.renderActiveScroll(
         await api.getImage(selectedArtwork.imgURL)
       );
+      controlSpinner('remove', 'controlLogRender');
+      logView.scrollIntoView('.highlighted-text');
+      scrollLogView.moveToActiveScroll(model.state.resultProximate.length);
     }
 
     //Mobile
@@ -170,10 +169,9 @@ const controlSearch = async () => {
         model.state.resultProximate,
         model.state.current.order,
       ]);
-      scrollLogView.moveToActiveScroll(
-        model.state.resultAccurate.order,
-        model.state.resultProximate.length
-      );
+
+      scrollLogView.highlightActiveScroll(model.state.resultAccurate.order);
+
       scrollLogView.renderActiveScroll(
         await api.getImage(model.state.resultAccurate.imgURL)
       );
@@ -181,6 +179,9 @@ const controlSearch = async () => {
       logView.renderLogs(model.state.resultProximate, 'landscape');
       logView.highlightActiveLog();
       window.location.hash = `#${model.state.resultAccurate._id}`;
+
+      controlSpinner('remove', 'controlSearch');
+      scrollLogView.moveToActiveScroll(model.state.resultProximate.length);
 
       model.updateProperties(model.state.current, model.state.resultAccurate);
     }
@@ -232,16 +233,17 @@ const controlSerachView = async () => {
         model.state.resultProximate,
         model.state.current.order,
       ]);
-      scrollLogView.moveToActiveScroll(
-        model.state.resultAccurate.order,
-        model.state.resultProximate.length
-      );
+
+      scrollLogView.highlightActiveScroll(model.state.resultAccurate.order);
+
       scrollLogView.renderActiveScroll(model.state.searchedIMG);
 
       logView.renderLogs(model.state.resultProximate, 'landscape');
-      // window.location.hash = `#${model.state.resultAccurate._id}`;
       logView.highlightActiveLog();
+
+      controlSpinner('remove', 'controlSerachView');
       logView.scrollIntoView('.highlighted-text');
+      scrollLogView.moveToActiveScroll(model.state.resultProximate.length);
 
       animationView.animateToggleSearchView();
     }

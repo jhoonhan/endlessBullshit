@@ -14,7 +14,6 @@ export const state = {
     order: '',
     imgURL: '',
   },
-  view: '',
   resultAccurate: '',
   resultProximate: '',
   searchedIMG: '',
@@ -38,7 +37,7 @@ export const logArtwork = async (inputData, imgBlob) => {
   try {
     // save new log
     // get the order of the latest artwork from database
-    const latestArtwork = await api.getArtwork('latest');
+    const latestArtwork = await api.getArtwork(false, 'latest');
 
     let imageID = `${Date.now()}-${+latestArtwork.order + 1}`;
 
@@ -55,25 +54,21 @@ export const logArtwork = async (inputData, imgBlob) => {
 
     // state.current.imgCache = imgCache;
     // await submitArtwork(data);
-    await api.postLog(data);
-    await api.postImage(image);
+    await api.post(true, data);
+    console.log(`divide`);
+    await api.post(false, image);
   } catch (err) {
-    // console.log(err);
-    throw new Error(
-      `Unable to post the artwork to the server. Please try again later (${err})`
-    );
+    throw err;
   }
 };
 
 export const loadLatest = async () => {
   try {
-    const latestArtwork = await api.getArtwork('latest');
+    const latestArtwork = await api.getArtwork(false, 'latest');
     if (!latestArtwork) return;
     updateProperties(state.current, latestArtwork);
   } catch (err) {
-    throw new Error(
-      `Unable to get the latest artwork from the server. Please try again later (${err})`
-    );
+    throw err;
   }
 };
 
@@ -82,13 +77,13 @@ export const search = async values => {
     const [keyword, type] = values;
 
     if (type === 'latest') {
-      const { resultAccu, resultProx } = await api.getSearch(keyword, type);
+      const { resultAccu, resultProx } = await api.getSearch(type, keyword);
       state.resultAccurate = resultAccu;
       state.resultProximate = resultProx;
       return;
     }
 
-    const { resultAccu, resultProx } = await api.getSearch(keyword, type);
+    const { resultAccu, resultProx } = await api.getSearch(type, keyword);
     if (!resultAccu || !resultProx) {
       state.resultProximate = [];
       return;
@@ -96,10 +91,6 @@ export const search = async values => {
       // Side effect
       state.resultAccurate = resultAccu;
       state.resultProximate = resultProx;
-    }
-
-    if (!resultAccu || !resultProx) {
-      throw new Error('No artwork found. Please try again.');
     }
   } catch (err) {
     throw err;

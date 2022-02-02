@@ -52,8 +52,7 @@ class ScrollLogView extends View {
   renderScrolls(data) {
     super.insertHTML(data, this._parentElement);
   }
-  moveToActiveScroll(activeIndex, qtScroll) {
-    // console.log(`moveToActiveScroll fired`);
+  highlightActiveScroll(activeIndex) {
     const scrolls = document.querySelectorAll('.scroll');
     scrolls.forEach(function (el) {
       if (+el.dataset.index !== +activeIndex)
@@ -61,11 +60,12 @@ class ScrollLogView extends View {
       if (+el.dataset.index === +activeIndex)
         el.classList.add('scroll--active');
     });
+  }
+  moveToActiveScroll(qtScroll) {
     const active = document.querySelector('.scroll--active');
     if (!active) return;
-    const moveValue = qtScroll * 100 - active.dataset.order * 100;
 
-    // this._parentElement.style.top = `-${moveValue}vh`;
+    const moveValue = qtScroll * 100 - active.dataset.order * 100;
     this._parentElement.style.transform = `translateY(-${moveValue}vh)`;
   }
   renderActiveScroll(img) {

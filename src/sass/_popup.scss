@@ -9,6 +9,9 @@
   justify-items: center;
   align-items: center;
 
+  background-color: rgba(255, 255, 255, 0.85);
+  opacity: 0;
+
   visibility: hidden;
 
   z-index: 11;
@@ -21,9 +24,6 @@
 
   text-align: center;
 
-  background-color: $color--main;
-  opacity: 0;
-
   transition: $transition--default;
 
   & h2 {
@@ -33,9 +33,6 @@
 
 .loading__container {
   @extend .pop-up;
-
-  background-color: rgba(255, 255, 255, 0.85);
-  opacity: 0;
 
   transition: $transition--default;
   // transition: visibility 0s, opacity 1s;
