@@ -1,4 +1,5 @@
 import { async } from 'regenerator-runtime';
+import animationView from './view/animationView';
 
 const timeout = function (s) {
   return new Promise(function (_, reject) {
@@ -39,6 +40,11 @@ export const isMobile = () => {
     isMobile = true;
   }
   return isMobile;
+};
+
+export const controlSpinner = (type, location) => {
+  animationView.renderSpinner(`${type}`);
+  // console.log(`${type} from ${location}`);
 };
 
 /*

@@ -4,30 +4,34 @@ import icons from 'url:../../img/icons.svg';
 
 class LogView extends View {
   _parentElement = document.querySelector('.log__container');
+
   _logResultContainer = document.querySelector('.log__results');
   _logMobileResultContainer = document.querySelector('.log__results--mobile');
 
   _logs = document.querySelectorAll('.log__logs');
+
   _btnToggleView = document.querySelector('.log__view--toggle');
   _btnSearchDropdown = document.querySelector('.log--search--dropdown');
+
   _searchDropdownOptions = document.querySelector(
     '.log--search--dropdown-options'
   );
   _searchDropdownOptionsMobile = document.querySelector(
     '.log__searchby--mobile'
   );
-  _searchInputMobile = document.querySelector('.log__search__input--mobile');
 
   _searchForm = document.querySelector('.log--search--form');
   _searchMobileForm = document.querySelector('.log__search__form--mobile');
-
   _searchInput = document.querySelector('.log__search__input');
+  _searchInputMobile = document.querySelector('.log__search__input--mobile');
+
   _byName = document.querySelector('.by-name');
   _byOrder = document.querySelector('.by-order');
   _byID = document.querySelector('.by-id');
 
   _description = document.querySelector('.description');
   _form = document.querySelector('.artwork__form');
+  _row1 = document.querySelector('.section--2 .row--1');
 
   _searchType = 'name';
   _view = '';
@@ -100,6 +104,11 @@ class LogView extends View {
   scrollIntoView(reference) {
     const ref = document.querySelector(reference);
     ref.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  getLogPosition() {
+    const rect = this._row1.getBoundingClientRect();
+    return rect.x;
   }
 
   highlightActiveLog() {
@@ -188,6 +197,13 @@ class LogView extends View {
   }
   getSearchType() {
     return this._searchType;
+  }
+
+  getSearchValueMobile() {
+    return [
+      this._searchInputMobile.value,
+      this._searchDropdownOptionsMobile.value,
+    ];
   }
 
   _searchBtnSQ1() {
