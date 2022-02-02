@@ -12,9 +12,6 @@ import scrollLogView from './view/scrollLogView.js';
 import mobileView from './view/mobileView.js';
 import { isMobile } from './helper.js';
 
-let resultAccurate;
-let resultProximate;
-
 if (module.hot) {
   module.hot.accept();
 }
@@ -40,10 +37,15 @@ const _update = async function (log, location = 'artwork') {
   }
 };
 
+const testfn = (type, location) => {
+  animationView.renderSpinner(`${type}`);
+  // console.log(`${type} from ${location}`);
+};
 const controlGenerateArtwork = async function (renderImage) {
   // @renderImage = html node to be converted to image
   try {
-    animationView.renderSpinner('add');
+    // animationView.renderSpinner('add');
+    testfn('add', 'GenerateArtwork');
 
     // get and checks input data
     const inputData = descriptionView.artworkInputData();
@@ -76,7 +78,8 @@ const controlGenerateArtwork = async function (renderImage) {
     // Update between page
     betweenView.update([model.state.current, img64]);
 
-    animationView.renderSpinner('remove');
+    // animationView.renderSpinner('remove');
+    testfn('remove', 'GenerateArtwork');
   } catch (err) {
     console.error(`${err} - admin 2`);
   }
@@ -84,7 +87,8 @@ const controlGenerateArtwork = async function (renderImage) {
 
 const controlLatestArtwork = async () => {
   try {
-    animationView.renderSpinner('add');
+    // animationView.renderSpinner('add');
+    testfn('add', 'controlLatestArtwork');
 
     await model.loadLatest();
     await _update(model.state.current);
@@ -96,7 +100,13 @@ const controlLatestArtwork = async () => {
     // load latest log data to description
     descriptionView.addDescription(model.state.current);
 
-    animationView.renderSpinner('remove');
+    // Refresh state
+    model.state.resultAccurate = '';
+    model.state.resultProximate = '';
+    model.state.searchedIMG = '';
+
+    // animationView.renderSpinner('remove');
+    testfn('remove', 'controlLatestArtwork');
   } catch (err) {
     console.log(err);
   }
@@ -104,19 +114,25 @@ const controlLatestArtwork = async () => {
 
 const controlLogRender = async () => {
   try {
-    animationView.renderSpinner('add');
+    // animationView.renderSpinner('add');
+    testfn('add', 'controlLogRender');
+
+    if (!model.state.resultProximate) {
+      testfn('remove', 'controlLogRender');
+      // console.log(`1234`);
+      return;
+    }
 
     // Gets imgURL of selected log
     const hashID = window.location.hash.slice(1);
     const selectedArtwork = await api.getOne(hashID);
     // Guard Clause
-    if (!resultProximate) return;
 
     // Web
     if (!isMobile()) {
       scrollLogView.moveToActiveScroll(
         selectedArtwork.order,
-        resultProximate.length
+        model.state.resultProximate.length
       );
       logView.highlightActiveLog();
       logView.scrollIntoView('.highlighted-text');
@@ -138,7 +154,8 @@ const controlLogRender = async () => {
       logView.scrollIntoView('.highlighted-text--mobile');
     }
 
-    animationView.renderSpinner('remove');
+    // animationView.renderSpinner('remove');
+    testfn('remove', 'controlLogRender');
   } catch (err) {
     console.log(err);
   }
@@ -146,27 +163,31 @@ const controlLogRender = async () => {
 
 const controlSearch = async () => {
   try {
-    animationView.renderSpinner('add');
+    // animationView.renderSpinner('add');
+    testfn('add', 'controlSearch');
 
     // Web
     if (!isMobile()) {
       await _search(undefined, logView.getSearchType());
 
-      // if (!resultAccurate) return;
-      scrollLogView.renderScrolls([resultProximate, model.state.current.order]);
+      // if (!model.state.resultAccurate) return;
+      scrollLogView.renderScrolls([
+        model.state.resultProximate,
+        model.state.current.order,
+      ]);
       scrollLogView.moveToActiveScroll(
-        resultAccurate.order,
-        resultProximate.length
+        model.state.resultAccurate.order,
+        model.state.resultProximate.length
       );
       scrollLogView.renderActiveScroll(
-        await api.getImage(resultAccurate.imgURL)
+        await api.getImage(model.state.resultAccurate.imgURL)
       );
 
-      logView.renderLogs(resultProximate, 'landscape');
+      logView.renderLogs(model.state.resultProximate, 'landscape');
       logView.highlightActiveLog();
-      window.location.hash = `#${resultAccurate._id}`;
+      window.location.hash = `#${model.state.resultAccurate._id}`;
 
-      model.updateProperties(model.state.current, resultAccurate);
+      model.updateProperties(model.state.current, model.state.resultAccurate);
     }
 
     // Mobile
@@ -178,12 +199,13 @@ const controlSearch = async () => {
       const searchKeyword = input.value;
 
       await _search(searchKeyword, searchType);
-      logView.renderLogs(resultProximate, 'portrait');
+      logView.renderLogs(model.state.resultProximate, 'portrait');
 
-      window.location.hash = `#${resultAccurate._id}`;
+      window.location.hash = `#${model.state.resultAccurate._id}`;
     }
 
-    animationView.renderSpinner('remove');
+    // animationView.renderSpinner('remove');
+    testfn('remove', 'controlSearch');
   } catch (err) {
     console.log(err);
   }
@@ -202,19 +224,19 @@ const _search = async (keyword, type) => {
         searchKeyword,
         type
       );
-      resultAccurate = resultAccu;
-      resultProximate = resultProx;
+      model.state.resultAccurate = resultAccu;
+      model.state.resultProximate = resultProx;
       return;
     }
     const { resultAccu, resultProx } = await api.getSearch(searchKeyword, type);
 
     if (!resultAccu || !resultProx) {
-      resultProximate = [];
+      model.state.resultProximate = [];
       return;
     } else {
       // Side effect
-      resultAccurate = resultAccu;
-      resultProximate = resultProx;
+      model.state.resultAccurate = resultAccu;
+      model.state.resultProximate = resultProx;
     }
 
     // animationView.renderSpinner('remove');
@@ -225,7 +247,8 @@ const _search = async (keyword, type) => {
 
 const controlSerachView = async () => {
   try {
-    animationView.renderSpinner('add');
+    // animationView.renderSpinner('add');
+    testfn('add', 'controlSerachView');
 
     // DRY
     const row1 = document.querySelector('.section--2 .row--1');
@@ -237,28 +260,36 @@ const controlSerachView = async () => {
       return;
     }
 
-    if (rect.x < 300) {
+    if (rect.x < 300 && !model.state.resultAccurate) {
       await model.loadLatest();
       await _update(model.state.current);
       await _search(model.state.current._id, 'id');
     }
 
-    if (!resultAccurate) return;
-    model.updateProperties(model.state.current, resultAccurate);
+    if (!model.state.searchedIMG) {
+      model.state.searchedIMG = await api.getImage(
+        model.state.resultAccurate.imgURL
+      );
+      console.log(model.state.searchedIMG);
+    }
+
+    if (!model.state.resultAccurate) return;
+    model.updateProperties(model.state.current, model.state.resultAccurate);
 
     // Web
     if (!isMobile()) {
-      scrollLogView.renderScrolls([resultProximate, model.state.current.order]);
+      scrollLogView.renderScrolls([
+        model.state.resultProximate,
+        model.state.current.order,
+      ]);
       scrollLogView.moveToActiveScroll(
-        resultAccurate.order,
-        resultProximate.length
+        model.state.resultAccurate.order,
+        model.state.resultProximate.length
       );
-      scrollLogView.renderActiveScroll(
-        await api.getImage(resultAccurate.imgURL)
-      );
+      scrollLogView.renderActiveScroll(model.state.searchedIMG);
 
-      logView.renderLogs(resultProximate, 'landscape');
-      // window.location.hash = `#${resultAccurate._id}`;
+      logView.renderLogs(model.state.resultProximate, 'landscape');
+      // window.location.hash = `#${model.state.resultAccurate._id}`;
       logView.highlightActiveLog();
       logView.scrollIntoView('.highlighted-text');
       animationView.animateToggleSearchView();
@@ -267,11 +298,11 @@ const controlSerachView = async () => {
     // Mobile
     if (isMobile()) {
       // Mobile render option
-      logView.renderLogs(resultProximate, 'portrait');
-      // console.log(resultAccurate);
+      logView.renderLogs(model.state.resultProximate, 'portrait');
+      // console.log(model.state.resultAccurate);
       mobileView.renderDetail([
-        resultAccurate,
-        await api.getImage(resultAccurate.imgURL),
+        model.state.resultAccurate,
+        model.state.searchedIMG,
         model.state.current.order,
       ]);
 
@@ -280,7 +311,8 @@ const controlSerachView = async () => {
 
       animationView.animateMobileArchive();
     }
-    animationView.renderSpinner('remove');
+    // animationView.renderSpinner('remove');
+    testfn('remove', 'controlSerachView');
   } catch (err) {}
 };
 

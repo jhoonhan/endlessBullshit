@@ -15,6 +15,9 @@ export const state = {
     imgURL: '',
   },
   view: '',
+  resultAccurate: '',
+  resultProximate: '',
+  searchedIMG: '',
 };
 
 // export const latestArtwork = async function () {};
