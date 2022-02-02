@@ -38,7 +38,7 @@ export const logArtwork = async (inputData, imgBlob) => {
   try {
     // save new log
     // get the order of the latest artwork from database
-    const latestArtwork = await api.getLatest();
+    const latestArtwork = await api.getArtwork('latest');
 
     let imageID = `${Date.now()}-${+latestArtwork.order + 1}`;
 
@@ -58,6 +58,7 @@ export const logArtwork = async (inputData, imgBlob) => {
     await api.postLog(data);
     await api.postImage(image);
   } catch (err) {
+    // console.log(err);
     throw new Error(
       `Unable to post the artwork to the server. Please try again later (${err})`
     );
@@ -66,7 +67,7 @@ export const logArtwork = async (inputData, imgBlob) => {
 
 export const loadLatest = async () => {
   try {
-    const latestArtwork = await api.getLatest();
+    const latestArtwork = await api.getArtwork('latest');
     if (!latestArtwork) return;
     updateProperties(state.current, latestArtwork);
   } catch (err) {

@@ -8,16 +8,24 @@ const newError = message => {
 
 export const getImage = async imgURL => {
   try {
+    let img;
     const res = await fetch(`http://127.0.0.1:3000/archive/${imgURL}`);
 
-    if (res.ok === false) {
-      newError(
-        `There has been an error with loading the image. You may close this prompt and continue to use the website`
-      );
+    if (res.ok === true) {
+      const imgBlob = await res.blob();
+      img = URL.createObjectURL(imgBlob);
     }
 
-    const imgBlob = await res.blob();
-    const img = URL.createObjectURL(imgBlob);
+    /// FIX IT!
+    if (res.ok === false) {
+      const altRes = await fetch(`http://127.0.0.1:3000/archive/test.png`);
+      const imgBlob = await altRes.blob();
+      img = URL.createObjectURL(imgBlob);
+
+      // newError(
+      //   'Unable to load the image. You may close this window and continue to use the website.'
+      // );
+    }
 
     return img;
   } catch (err) {
@@ -30,36 +38,70 @@ export const getSearch = async (keyword, type) => {
     let data;
     if (type !== 'latest') {
       const res = await fetch(`${APIBASEURL}/search/${type}/${keyword}`);
-
       data = await res.json();
     }
     if (type === 'latest') {
       const res = await fetch(`${APIBASEURL}/search/${type}/latest`);
       data = await res.json();
     }
+
+    if (data.status !== 'success') {
+      throw new Error('No result found, please try again.');
+    }
     return data;
   } catch (err) {
-    newError(`No result found. Please try again`);
+    throw err;
   }
 };
-export const getOne = async id => {
+
+export const getArtwork = async (type, id) => {
   try {
-    const res = await fetch(`${APIBASEURL}/${id}`);
-    const data = await res.json();
+    let data;
+    if (type === 'one') {
+      const res = await fetch(`${APIBASEURL}/${id}`);
+      data = await res.json();
+    }
+    if (type == 'latest') {
+      const res = await fetch(`${APIBASEURL}/latest`);
+      data = await res.json();
+    }
+
+    if (data.status !== 'success') {
+      throw new Error('No result found, please try again.');
+    }
+
     return data.data;
   } catch (err) {
     throw err;
   }
 };
-export const getLatest = async () => {
-  try {
-    const res = await fetch(`${APIBASEURL}/latest`);
-    const data = await res.json();
-    return data.data;
-  } catch (err) {
-    throw err;
-  }
-};
+// export const getOne = async id => {
+//   try {
+//     const res = await fetch(`${APIBASEURL}/${id}`);
+//     const data = await res.json();
+
+//     if (data.status !== 'success') {
+//       throw new Error('No result found, please try again.');
+//     }
+//     return data.data;
+//   } catch (err) {
+//     throw err;
+//   }
+// };
+
+// export const getLatest = async () => {
+//   try {
+//     const res = await fetch(`${APIBASEURL}/latest`);
+//     const data = await res.json();
+
+//     if (data.status !== 'success') {
+//       throw new Error('No result found, please try again.');
+//     }
+//     return data.data;
+//   } catch (err) {
+//     throw err;
+//   }
+// };
 export const postImage = async img => {
   try {
     const res = await axios({
@@ -67,6 +109,7 @@ export const postImage = async img => {
       url: `${APIBASEURL}/upload`,
       data: img,
     });
+
     if (res.data.status === 'success') {
       console.log(`posted`);
     }

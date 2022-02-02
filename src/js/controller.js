@@ -117,13 +117,12 @@ const controlLogRender = async () => {
 
     // Guard clause
     if (!model.state.resultProximate) {
-      controlSpinner('remove', 'controlLogRender');
       return;
     }
 
     // Gets imgURL of selected log
     const hashID = window.location.hash.slice(1);
-    const selectedArtwork = await api.getOne(hashID);
+    const selectedArtwork = await api.getArtwork('one', hashID);
 
     // Web
     if (!isMobile()) {
@@ -150,11 +149,11 @@ const controlLogRender = async () => {
       logView.highlightActiveLogMobile();
       logView.scrollIntoView('.highlighted-text--mobile');
     }
-
-    controlSpinner('remove', 'controlLogRender');
   } catch (err) {
     popUpView.renderErrorPrompt(err.message.split(' (')[0]);
     console.error(err);
+  } finally {
+    controlSpinner('remove', 'controlLogRender');
   }
 };
 
@@ -194,11 +193,11 @@ const controlSearch = async () => {
 
       window.location.hash = `#${model.state.resultAccurate._id}`;
     }
-
-    controlSpinner('remove', 'controlSearch');
   } catch (err) {
     popUpView.renderErrorPrompt(err.message.split(' (')[0]);
     console.error(err);
+  } finally {
+    controlSpinner('remove', 'controlSearch');
   }
 };
 
@@ -208,7 +207,7 @@ const controlSerachView = async () => {
 
     if (logView.getLogPosition() >= 300) {
       animationView.animateToggleSearchView();
-      animationView.renderSpinner('remove');
+
       return;
     }
 
@@ -262,11 +261,11 @@ const controlSerachView = async () => {
 
       animationView.animateMobileArchive();
     }
-
-    controlSpinner('remove', 'controlSerachView');
   } catch (err) {
     popUpView.renderErrorPrompt(err.message.split(' (')[0]);
     console.error(err);
+  } finally {
+    controlSpinner('remove', 'controlSerachView');
   }
 };
 

@@ -82,18 +82,6 @@ class ScrollLogView extends View {
   _generateMarkup(data) {
     const [resultProx, totalNumber] = data;
 
-    if (resultProx.length < 1) {
-      return `
-        <div class="no-result">
-          <span>There is no result with your search. <br>Try it again or close the archive panel
-          </span>
-        </div>`;
-    }
-    // const year = data.date.slice(0, 4);
-    // console.log(year);
-    // const date = data.date.slice(0, 7);
-    // console.log(date);
-
     const generatedHTML = resultProx
       .map(
         function (el, i) {
