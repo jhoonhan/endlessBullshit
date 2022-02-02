@@ -192,13 +192,9 @@ class LogView extends View {
   //   );
   // };
 
-  getSearchInput() {
-    return this._searchInput.value;
+  getSearchValue() {
+    return [this._searchInput.value, this._searchType];
   }
-  getSearchType() {
-    return this._searchType;
-  }
-
   getSearchValueMobile() {
     return [
       this._searchInputMobile.value,

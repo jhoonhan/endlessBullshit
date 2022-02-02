@@ -12,6 +12,7 @@ import scrollLogView from './view/scrollLogView.js';
 import mobileView from './view/mobileView.js';
 import { isMobile } from './helper.js';
 import { controlSpinner } from './helper.js';
+import popUpView from './view/popUpView.js';
 
 if (module.hot) {
   module.hot.accept();
@@ -25,14 +26,15 @@ const _update = async function (log, location = 'artwork') {
     if (!log) return;
 
     // renderView.artworkRender(await api.api('getImage', log.imgURL));
-    renderView.artworkRender(await api.getImage(log.imgURL));
+    const imgURL = await api.getImage(log.imgURL);
+    renderView.artworkRender(imgURL);
 
     // Insert ID to artwork on view
     renderView.artworkID(log._id);
     // latest log data to artwork title for render
     titleView.addTitles(log, location);
   } catch (err) {
-    console.log(err);
+    throw err;
   }
 };
 
@@ -48,7 +50,7 @@ const controlGenerateArtwork = async function (renderImage) {
     // reduce dummy to fit in the center with 70%
     renderView.artworkReducer('add');
 
-    //ERR
+    //ERR handled
     await model.loadArtwork(renderImage);
 
     // use current IMG to render to the canvas
@@ -61,6 +63,7 @@ const controlGenerateArtwork = async function (renderImage) {
     const [imgBlob, img64] = await renderView.artworkImgURL();
 
     // Save the imgURL data
+    // ERR handled
     await model.logArtwork(inputData, imgBlob);
     // await model.uploadIMG(imgURL);
 
@@ -73,11 +76,12 @@ const controlGenerateArtwork = async function (renderImage) {
     betweenView.update([model.state.current, img64]);
 
     // Hide form
-    descriptionView.toggleWindow();
-
-    controlSpinner('remove', 'GenerateArtwork');
   } catch (err) {
+    popUpView.renderErrorPrompt(err.message.split(' (')[0]);
     console.error(err);
+  } finally {
+    descriptionView.toggleWindow();
+    controlSpinner('remove', 'GenerateArtwork');
   }
 };
 
@@ -98,10 +102,12 @@ const controlLatestArtwork = async () => {
     model.state.resultAccurate = '';
     model.state.resultProximate = '';
     model.state.searchedIMG = '';
-
-    controlSpinner('remove', 'controlLatestArtwork');
+    //
   } catch (err) {
-    console.log(err);
+    popUpView.renderErrorPrompt(err.message.split(' (')[0]);
+    console.error(err);
+  } finally {
+    controlSpinner('remove', 'controlLatestArtwork');
   }
 };
 
@@ -147,7 +153,8 @@ const controlLogRender = async () => {
 
     controlSpinner('remove', 'controlLogRender');
   } catch (err) {
-    console.log(err);
+    popUpView.renderErrorPrompt(err.message.split(' (')[0]);
+    console.error(err);
   }
 };
 
@@ -157,7 +164,7 @@ const controlSearch = async () => {
 
     // Web
     if (!isMobile()) {
-      await _search(undefined, logView.getSearchType());
+      await model.search(logView.getSearchValue());
 
       // if (!model.state.resultAccurate) return;
       scrollLogView.renderScrolls([
@@ -181,9 +188,8 @@ const controlSearch = async () => {
 
     // Mobile
     if (isMobile()) {
-      const [searchKeyword, searchType] = logView.getSearchValueMobile();
+      await model.search(logView.getSearchValueMobile());
 
-      await _search(searchKeyword, searchType);
       logView.renderLogs(model.state.resultProximate, 'portrait');
 
       window.location.hash = `#${model.state.resultAccurate._id}`;
@@ -191,37 +197,8 @@ const controlSearch = async () => {
 
     controlSpinner('remove', 'controlSearch');
   } catch (err) {
-    console.log(err);
-  }
-};
-
-const _search = async (keyword, type) => {
-  try {
-    let searchKeyword = keyword;
-    if (!keyword && type !== 'latest') {
-      searchKeyword = logView.getSearchInput();
-    }
-    if (type === 'latest') {
-      const { resultAccu, resultProx } = await api.getSearch(
-        searchKeyword,
-        type
-      );
-      model.state.resultAccurate = resultAccu;
-      model.state.resultProximate = resultProx;
-      return;
-    }
-
-    const { resultAccu, resultProx } = await api.getSearch(searchKeyword, type);
-    if (!resultAccu || !resultProx) {
-      model.state.resultProximate = [];
-      return;
-    } else {
-      // Side effect
-      model.state.resultAccurate = resultAccu;
-      model.state.resultProximate = resultProx;
-    }
-  } catch (err) {
-    console.log(err);
+    popUpView.renderErrorPrompt(err.message.split(' (')[0]);
+    console.error(err);
   }
 };
 
@@ -238,7 +215,7 @@ const controlSerachView = async () => {
     if (logView.getLogPosition() < 300 && !model.state.resultAccurate) {
       await model.loadLatest();
       await _update(model.state.current);
-      await _search(model.state.current._id, 'id');
+      await model.search([model.state.current._id, 'id']);
     }
 
     if (!model.state.searchedIMG) {
@@ -287,7 +264,10 @@ const controlSerachView = async () => {
     }
 
     controlSpinner('remove', 'controlSerachView');
-  } catch (err) {}
+  } catch (err) {
+    popUpView.renderErrorPrompt(err.message.split(' (')[0]);
+    console.error(err);
+  }
 };
 
 const init = function () {
@@ -297,6 +277,7 @@ const init = function () {
   logView.addHandlerSearch(controlSearch);
   logView.addHandlerToggleView(controlSerachView);
   mobileView.addHandlerToggleView(controlSerachView);
+  // popUpView.renderErrorPrompt(`aaaang!2`);
 };
 
 init();

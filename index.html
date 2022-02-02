@@ -12,8 +12,8 @@
     <script type="module" defer src="src/js/controller.js"></script>
   </head>
   <body class="body">
-    <div class="loading visibilityVisible">
-      <div class="loading__spinner">
+    <div class="loading__container visibilityVisible">
+      <div class="loading__container__spinner">
         <svg>
           <use href="src/img/icons.svg#icon-loader"></use>
         </svg>
@@ -23,9 +23,9 @@
 
     <div class="error__container">
       <div>
-        <div class="error__container__message">
-          <h2>No result found. Try agian with correct keyword and seach type.</h2>
-          <button class="btn--large error__container--close">Close</button>
+        <div>
+          <h2 class="error__container__message">No result found. Try agian with correct keyword and seach type.</h2>
+          <button class="btn--large error__container--toggle">Close</button>
         </div>
       </div>
     </div>

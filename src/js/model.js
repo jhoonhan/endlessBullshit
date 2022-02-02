@@ -27,9 +27,10 @@ export const loadArtwork = async function (renderImage) {
   try {
     const img = await html2canvas(renderImage);
     state.current.img = img;
-    if (!img) console.log(`aaang`);
   } catch (err) {
-    throw err;
+    throw new Error(
+      `Unable to render the request. Please try again later (${err})`
+    );
   }
 };
 
@@ -57,7 +58,9 @@ export const logArtwork = async (inputData, imgBlob) => {
     await api.postLog(data);
     await api.postImage(image);
   } catch (err) {
-    throw err;
+    throw new Error(
+      `Unable to post the artwork to the server. Please try again later (${err})`
+    );
   }
 };
 
@@ -67,9 +70,41 @@ export const loadLatest = async () => {
     if (!latestArtwork) return;
     updateProperties(state.current, latestArtwork);
   } catch (err) {
+    throw new Error(
+      `Unable to get the latest artwork from the server. Please try again later (${err})`
+    );
+  }
+};
+
+export const search = async values => {
+  try {
+    const [keyword, type] = values;
+
+    if (type === 'latest') {
+      const { resultAccu, resultProx } = await api.getSearch(keyword, type);
+      state.resultAccurate = resultAccu;
+      state.resultProximate = resultProx;
+      return;
+    }
+
+    const { resultAccu, resultProx } = await api.getSearch(keyword, type);
+    if (!resultAccu || !resultProx) {
+      state.resultProximate = [];
+      return;
+    } else {
+      // Side effect
+      state.resultAccurate = resultAccu;
+      state.resultProximate = resultProx;
+    }
+
+    if (!resultAccu || !resultProx) {
+      throw new Error('No artwork found. Please try again.');
+    }
+  } catch (err) {
     throw err;
   }
 };
+
 export const updateProperties = function (to, from) {
   Object.keys(to).forEach(function (key) {
     to[key] = from[key];

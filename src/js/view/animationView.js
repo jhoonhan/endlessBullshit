@@ -19,7 +19,6 @@ class AnimationView extends View {
   // Main page
   _artworkPage = document.querySelector('.artworkPage');
   _container = document.querySelector('.container');
-  _loadingDiv = document.querySelector('.loading');
   //
 
   // Log view
@@ -292,27 +291,6 @@ class AnimationView extends View {
     // opening search will hide form
     this._description.classList.remove('hidden');
     this._form.classList.add('hidden');
-  }
-
-  renderSpinner(type = 'toggle') {
-    // const dataHTML = `
-    //   <div class="spinner">
-    //     <svg>
-    //       <use href="${icons}#icon-loader"></use>
-    //     </svg>
-    //   </div>
-    // `;
-    // this._loadingDiv.insertAdjacentHTML('afterbegin', dataHTML);
-
-    if (type === 'add') {
-      this._loadingDiv.classList.add('visibilityVisible');
-    }
-    if (type === 'remove') {
-      this._loadingDiv.classList.remove('visibilityVisible');
-    }
-    if (type === 'toggle') {
-      this._loadingDiv.classList.toggle('visibilityVisible');
-    }
   }
 }
 

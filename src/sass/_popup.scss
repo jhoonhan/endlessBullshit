@@ -22,13 +22,16 @@
   text-align: center;
 
   background-color: $color--main;
+  opacity: 0;
+
+  transition: $transition--default;
 
   & h2 {
     margin-bottom: 2rem;
   }
 }
 
-.loading {
+.loading__container {
   @extend .pop-up;
 
   background-color: rgba(255, 255, 255, 0.85);
@@ -37,7 +40,7 @@
   transition: $transition--default;
   // transition: visibility 0s, opacity 1s;
 }
-.loading__spinner {
+.loading__container__spinner {
   text-align: center;
   svg {
     height: 6rem;

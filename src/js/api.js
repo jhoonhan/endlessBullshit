@@ -2,11 +2,23 @@
 import axios from 'axios';
 import { APIBASEURL } from './config.js';
 
+const newError = message => {
+  throw new Error(message);
+};
+
 export const getImage = async imgURL => {
   try {
     const res = await fetch(`http://127.0.0.1:3000/archive/${imgURL}`);
+
+    if (res.ok === false) {
+      newError(
+        `There has been an error with loading the image. You may close this prompt and continue to use the website`
+      );
+    }
+
     const imgBlob = await res.blob();
     const img = URL.createObjectURL(imgBlob);
+
     return img;
   } catch (err) {
     throw err;
@@ -18,16 +30,16 @@ export const getSearch = async (keyword, type) => {
     let data;
     if (type !== 'latest') {
       const res = await fetch(`${APIBASEURL}/search/${type}/${keyword}`);
+
       data = await res.json();
     }
     if (type === 'latest') {
       const res = await fetch(`${APIBASEURL}/search/${type}/latest`);
       data = await res.json();
     }
-
     return data;
   } catch (err) {
-    throw err;
+    newError(`No result found. Please try again`);
   }
 };
 export const getOne = async id => {
