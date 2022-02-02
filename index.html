@@ -240,11 +240,13 @@
             <form class="artwork__form hidden">
               <div class="cell cell--2">
                 <label class="label-form">Your Name :</label>
+                <span class="error-message error-message--name"></span>
+
                 <input name="name" class="input--text input-form" placeholder="artist name"  type="text" required></input>
               </div>
               <div class="cell cell--3">
                 <label class="label-form">Your Statement :</label>
-                <span class="error-message--form"></span>
+                <span class="error-message error-message--statement"></span>
                 <textarea name="statement" class="input--text input-form--textarea" placeholder="artist statement has to be between 100 to 500 characters" type="text" required></textarea>
                 <div class="text-count">
                   <span class="current-count">0</span>

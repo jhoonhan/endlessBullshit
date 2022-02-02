@@ -76,11 +76,11 @@ const controlGenerateArtwork = async function (renderImage) {
     betweenView.update([model.state.current, img64]);
 
     // Hide form
+    descriptionView.toggleWindow();
   } catch (err) {
     popUpView.renderErrorPrompt(err.message.split(' (')[0]);
     console.error(err);
   } finally {
-    descriptionView.toggleWindow();
     controlSpinner('remove', 'GenerateArtwork');
   }
 };

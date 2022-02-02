@@ -5,7 +5,8 @@ class DescriptionView extends View {
   _parentElement = document.querySelector('.description');
   _form = document.querySelector('.artwork__form');
   _textarea = document.querySelector('.input-form--textarea');
-  _errorMessage = document.querySelector('.error-message--form');
+  _errorMessageName = document.querySelector('.error-message--name');
+  _errorMessageStatement = document.querySelector('.error-message--statement');
   _btnFormHide = document.querySelector('.btn__form--hide');
 
   constructor() {
@@ -32,41 +33,35 @@ class DescriptionView extends View {
     inputTexts.forEach(el => (el.value = ''));
     inputCheckBoxes.forEach(el => (el.checked = false));
   }
-  _promptError(message) {
-    this._errorMessage.innerHTML = '';
-    this._errorMessage.innerHTML = `${message}`;
+  _promptError(message, location) {
+    location.innerHTML = '';
+    location.innerHTML = `${message}`;
     this._textarea.classList.add('error-box');
   }
   _inputDataValidate(inputData) {
     const { name, statement } = inputData;
+    const cleanedName = name.replace(/[^0-9a-zA-Z]+/g, '');
 
-    if (name.length > config.NAMEMAX) {
-      this._errorMessage.innerHTML = '';
-      this._errorMessage.innerHTML = `name has to be less than ${config.NAMEMAX} characters.`;
-      this._textarea.classList.add('error-box');
+    // Name validate
+    if (cleanedName.length > config.NAMEMAX) {
+      const message = `name has to be less than ${config.NAMEMAX} characters.`;
+      this._promptError(message, this._errorMessageName);
       return false;
     }
 
     // Statement validate
     if (statement.length < config.STATEMENTMIN) {
-      this._errorMessage.innerHTML = '';
-      this._errorMessage.innerHTML = `statment has to be at least ${config.STATEMENTMIN} characters.`;
-      this._textarea.classList.add('error-box');
+      const message = `statment has to be at least ${config.STATEMENTMIN} characters.`;
+      this._promptError(message, this._errorMessageStatement);
       return false;
     } else if (statement.length > config.STATEMENTMAX) {
-      this._errorMessage.innerHTML = '';
-      this._errorMessage.innerHTML = `statment has to be less than ${config.STATEMENTMAX} characters.`;
-      this._textarea.classList.add('error-box');
+      const message = `statment has to be less than ${config.STATEMENTMAX} characters.`;
+      this._promptError(message, this._errorMessageStatement);
       return false;
     } else {
       this._textarea.classList.remove('error-box');
       return true;
     }
-
-    // if (name.length < config.NAMEMIN) {
-    //   console.log(`name too short`);
-    //   this._errorData.push(`name too short`);
-    // }
   }
 
   _characterCount() {

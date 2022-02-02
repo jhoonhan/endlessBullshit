@@ -1,5 +1,7 @@
 /* eslint-disable */
 import html2canvas from 'html2canvas';
+import * as config from './config.js';
+
 import { OGARTWORK } from './config.js';
 import { text } from 'body-parser';
 
@@ -19,7 +21,10 @@ export const state = {
   searchedIMG: '',
 };
 
-// export const latestArtwork = async function () {};
+const validateInput = text => {
+  const validatedText = text.replace(/[^0-9a-zA-Z]+/g, '');
+  return validatedText;
+};
 
 // takes dummy and convert it to canvas
 export const loadArtwork = async function (renderImage) {
@@ -75,15 +80,16 @@ export const loadLatest = async () => {
 export const search = async values => {
   try {
     const [keyword, type] = values;
+    const valKeyword = validateInput(keyword);
 
     if (type === 'latest') {
-      const { resultAccu, resultProx } = await api.getSearch(type, keyword);
+      const { resultAccu, resultProx } = await api.getSearch(type, valKeyword);
       state.resultAccurate = resultAccu;
       state.resultProximate = resultProx;
       return;
     }
 
-    const { resultAccu, resultProx } = await api.getSearch(type, keyword);
+    const { resultAccu, resultProx } = await api.getSearch(type, valKeyword);
     if (!resultAccu || !resultProx) {
       state.resultProximate = [];
       return;

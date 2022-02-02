@@ -53,6 +53,9 @@
 
   overflow-y: scroll;
 
+  scrollbar-color: #ccc white;
+  scrollbar-width: thin;
+
   & li {
     list-style-type: none;
     display: flex;
