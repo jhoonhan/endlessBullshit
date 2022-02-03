@@ -1,3 +1,5 @@
+import * as config from '../config.js';
+
 export default class View {
   _data;
 
@@ -52,5 +54,18 @@ export default class View {
       .split(' ')
       .map(letter => `${letter.slice(0, 1).toUpperCase()}${letter.slice(1)}`)
       .join(' ');
+  }
+
+  convertName(name) {
+    if (name.length > config.NAMESHORTEN) {
+      if (name.split(' ').length > 1) {
+        const firstInitial = name.split(' ')[0].slice(0, 1);
+        const lastName = name.split(' ').slice(-1)[0];
+        return `${firstInitial}. ${lastName}`;
+      }
+      if (name.split(' ').length <= 1) {
+        return name.slice(0, 15);
+      }
+    } else return name;
   }
 }

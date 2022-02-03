@@ -31,7 +31,6 @@ class LogView extends View {
   _form = document.querySelector('.artwork__form');
   _row1 = document.querySelector('.section--2 .row--1');
 
-  _searchType = 'name';
   _view = '';
   _node = '';
 
@@ -57,9 +56,7 @@ class LogView extends View {
   addHandlerLogRender(handler) {
     window.addEventListener('hashchange', handler);
   }
-  addHandlerLogRenderInfinity(handler) {
-    this._logResultContainer.addEventListener('scroll', handler);
-  }
+
   addHandlerSearch(handler) {
     this._searchForm.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -79,25 +76,6 @@ class LogView extends View {
     if (orientation === 'portrait') {
       super.insertHTML(data, this._logResultContainerMobile);
     }
-  }
-
-  scrollListener() {
-    const x = this._logResultContainer.clientHeight;
-    const y = this._logResultContainer.scrollTop;
-    const z = this._logResultContainer.scrollHeight;
-    console.log(x, y, z);
-    if (y === 0) return `top`;
-    if (x + y + 1 <= z) return null;
-    if (x + y + 1 > z) return `bottom`;
-  }
-
-  renderInfiniteLogs(data, orientation) {
-    // const x = ref.getBoundingClientRect().top;
-    const x = this._logResultContainer.clientHeight;
-    const y = this._logResultContainer.scrollTop;
-    const z = this._logResultContainer.scrollHeight;
-    console.log(x, y, z);
-    if (x + y + 100 > z) console.log(`fire`);
   }
 
   scrollIntoView(reference, orientation, location) {
@@ -173,34 +151,28 @@ class LogView extends View {
     ];
   }
 
-  _searchByName() {
-    this._searchType = 'name';
-  }
-  _searchByOrder() {
-    this._searchType = 'order';
-  }
-  _searchByID() {
-    this._searchType = 'id';
-  }
+  // _convertName(name) {
+  //   if (name.length > config.NAMESHORTEN) {
+  //     if (name.split(' ').length > 1) {
+  //       const firstInitial = name.split(' ')[0].slice(0, 1);
+  //       const lastName = name.split(' ').slice(-1)[0];
+  //       return `${firstInitial}. ${lastName}`;
+  //     }
+  //     if (name.split(' ').length <= 1) {
+  //       return name.slice(0, 15);
+  //     }
+  //   } else return name;
+  // }
 
-  _convertName(name) {
-    if (name.length > config.NAMESHORTEN) {
-      if (name.split(' ').length > 1) {
-        const firstInitial = name.split(' ')[0].slice(0, 1);
-        const lastName = name.split(' ').slice(-1)[0];
-        return `${firstInitial}. ${lastName}`;
-      }
-      if (name.split(' ').length <= 1) {
-        return name.slice(0, 15);
-      }
-    } else return name;
-  }
+  //
+  //
+  // Generate
   _generateMarkup(data) {
     const generatedHTML = data
       .slice(0, config.MAXSEARCHRESULT)
       .map(
         function (el) {
-          const convtName = this._convertName(el.name);
+          const convtName = this.convertName(el.name);
           return `<li><a href="#${el._id}" class="log__logs" data-index="${
             el.order
           }">${this.capitalizeName(convtName)}</a></li>`;

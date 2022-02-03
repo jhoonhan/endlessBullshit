@@ -82,9 +82,19 @@ export const loadLatest = async () => {
   }
 };
 
-export const search = async values => {
+// export const searchInfinity = async (id, type) => {
+//   try {
+//     const result = await api.searchInfinity(type, id);
+//     console.log(result);
+//     return result;
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
+
+export const search = async data => {
   try {
-    const [keyword, type] = values;
+    const [keyword, type] = data;
     const valKeyword = validateInput(keyword, false);
 
     if (type === 'latest') {

@@ -13,6 +13,7 @@ import mobileView from './view/mobileView.js';
 import { isMobile } from './helper.js';
 import { controlSpinner } from './helper.js';
 import popUpView from './view/popUpView.js';
+import infinityView from './view/infinityView.js';
 
 if (module.hot) {
   module.hot.accept();
@@ -162,12 +163,16 @@ const controlLogRenderInfinity = async () => {
     if (!state) return;
 
     if (state === 'top') {
-      // await model.blah();
       console.log(`load more on top`);
+      await model.search([model.state.current._id, 'id']);
     }
 
     if (state === 'bottom') {
       console.log(`load more on bottom`);
+      // Find the very last node's id
+      const lastLogID = infinityView.getLastLogID();
+      const data = await api.searchInfinity(lastLogID, 'bottom');
+      infinityView.renderInfinity(data.results, 'bottom', 'landscape');
     }
   } catch (err) {
     console.log(err);
@@ -243,6 +248,7 @@ const controlSerachView = async () => {
     }
 
     if (!model.state.resultAccurate) return;
+
     model.updateProperties(model.state.current, model.state.resultAccurate);
 
     // Web
@@ -293,11 +299,11 @@ const init = function () {
   titleView.addHandlerLatest(controlLatestArtwork);
   renderView.addHandlerGenerateArtwork(controlGenerateArtwork);
   logView.addHandlerLogRender(controlLogRender);
-  logView.addHandlerLogRenderInfinity(controlLogRenderInfinity);
   logView.addHandlerSearch(controlSearch);
   logView.addHandlerToggleView(controlSerachView);
   mobileView.addHandlerToggleView(controlSerachView);
   // popUpView.renderErrorPrompt(`aaaang!2`);
+  infinityView.addHandlerLogRenderInfinity(controlLogRenderInfinity);
 };
 
 init();

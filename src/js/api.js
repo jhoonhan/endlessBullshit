@@ -50,6 +50,16 @@ export const getSearch = async (type, keyword) => {
   }
 };
 
+export const searchInfinity = async (id, type) => {
+  try {
+    const res = await fetch(`${APIBASEURL}/infinity/${type}/${id}`);
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export const getArtwork = async (type, id) => {
   try {
     const res = await fetch(`${APIBASEURL}/${type ? id : 'latest'}`);
