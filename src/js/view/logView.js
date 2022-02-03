@@ -6,7 +6,7 @@ class LogView extends View {
   _parentElement = document.querySelector('.log__container');
 
   _logResultContainer = document.querySelector('.log__results');
-  _logMobileResultContainer = document.querySelector('.log__results--mobile');
+  _logResultContainerMobile = document.querySelector('.log__results--mobile');
 
   _logs = document.querySelectorAll('.log__logs');
 
@@ -38,6 +38,9 @@ class LogView extends View {
   constructor() {
     super();
     this.renderLogs();
+    this._logResultContainer.addEventListener('scroll', () => {
+      this.renderInfiniteLogs();
+    });
     // this._addHandlerSearchOption();
     // this._addHandlerSearchByOption();
   }
@@ -73,14 +76,17 @@ class LogView extends View {
       super.insertHTML(data, this._logResultContainer);
     }
     if (orientation === 'portrait') {
-      super.insertHTML(data, this._logMobileResultContainer);
+      super.insertHTML(data, this._logResultContainerMobile);
     }
   }
 
   renderInfiniteLogs(data, orientation) {
-    const x = ref.getBoundingClientRect().top;
-    const y = loc.clientHeight;
-    const z = loc.scrollTop;
+    // const x = ref.getBoundingClientRect().top;
+    const x = this._logResultContainer.clientHeight;
+    const y = this._logResultContainer.scrollTop;
+    const z = this._logResultContainer.scrollHeight;
+    console.log(x, y, z);
+    if (x + y + 100 > z) console.log(`fire`);
   }
 
   scrollIntoView(reference, orientation, location) {

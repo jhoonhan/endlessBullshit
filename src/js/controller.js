@@ -156,6 +156,13 @@ const controlLogRender = async () => {
   }
 };
 
+const controlLogRenderInfinity = async () => {
+  try {
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const controlSearch = async () => {
   try {
     controlSpinner('add', 'controlSearch');
