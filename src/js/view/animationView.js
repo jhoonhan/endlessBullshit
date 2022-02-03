@@ -243,19 +243,21 @@ class AnimationView extends View {
   }
   _toggleScrollView(rect) {
     if (rect.x < 0) {
-      this._row1.classList.toggle('transfrom-x__100vw');
-      this._row2.classList.toggle('transfrom-y__-100vh');
+      console.log(`1`);
+      this._row1.classList.add('transfrom-x__100vw');
+      this._row2.classList.add('transfrom-y__-100vh');
       this._expandSearchBtn.classList.toggle('arrow-rotate');
       // setTimeout(this.renderSpinner('remove'), 3000);
       // this.renderSpinner('remove');
     }
     if (rect.x >= 0) {
-      this._row1.classList.toggle('transfrom-x__100vw');
-      this._row2.classList.toggle('transfrom-y__-100vh');
+      console.log(`2`);
+      this._row1.classList.remove('transfrom-x__100vw');
+      this._row2.classList.remove('transfrom-y__-100vh');
       this._expandSearchBtn.classList.toggle('arrow-rotate');
 
       // this._scrollContainer.style.top = '0';
-      this._scrollContainer.style.transform = 'translateY(0)';
+      // this._scrollContainer.style.transform = 'translateY(0)';
       // setTimeout(this.renderSpinner('remove'), 3000);
 
       // this.renderSpinner('remove');

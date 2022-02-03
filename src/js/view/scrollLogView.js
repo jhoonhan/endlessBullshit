@@ -52,29 +52,25 @@ class ScrollLogView extends View {
   renderScrolls(data) {
     super.insertHTML(data, this._parentElement);
   }
-  highlightActiveScroll(activeIndex) {
+  highlightActiveScroll(activeID) {
+    console.log(activeID);
     const scrolls = document.querySelectorAll('.scroll');
     scrolls.forEach(function (el) {
-      if (+el.dataset.index !== +activeIndex)
-        el.classList.remove('scroll--active');
-      if (+el.dataset.index === +activeIndex)
-        el.classList.add('scroll--active');
+      if (el.dataset.id !== activeID) el.classList.remove('scroll--active');
+      if (el.dataset.id === activeID) el.classList.add('scroll--active');
     });
   }
-  moveToActiveScroll(qtScroll) {
+  moveToActiveScroll() {
     const active = document.querySelector('.scroll--active');
-    if (!active) return;
 
-    const moveValue = qtScroll * 100 - active.dataset.order * 100;
-    this._parentElement.style.transform = `translateY(-${moveValue}vh)`;
+    active.scrollIntoView({ behavior: 'smooth' });
   }
   renderActiveScroll(img) {
     const active = document.querySelector('.scroll--active .artwork-frame');
     if (!active) return;
     active.style.backgroundImage = `url(${img})`;
   }
-  //
-  //
+
   getTotalNumber(totalNumber) {
     return totalNumber;
   }
@@ -90,7 +86,7 @@ class ScrollLogView extends View {
           return `
           <div class="scroll scroll--${i}" data-order="${i}" data-index="${
             el.order
-          }"">
+          }" data-id="${el._id}">
           <div class="column column--4">
               <div class="artwork__container--outer shadow--outer">
               <div class="artwork__container">

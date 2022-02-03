@@ -89,13 +89,13 @@ class InfinityView extends View {
             : +lastOrder - 1 - i;
 
           return `
-          <div class="scroll" data-order="${newOrder}" data-index="${el.order}">
+          <div class="scroll" data-order="${newOrder}" data-index="${
+            el.order
+          }" data-id="${el._id}">
           <div class="column column--4">
               <div class="artwork__container--outer shadow--outer">
               <div class="artwork__container">
-                  <div class="artwork-info artwork-frame" data-id="${
-                    el._id
-                  }" style="background-image: none">
+                  <div class="artwork-info artwork-frame" data-id="" style="background-image: none">
                   </div>
               </div>
               </div>

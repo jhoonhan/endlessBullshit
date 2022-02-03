@@ -109,7 +109,7 @@ class LogView extends View {
 
   highlightActiveLog() {
     const logs = document.querySelectorAll('.log__logs');
-    const artworkInfo = document.querySelector('.scroll--active .artwork-info');
+    const activeScroll = document.querySelector('.scroll--active');
 
     // if (window.location.hash === '') return;
     // logs.forEach(function (log) {
@@ -119,9 +119,9 @@ class LogView extends View {
     //     log.classList.remove('highlighted-text');
     //   }
     // });
-    if (!artworkInfo) return;
+    if (!activeScroll) return;
     logs.forEach(function (log) {
-      if (log.href.slice(-24) === artworkInfo.dataset.id) {
+      if (log.href.slice(-24) === activeScroll.dataset.id) {
         log.classList.add('highlighted-text');
       } else {
         log.classList.remove('highlighted-text');
