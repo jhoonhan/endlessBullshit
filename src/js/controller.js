@@ -158,6 +158,17 @@ const controlLogRender = async () => {
 
 const controlLogRenderInfinity = async () => {
   try {
+    const state = logView.scrollListener();
+    if (!state) return;
+
+    if (state === 'top') {
+      // await model.blah();
+      console.log(`load more on top`);
+    }
+
+    if (state === 'bottom') {
+      console.log(`load more on bottom`);
+    }
   } catch (err) {
     console.log(err);
   }
@@ -282,6 +293,7 @@ const init = function () {
   titleView.addHandlerLatest(controlLatestArtwork);
   renderView.addHandlerGenerateArtwork(controlGenerateArtwork);
   logView.addHandlerLogRender(controlLogRender);
+  logView.addHandlerLogRenderInfinity(controlLogRenderInfinity);
   logView.addHandlerSearch(controlSearch);
   logView.addHandlerToggleView(controlSerachView);
   mobileView.addHandlerToggleView(controlSerachView);

@@ -38,9 +38,7 @@ class LogView extends View {
   constructor() {
     super();
     this.renderLogs();
-    this._logResultContainer.addEventListener('scroll', () => {
-      this.renderInfiniteLogs();
-    });
+
     // this._addHandlerSearchOption();
     // this._addHandlerSearchByOption();
   }
@@ -58,6 +56,9 @@ class LogView extends View {
   }
   addHandlerLogRender(handler) {
     window.addEventListener('hashchange', handler);
+  }
+  addHandlerLogRenderInfinity(handler) {
+    this._logResultContainer.addEventListener('scroll', handler);
   }
   addHandlerSearch(handler) {
     this._searchForm.addEventListener('submit', function (e) {
@@ -78,6 +79,16 @@ class LogView extends View {
     if (orientation === 'portrait') {
       super.insertHTML(data, this._logResultContainerMobile);
     }
+  }
+
+  scrollListener() {
+    const x = this._logResultContainer.clientHeight;
+    const y = this._logResultContainer.scrollTop;
+    const z = this._logResultContainer.scrollHeight;
+    console.log(x, y, z);
+    if (y === 0) return `top`;
+    if (x + y + 1 <= z) return null;
+    if (x + y + 1 > z) return `bottom`;
   }
 
   renderInfiniteLogs(data, orientation) {
