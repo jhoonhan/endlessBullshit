@@ -133,7 +133,7 @@ const controlLogRender = async () => {
         await api.getImage(selectedArtwork.imgURL)
       );
       controlSpinner('remove', 'controlLogRender');
-      logView.scrollIntoView('.highlighted-text');
+      logView.scrollIntoView('.highlighted-text', 'landscape', '.log__results');
       scrollLogView.moveToActiveScroll(model.state.resultProximate.length);
     }
     //
@@ -146,7 +146,7 @@ const controlLogRender = async () => {
       ]);
 
       logView.highlightActiveLogMobile();
-      logView.scrollIntoView('.highlighted-text--mobile');
+      logView.scrollIntoView('.highlighted-text--mobile', 'portrait');
     }
   } catch (err) {
     popUpView.renderErrorPrompt(err.message.split(' (')[0]);
@@ -242,7 +242,7 @@ const controlSerachView = async () => {
       logView.highlightActiveLog();
 
       controlSpinner('remove', 'controlSerachView');
-      logView.scrollIntoView('.highlighted-text');
+      logView.scrollIntoView('.highlighted-text', '.log__results', 'landscape');
       scrollLogView.moveToActiveScroll(model.state.resultProximate.length);
 
       animationView.animateToggleSearchView();
@@ -259,7 +259,7 @@ const controlSerachView = async () => {
       ]);
 
       logView.highlightActiveLogMobile();
-      logView.scrollIntoView('.highlighted-text--mobile');
+      logView.scrollIntoView('.highlighted-text--mobile', 'portrait');
 
       animationView.animateMobileArchive();
     }

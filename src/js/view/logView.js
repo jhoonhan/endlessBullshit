@@ -77,17 +77,34 @@ class LogView extends View {
     }
   }
 
-  scrollToY(loc, ref, offset) {
-    const reference = document.querySelector(ref);
-    const location = document.querySelector(loc);
-    const y = reference.getBoundingClientRect().top + offset;
-
-    location.scrollTo({ top: y, behavior: 'smooth' });
+  renderInfiniteLogs(data, orientation) {
+    const x = ref.getBoundingClientRect().top;
+    const y = loc.clientHeight;
+    const z = loc.scrollTop;
   }
 
-  scrollIntoView(reference) {
-    const ref = document.querySelector(reference);
-    ref.scrollIntoView({ behavior: 'smooth' });
+  scrollIntoView(reference, orientation, location) {
+    // Web
+    if (location && orientation === 'landscape') {
+      const ref = document.querySelector(reference);
+      const loc = document.querySelector(location);
+      const x = ref.getBoundingClientRect().top;
+      const y = loc.clientHeight;
+      const z = loc.scrollTop;
+      const newPosition = x - y / 2 + z - 12;
+
+      loc.scrollTo({
+        top: newPosition,
+        behavior: 'smooth',
+      });
+      return;
+    }
+
+    // Mobile
+    if (orientation === 'portrait') {
+      const ref = document.querySelector(reference);
+      ref.scrollIntoView({ behavior: 'smooth' });
+    }
   }
 
   getLogPosition() {
