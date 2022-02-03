@@ -74,15 +74,20 @@ class InfinityView extends View {
 
   _generateMarkupScroll(data) {
     const [results, totalNumber, type, lastOrder] = data;
+
     const generatedHTML = results
       .map(
         function (el, i) {
           const year = el.date.slice(0, 4);
           const date = el.date.slice(0, 10);
 
-          let newOrder;
-          if (type) newOrder = +lastOrder + 1 + i;
-          if (!type) newOrder = +lastOrder - 1 - i;
+          // let newOrder;
+          const resultsCount = results.length;
+
+          let newOrder = type
+            ? +lastOrder + resultsCount - i
+            : +lastOrder - 1 - i;
+
           return `
           <div class="scroll" data-order="${newOrder}" data-index="${el.order}">
           <div class="column column--4">
