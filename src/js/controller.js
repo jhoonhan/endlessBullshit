@@ -128,6 +128,7 @@ const controlLogRender = async () => {
     // Web
     if (!isMobile()) {
       scrollLogView.highlightActiveScroll(selectedArtwork._id);
+
       logView.highlightActiveLog();
 
       scrollLogView.renderActiveScroll(

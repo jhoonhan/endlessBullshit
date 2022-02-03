@@ -11,6 +11,11 @@ class ScrollLogView extends View {
   constructor() {
     super();
     this._getClickedLogIndex();
+
+    this._parentElement.addEventListener(
+      'scroll',
+      this._scrollStateListener.bind(this)
+    );
   }
 
   //
@@ -53,18 +58,73 @@ class ScrollLogView extends View {
     super.insertHTML(data, this._parentElement);
   }
   highlightActiveScroll(activeID) {
-    console.log(activeID);
     const scrolls = document.querySelectorAll('.scroll');
     scrolls.forEach(function (el) {
       if (el.dataset.id !== activeID) el.classList.remove('scroll--active');
       if (el.dataset.id === activeID) el.classList.add('scroll--active');
     });
   }
+
+  _scrollStateListener() {
+    const scrolls = document.querySelectorAll('.scroll');
+
+    scrolls.forEach((el, i) => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
+        el.classList.add('scroll--active');
+      } else {
+        el.classList.remove('scroll--active');
+      }
+    });
+
+    this._scrollStateLogHighlight();
+  }
+
+  _scrollStateLogHighlight() {
+    const logs = document.querySelectorAll('.log__logs');
+    const activeScroll = document.querySelector('.scroll--active');
+
+    if (activeScroll) {
+      const activeID = activeScroll.dataset.id;
+      logs.forEach(log => {
+        if (log.dataset.id === activeID) {
+          log.classList.add('highlighted-text');
+        } else {
+          log.classList.remove('highlighted-text');
+        }
+      });
+    }
+  }
+
+  _scrollStateLogScroll(reference, orientation, location) {
+    // Web
+    if (location && orientation === 'landscape') {
+      const ref = document.querySelector(reference);
+      const loc = document.querySelector(location);
+      const x = ref.getBoundingClientRect().top;
+      const y = loc.clientHeight;
+      const z = loc.scrollTop;
+      const newPosition = x - y / 2 + z - 12;
+
+      loc.scrollTo({
+        top: newPosition,
+        behavior: 'smooth',
+      });
+      return;
+    }
+
+    // Mobile
+    if (orientation === 'portrait') {
+      const ref = document.querySelector(reference);
+      ref.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
   moveToActiveScroll() {
     const active = document.querySelector('.scroll--active');
-
     active.scrollIntoView({ behavior: 'smooth' });
   }
+
   renderActiveScroll(img) {
     const active = document.querySelector('.scroll--active .artwork-frame');
     if (!active) return;

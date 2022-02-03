@@ -177,6 +177,12 @@ footer {
   justify-content: center;
   column-gap: 5%;
 }
+.scroll--active {
+  background-color: orange !important;
+}
+.aaaang2 {
+  color: red !important;
+}
 .row--2 {
   @extend .row;
   position: fixed;
@@ -189,6 +195,8 @@ footer {
   display: flex;
   flex-direction: column;
   align-self: flex-end;
+
+  scroll-snap-type: y mandatory;
 
   overflow-y: scroll;
 }
@@ -338,6 +346,8 @@ footer {
   display: grid;
   grid-template-columns: 1fr 0.8fr;
   column-gap: 5%;
+
+  scroll-snap-align: start;
 }
 
 .scroll__label {

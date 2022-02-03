@@ -38,6 +38,10 @@ class LogView extends View {
     super();
     this.renderLogs();
 
+    document
+      .querySelector('.scroll__container')
+      .addEventListener('scroll', this.highlightActiveLog2);
+
     // this._addHandlerSearchOption();
     // this._addHandlerSearchByOption();
   }
@@ -108,25 +112,16 @@ class LogView extends View {
   }
 
   highlightActiveLog() {
-    const logs = document.querySelectorAll('.log__logs');
-    const activeScroll = document.querySelector('.scroll--active');
-
-    // if (window.location.hash === '') return;
+    // const logs = document.querySelectorAll('.log__logs');
+    // const activeScroll = document.querySelector('.scroll--active');
+    // if (!activeScroll) return;
     // logs.forEach(function (log) {
-    //   if (log.href.includes(window.location.hash)) {
+    //   if (log.href.slice(-24) === activeScroll.dataset.id) {
     //     log.classList.add('highlighted-text');
     //   } else {
     //     log.classList.remove('highlighted-text');
     //   }
     // });
-    if (!activeScroll) return;
-    logs.forEach(function (log) {
-      if (log.href.slice(-24) === activeScroll.dataset.id) {
-        log.classList.add('highlighted-text');
-      } else {
-        log.classList.remove('highlighted-text');
-      }
-    });
   }
 
   highlightActiveLogMobile() {
@@ -174,7 +169,7 @@ class LogView extends View {
         const convtName = this.convertName(el.name);
         return `<li><a href="#${el._id}" class="log__logs" data-index="${
           el.order
-        }">${this.capitalizeName(convtName)}</a></li>`;
+        }" data-id="${el._id}">${this.capitalizeName(convtName)}</a></li>`;
       })
       .reverse()
       .join(' ');

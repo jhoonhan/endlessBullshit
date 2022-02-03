@@ -242,16 +242,16 @@ class AnimationView extends View {
     this._section2.classList.toggle('transfrom-x__0');
   }
   _toggleScrollView(rect) {
+    // open
     if (rect.x < 0) {
-      console.log(`1`);
       this._row1.classList.add('transfrom-x__100vw');
       this._row2.classList.add('transfrom-y__-100vh');
       this._expandSearchBtn.classList.toggle('arrow-rotate');
       // setTimeout(this.renderSpinner('remove'), 3000);
       // this.renderSpinner('remove');
     }
+    // close
     if (rect.x >= 0) {
-      console.log(`2`);
       this._row1.classList.remove('transfrom-x__100vw');
       this._row2.classList.remove('transfrom-y__-100vh');
       this._expandSearchBtn.classList.toggle('arrow-rotate');
