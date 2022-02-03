@@ -50,9 +50,11 @@ export const getSearch = async (type, keyword) => {
   }
 };
 
-export const searchInfinity = async (id, type) => {
+export const searchInfinity = async (id, state) => {
   try {
-    const res = await fetch(`${APIBASEURL}/infinity/${type}/${id}`);
+    const res = await fetch(
+      `${APIBASEURL}/infinity/${state ? 'top' : 'bottom'}/${id}`
+    );
     const data = await res.json();
     return data;
   } catch (err) {

@@ -2,7 +2,7 @@ import * as config from '../config.js';
 import View from './View.js';
 
 class ScrollLogView extends View {
-  _parentElement = document.querySelector('.scroll-log-container');
+  _parentElement = document.querySelector('.scroll__container');
   _logResultContainer = document.querySelector('.log__results');
   _scroll0 = document.querySelector('.scroll--0');
   _scroll1 = document.querySelector('.scroll--1');

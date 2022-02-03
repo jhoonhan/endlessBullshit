@@ -151,7 +151,7 @@ class LogView extends View {
     ];
   }
 
-  // _convertName(name) {
+  // convertName(name) {
   //   if (name.length > config.NAMESHORTEN) {
   //     if (name.split(' ').length > 1) {
   //       const firstInitial = name.split(' ')[0].slice(0, 1);
@@ -170,14 +170,12 @@ class LogView extends View {
   _generateMarkup(data) {
     const generatedHTML = data
       .slice(0, config.MAXSEARCHRESULT)
-      .map(
-        function (el) {
-          const convtName = this.convertName(el.name);
-          return `<li><a href="#${el._id}" class="log__logs" data-index="${
-            el.order
-          }">${this.capitalizeName(convtName)}</a></li>`;
-        }.bind(this)
-      )
+      .map(el => {
+        const convtName = this.convertName(el.name);
+        return `<li><a href="#${el._id}" class="log__logs" data-index="${
+          el.order
+        }">${this.capitalizeName(convtName)}</a></li>`;
+      })
       .reverse()
       .join(' ');
 

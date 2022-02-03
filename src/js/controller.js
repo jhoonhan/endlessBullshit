@@ -159,21 +159,32 @@ const controlLogRender = async () => {
 
 const controlLogRenderInfinity = async () => {
   try {
-    const state = logView.scrollListener();
-    if (!state) return;
-
-    if (state === 'top') {
-      console.log(`load more on top`);
-      await model.search([model.state.current._id, 'id']);
+    let state;
+    const listener = infinityView.scrollListener();
+    if (listener === 'top') {
+      state = true;
     }
-
-    if (state === 'bottom') {
-      console.log(`load more on bottom`);
-      // Find the very last node's id
-      const lastLogID = infinityView.getLastLogID();
-      const data = await api.searchInfinity(lastLogID, 'bottom');
-      infinityView.renderInfinity(data.results, 'bottom', 'landscape');
+    if (listener === 'bottom') {
+      state = false;
     }
+    // Guard clause
+    if (state === undefined) return;
+
+    const lastLogID = infinityView.getLastLogID(state);
+    const data = await api.searchInfinity(lastLogID, state);
+    console.log(data.results);
+
+    if (data.results.length <= 0) return;
+
+    const lastScrollOrder = infinityView.getLastScrollOrder(state);
+
+    infinityView.renderInfinity({
+      data: data.results,
+      totalNumber: model.state.current.order,
+      type: state,
+      orientation: 'landscape',
+      lastOrder: lastScrollOrder,
+    });
   } catch (err) {
     console.log(err);
   }

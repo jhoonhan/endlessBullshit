@@ -23,7 +23,7 @@ class AnimationView extends View {
 
   // Log view
   _logContainer = document.querySelector('.log__container');
-  _scrollContainer = document.querySelector('.scroll-log-container');
+  _scrollContainer = document.querySelector('.scroll__container');
   _description = document.querySelector('.description');
   _form = document.querySelector('.artwork__form');
   //
