@@ -222,9 +222,8 @@ const controlSearch = async () => {
       window.location.hash = `#${model.state.resultAccurate._id}`;
 
       controlSpinner('remove', 'controlSearch');
-      scrollLogView.moveToActiveScroll();
 
-      model.updateProperties(model.state.current, model.state.resultAccurate);
+      // model.updateProperties(model.state.current, model.state.resultAccurate);
     }
 
     // Mobile
@@ -247,18 +246,18 @@ const controlSerachView = async () => {
   try {
     controlSpinner('add', 'controlSerachView');
 
-    // PERFORMANCE -- no api call when closed
+    // PERFORMANCE -- no API call when closed
     if (!logView.getLogPosition()) {
       animationView.animateToggleSearchView();
       return;
     }
-    // PERFORMANCE -- runs only on fresh reload
+    // PERFORMANCE -- runs only on a fresh reload
     if (logView.getLogPosition() && !model.state.resultAccurate) {
       await model.loadLatest();
       await _updateRender(model.state.current);
       await model.search([model.state.current._id, 'id']);
     }
-    // If no image found, used default
+    // If no image found, use the default
     if (!model.state.searchedIMG) {
       model.state.searchedIMG = await api.getImage(
         model.state.resultAccurate.imgURL

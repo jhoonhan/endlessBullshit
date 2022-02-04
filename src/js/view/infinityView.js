@@ -95,7 +95,7 @@ class InfinityView extends View {
           <div class="column column--4">
               <div class="artwork__container--outer shadow--outer">
               <div class="artwork__container">
-                  <div class="artwork-info artwork-frame" data-id="" style="background-image: none">
+                  <div class="artwork-info artwork-frame">
                   </div>
               </div>
               </div>
