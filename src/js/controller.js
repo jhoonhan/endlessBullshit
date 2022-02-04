@@ -269,7 +269,7 @@ const controlSerachView = async () => {
     //
 
     model.updateProperties(model.state.current, model.state.resultAccurate);
-
+    //
     // Web
     if (!isMobile()) {
       scrollLogView.renderScrolls([
