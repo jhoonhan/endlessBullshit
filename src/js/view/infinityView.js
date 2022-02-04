@@ -65,7 +65,7 @@ class InfinityView extends View {
         const convtName = this.convertName(el.name);
         return `<li><a href="#${el._id}" class="log__logs" data-index="${
           el.order
-        }">${this.capitalizeName(convtName)}</a></li>`;
+        }" data-id="${el._id}">${this.capitalizeName(convtName)}</a></li>`;
       })
       .join(' ');
 

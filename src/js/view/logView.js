@@ -112,16 +112,16 @@ class LogView extends View {
   }
 
   highlightActiveLog() {
-    // const logs = document.querySelectorAll('.log__logs');
-    // const activeScroll = document.querySelector('.scroll--active');
-    // if (!activeScroll) return;
-    // logs.forEach(function (log) {
-    //   if (log.href.slice(-24) === activeScroll.dataset.id) {
-    //     log.classList.add('highlighted-text');
-    //   } else {
-    //     log.classList.remove('highlighted-text');
-    //   }
-    // });
+    const logs = document.querySelectorAll('.log__logs');
+    const activeScroll = document.querySelector('.scroll--active');
+    if (!activeScroll) return;
+    logs.forEach(function (log) {
+      if (log.dataset.id === activeScroll.dataset.id) {
+        log.classList.add('highlighted-text');
+      } else {
+        log.classList.remove('highlighted-text');
+      }
+    });
   }
 
   highlightActiveLogMobile() {

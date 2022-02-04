@@ -127,17 +127,21 @@ const controlLogRender = async () => {
 
     // Web
     if (!isMobile()) {
-      scrollLogView.highlightActiveScroll(selectedArtwork._id);
+      // scrollLogView.highlightActiveScroll(selectedArtwork._id);
+      // scrollLogView.moveToActiveScroll(selectedArtwork._id, 'shit');
+      const fuck = document.querySelector('.scroll__container');
+      const ing = fuck.querySelector(`[data-id='${selectedArtwork._id}']`);
+      ing.scrollIntoView();
 
-      logView.highlightActiveLog();
+      // logView.highlightActiveLog();
 
       scrollLogView.renderActiveScroll(
         await api.getImage(selectedArtwork.imgURL)
       );
       controlSpinner('remove', 'controlLogRender');
 
-      logView.scrollIntoView('.highlighted-text', 'landscape', '.log__results');
-      scrollLogView.moveToActiveScroll();
+      // logView.scrollIntoView('.highlighted-text', 'landscape', '.log__results');
+      // scrollLogView.moveToActiveScroll();
     }
     //
     //Mobile
@@ -243,25 +247,23 @@ const controlSerachView = async () => {
   try {
     controlSpinner('add', 'controlSerachView');
 
+    // Short cuircuit
     if (logView.getLogPosition() >= 300) {
       animationView.animateToggleSearchView();
-
       return;
     }
-
     if (logView.getLogPosition() < 300 && !model.state.resultAccurate) {
       await model.loadLatest();
       await _update(model.state.current);
       await model.search([model.state.current._id, 'id']);
     }
-
     if (!model.state.searchedIMG) {
       model.state.searchedIMG = await api.getImage(
         model.state.resultAccurate.imgURL
       );
     }
-
     if (!model.state.resultAccurate) return;
+    //
 
     model.updateProperties(model.state.current, model.state.resultAccurate);
 
@@ -273,15 +275,14 @@ const controlSerachView = async () => {
       ]);
 
       scrollLogView.highlightActiveScroll(model.state.resultAccurate._id);
-
       scrollLogView.renderActiveScroll(model.state.searchedIMG);
 
       logView.renderLogs(model.state.resultProximate, 'landscape');
       logView.highlightActiveLog();
 
       controlSpinner('remove', 'controlSerachView');
-      logView.scrollIntoView('.highlighted-text', '.log__results', 'landscape');
-      scrollLogView.moveToActiveScroll();
+      // logView.scrollIntoView('.highlighted-text', '.log__results', 'landscape');
+      // scrollLogView.moveToActiveScroll();
 
       animationView.animateToggleSearchView();
     }

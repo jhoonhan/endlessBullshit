@@ -21,9 +21,9 @@ class ScrollLogView extends View {
   //
   //
   _clickedLogIndex = '';
+  _scrollListenerSwitch;
   getMoveDirection(currentLogIndex) {
     if (!currentLogIndex || !this._clickedLogIndex) {
-      console.log(`no log index`);
       return;
     }
     if (currentLogIndex > this._clickedLogIndex) return `down`;
@@ -41,7 +41,6 @@ class ScrollLogView extends View {
     );
   }
   moveToNextLog(direction) {
-    console.log(direction);
     if (direction === 'up') {
       // generate
       // removes hidden
@@ -59,48 +58,83 @@ class ScrollLogView extends View {
   }
   highlightActiveScroll(activeID) {
     const scrolls = document.querySelectorAll('.scroll');
-    scrolls.forEach(function (el) {
-      if (el.dataset.id !== activeID) el.classList.remove('scroll--active');
-      if (el.dataset.id === activeID) el.classList.add('scroll--active');
+
+    scrolls.forEach(el => {
+      if (el.dataset.id === activeID) {
+        el.classList.add('scroll--active');
+      }
+      if (!el.dataset.id === activeID) {
+        el.classList.remove('scroll--active');
+      }
     });
   }
 
+  scrollBackTo() {
+    // scrolls back to the active before "scroll--active" gets cleared by "scrollListener"
+    console.log(`fired`);
+    const activeScroll = document.querySelector('.scroll--active');
+    activeScroll.scrollIntoView();
+  }
+
+  switchScrollListener(type) {
+    this._scrollListenerSwitch = type;
+    console.log(`turned ${type ? 'on' : 'off'}`);
+  }
+
   _scrollStateListener() {
+    console.log(`scroll listening`);
     const scrolls = document.querySelectorAll('.scroll');
 
     scrolls.forEach((el, i) => {
       const rect = el.getBoundingClientRect();
       if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
         el.classList.add('scroll--active');
+        // Changes hash location
+        window.location.hash = `#${el.dataset.id}`;
       } else {
         el.classList.remove('scroll--active');
       }
     });
 
     this._scrollStateLogHighlight();
+    this._scrollStateLogScroll(`landscape`);
   }
 
   _scrollStateLogHighlight() {
+    console.log(`_scrollStateLogHighlight`);
     const logs = document.querySelectorAll('.log__logs');
-    const activeScroll = document.querySelector('.scroll--active');
 
-    if (activeScroll) {
-      const activeID = activeScroll.dataset.id;
-      logs.forEach(log => {
-        if (log.dataset.id === activeID) {
-          log.classList.add('highlighted-text');
-        } else {
-          log.classList.remove('highlighted-text');
-        }
-      });
-    }
+    // Based on window hash location
+    logs.forEach(el => {
+      const hash = window.location.hash.slice(1);
+
+      if (el.dataset.id === hash) {
+        el.classList.add('highlighted-text');
+      } else {
+        el.classList.remove('highlighted-text');
+      }
+    });
+
+    // Based on scroll's id
+    // const activeScroll = document.querySelector('.scroll--active');
+    // if (activeScroll) {
+    //   const activeID = activeScroll.dataset.id;
+    //   logs.forEach(log => {
+    //     if (log.dataset.id === activeID) {
+    //       log.classList.add('highlighted-text');
+    //     } else {
+    //       log.classList.remove('highlighted-text');
+    //     }
+    //   });
+    // }
   }
 
-  _scrollStateLogScroll(reference, orientation, location) {
+  _scrollStateLogScroll(orientation) {
+    console.log(`_scrollStateLogScroll`);
     // Web
-    if (location && orientation === 'landscape') {
-      const ref = document.querySelector(reference);
-      const loc = document.querySelector(location);
+    if (orientation === 'landscape') {
+      const ref = document.querySelector('.highlighted-text');
+      const loc = document.querySelector('.log__results');
       const x = ref.getBoundingClientRect().top;
       const y = loc.clientHeight;
       const z = loc.scrollTop;
@@ -115,13 +149,22 @@ class ScrollLogView extends View {
 
     // Mobile
     if (orientation === 'portrait') {
-      const ref = document.querySelector(reference);
+      const ref = document.querySelector('highlighted-text--mobile');
       ref.scrollIntoView({ behavior: 'smooth' });
     }
   }
 
-  moveToActiveScroll() {
+  moveToActiveScroll(id, type) {
     const active = document.querySelector('.scroll--active');
+    const active2 = this._parentElement.querySelector(`[data-id='${id}']`);
+
+    if (!active && !active2) return;
+
+    if (type === 'shit') {
+      active2.scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+
     active.scrollIntoView({ behavior: 'smooth' });
   }
 
