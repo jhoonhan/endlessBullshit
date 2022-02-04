@@ -122,7 +122,6 @@ const controlLogRender = async () => {
       return;
     }
 
-    // Gets imgURL of selected log
     const hashID = window.location.hash.slice(1);
     const selectedArtwork = await api.getArtwork(true, hashID);
 
@@ -160,6 +159,10 @@ const controlLogRender = async () => {
 
 const controlLogRenderInfinity = async () => {
   try {
+    const state = infinityView.listenerSwitch();
+    console.log(state);
+    if (!state) return;
+
     let direction;
     const listener = infinityView.scrollListener(isMobile());
     if (listener === 'top') {

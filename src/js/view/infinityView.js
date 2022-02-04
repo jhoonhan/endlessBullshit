@@ -22,6 +22,10 @@ class InfinityView extends View {
     // if (x + y + 1 <= z) return null;
     if (x + y + 1 > z) return `bottom`;
   }
+  listenerSwitch(setValue) {
+    const state = setValue ? setValue : false;
+    return state;
+  }
 
   renderInfinity(doc) {
     const { data, totalNumber, direction, isMobile } = doc;
