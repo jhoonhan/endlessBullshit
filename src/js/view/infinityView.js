@@ -1,4 +1,3 @@
-import { set } from 'core-js/core/dict';
 import View from './View.js';
 class InfinityView extends View {
   _logResultContainer = document.querySelector('.log__results');

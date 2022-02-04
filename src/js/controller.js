@@ -200,7 +200,11 @@ const controlSearch = async () => {
   try {
     controlSpinner('add', 'controlSearch');
 
-    await model.search(logView.getSearchValue(isMobile()));
+    let searchPage;
+    if (!searchPage) searchPage = 1;
+
+    await model.search(logView.getSearchValue(isMobile()), searchPage);
+
     logView.renderLogs(model.state.resultProximate, isMobile());
 
     // Web
@@ -236,7 +240,6 @@ const controlSerachView = async () => {
     // PERFORMANCE -- runs only on a fresh reload
     if (logView.getLogPosition() && !model.state.resultAccurate) {
       // await model.loadLatest();
-      console.log(`first search fired`);
       await _updateRender(model.state.current);
       await model.search([model.state.current._id, 'id']);
       model.updateProperties(model.state.current, model.state.resultAccurate);
@@ -298,6 +301,8 @@ const init = function () {
   logView.addHandlerToggleView(controlSerachView);
   mobileView.addHandlerToggleView(controlSerachView);
   infinityView.addHandlerLogRenderInfinity(controlLogRenderInfinity);
+
+  // api.getSearchedPaginated('1', 2);
 };
 
 init();

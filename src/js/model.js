@@ -92,10 +92,11 @@ export const loadLatest = async () => {
 //   }
 // };
 
-export const search = async data => {
+export const search = async (data, page) => {
   try {
     const [keyword, type] = data;
     const valKeyword = validateInput(keyword, false);
+    console.log(keyword, type, page);
 
     if (type === 'latest') {
       const { resultAccu, resultProx } = await api.getSearch(type, valKeyword);
@@ -104,15 +105,27 @@ export const search = async data => {
       return;
     }
 
-    const { resultAccu, resultProx } = await api.getSearch(type, valKeyword);
-    if (!resultAccu || !resultProx) {
-      state.resultProximate = [];
-      return;
-    } else {
-      // Side effect
+    if (type === 'order' || type === 'id') {
+      const data = await api.getSearch(type, valKeyword);
+      const { resultAccu, resultProx } = data;
       state.resultAccurate = resultAccu;
       state.resultProximate = resultProx;
     }
+    if (type === 'name') {
+      const data = await api.getSearchedPaginated(valKeyword, page);
+      const { resultAccu, resultProx } = data;
+      state.resultAccurate = resultAccu;
+      state.resultProximate = resultProx;
+    }
+
+    // if (!resultAccu || !resultProx) {
+    //   state.resultProximate = [];
+    //   return;
+    // } else {
+    //   // Side effect
+    //   // state.resultAccurate = resultAccu;
+    //   // state.resultProximate = resultProx;
+    // }
   } catch (err) {
     throw err;
   }

@@ -50,6 +50,18 @@ export const getSearch = async (type, keyword) => {
   }
 };
 
+export const getSearchedPaginated = async (keyword, page) => {
+  try {
+    const res = await fetch(
+      `${APIBASEURL}/searchedPaginated/name/${keyword}?page=${page}`
+    );
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.log(`err`);
+  }
+};
+
 export const searchInfinity = async (id, state) => {
   try {
     const res = await fetch(
