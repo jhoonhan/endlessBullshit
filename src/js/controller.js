@@ -187,9 +187,9 @@ const controlLogRenderInfinity = async () => {
       orientation: 'landscape',
       lastScrollOrder,
     });
+
     // stop top infinity pushing active log
     const curLocation = window.location.hash.slice(1);
-    console.log(curLocation);
     logView.catchInfinityLog(state, curLocation);
   } catch (err) {
     console.log(err);

@@ -23,10 +23,6 @@ class LogView extends View {
   _searchInput = document.querySelector('.log__search__input');
   _searchInputMobile = document.querySelector('.log__search__input--mobile');
 
-  // _byName = document.querySelector('.by-name');
-  // _byOrder = document.querySelector('.by-order');
-  // _byID = document.querySelector('.by-id');
-
   _description = document.querySelector('.description');
   _form = document.querySelector('.artwork__form');
   _row1 = document.querySelector('.section--2 .row--1');
@@ -94,11 +90,13 @@ class LogView extends View {
     const x = ref.getBoundingClientRect().top;
     const y = loc.clientHeight;
     const z = loc.scrollTop;
+    const w = loc.scrollHeight;
     const newPosition = x - y / 2 + z - 12;
     console.log(x);
+    // console.log(x, y, z, w);
 
     loc.scrollTo({
-      top: 500,
+      top: newPosition,
       behavior: 'smooth',
     });
   }

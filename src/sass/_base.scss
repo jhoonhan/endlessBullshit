@@ -194,10 +194,20 @@ footer {
   flex-direction: column;
   align-self: flex-end;
 
-  scroll-snap-type: y mandatory;
-  // scroll-snap-type: none;
-
   overflow-y: scroll;
+
+  scroll-snap-type: y mandatory;
+  &::-webkit-scrollbar {
+    width: 1rem;
+    background-color: transparent;
+  }
+  &::-webkit-scrollbar-track {
+    border: 1px solid $color--main;
+  }
+  &::-webkit-scrollbar-thumb {
+    height: 10px;
+    background-color: #ccc;
+  }
 }
 
 .sub-grid {
