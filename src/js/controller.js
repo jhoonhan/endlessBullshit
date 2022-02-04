@@ -19,7 +19,7 @@ if (module.hot) {
   module.hot.accept();
 }
 
-const _update = async function (log, location = 'artwork') {
+const _updateRender = async function (log, location = 'artwork') {
   try {
     // Selects location (artwork or artworkInfo)
     renderView.locationDecider(location);
@@ -91,7 +91,7 @@ const controlLatestArtwork = async () => {
     controlSpinner('add', 'controlLatestArtwork');
 
     await model.loadLatest();
-    await _update(model.state.current);
+    await _updateRender(model.state.current);
 
     // set has location
     window.location.hash = `#${model.state.current._id}`;
@@ -113,6 +113,7 @@ const controlLatestArtwork = async () => {
 };
 
 const controlLogRender = async () => {
+  // event: HASH CHANGE
   try {
     controlSpinner('add', 'controlLogRender');
 
@@ -127,7 +128,6 @@ const controlLogRender = async () => {
 
     // Web
     if (!isMobile()) {
-      console.log(selectedArtwork.name);
       scrollLogView.highlightActiveScroll(selectedArtwork._id);
 
       logView.highlightActiveLog(selectedArtwork._id);
@@ -138,8 +138,7 @@ const controlLogRender = async () => {
       controlSpinner('remove', 'controlLogRender');
 
       logView.scrollIntoView(selectedArtwork._id, 'landscape');
-      scrollLogView.moveToActiveScroll(selectedArtwork._id, 'shit');
-      // scrollLogView.moveToActiveScroll();
+      scrollLogView.moveToActiveScroll(selectedArtwork._id);
     }
     //
     //Mobile
@@ -176,7 +175,6 @@ const controlLogRenderInfinity = async () => {
 
     const lastLogID = infinityView.getLastLogID(state);
     const data = await api.searchInfinity(lastLogID, state);
-    console.log(data.results);
 
     if (data.results.length <= 0) return;
 
@@ -246,14 +244,14 @@ const controlSerachView = async () => {
     controlSpinner('add', 'controlSerachView');
 
     // PERFORMANCE -- no api call when closed
-    if (logView.getLogPosition() >= 300) {
+    if (!logView.getLogPosition()) {
       animationView.animateToggleSearchView();
       return;
     }
     // PERFORMANCE -- runs only on fresh reload
-    if (logView.getLogPosition() < 300 && !model.state.resultAccurate) {
+    if (logView.getLogPosition() && !model.state.resultAccurate) {
       await model.loadLatest();
-      await _update(model.state.current);
+      await _updateRender(model.state.current);
       await model.search([model.state.current._id, 'id']);
     }
     // If no image found, used default
@@ -275,16 +273,14 @@ const controlSerachView = async () => {
         model.state.resultProximate,
         model.state.current.order,
       ]);
-
-      scrollLogView.highlightActiveScroll(model.state.resultAccurate._id);
+      scrollLogView.highlightActiveScroll(model.state.current._id);
       scrollLogView.renderActiveScroll(model.state.searchedIMG);
+      scrollLogView.moveToActiveScroll(model.state.current._id);
 
       logView.renderLogs(model.state.resultProximate, 'landscape');
-      logView.highlightActiveLog(model.state.resultAccurate._id);
+      logView.highlightActiveLog(model.state.current._id);
 
       controlSpinner('remove', 'controlSerachView');
-      // logView.scrollIntoView('.highlighted-text', '.log__results', 'landscape');
-      // scrollLogView.moveToActiveScroll();
 
       animationView.animateToggleSearchView();
     }
@@ -294,7 +290,7 @@ const controlSerachView = async () => {
       // Mobile render option
       logView.renderLogs(model.state.resultProximate, 'portrait');
       mobileView.renderDetail([
-        model.state.resultAccurate,
+        model.state.current,
         model.state.searchedIMG,
         model.state.current.order,
       ]);
@@ -319,7 +315,6 @@ const init = function () {
   logView.addHandlerSearch(controlSearch);
   logView.addHandlerToggleView(controlSerachView);
   mobileView.addHandlerToggleView(controlSerachView);
-  // popUpView.renderErrorPrompt(`aaaang!2`);
   infinityView.addHandlerLogRenderInfinity(controlLogRenderInfinity);
 };
 

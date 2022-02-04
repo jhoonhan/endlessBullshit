@@ -10,48 +10,37 @@ class ScrollLogView extends View {
 
   constructor() {
     super();
-    this._getClickedLogIndex();
-
     this._parentElement.addEventListener(
       'scroll',
       this._scrollStateListener.bind(this)
     );
   }
 
+  // Moving
+  _scrollStateListener() {
+    const scrolls = document.querySelectorAll('.scroll');
+
+    scrolls.forEach((el, i) => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
+        el.classList.add('scroll--active');
+        // Changes hash location
+        window.location.hash = `#${el.dataset.id}`;
+      } else {
+        el.classList.remove('scroll--active');
+      }
+    });
+  }
+  moveToActiveScroll(id) {
+    const active = this._parentElement.querySelector(`[data-id='${id}']`);
+
+    if (!active) return;
+
+    active.scrollIntoView({ behavior: 'smooth' });
+  }
+
   //
-  //
-  _clickedLogIndex = '';
-  _scrollListenerSwitch;
-  getMoveDirection(currentLogIndex) {
-    if (!currentLogIndex || !this._clickedLogIndex) {
-      return;
-    }
-    if (currentLogIndex > this._clickedLogIndex) return `down`;
-    if (currentLogIndex < this._clickedLogIndex) return `up`;
-    if (currentLogIndex === this._clickedLogIndex) return `same`;
-  }
-  _getClickedLogIndex() {
-    this._logResultContainer.addEventListener(
-      'click',
-      function (e) {
-        if (!e.target.dataset.index) return;
-        this._clickedLogIndex = e.target.dataset.index;
-      }.bind(this)
-    );
-  }
-  moveToNextLog(direction) {
-    if (direction === 'up') {
-      // generate
-      // removes hidden
-      this._scroll0.classList.remove('hidden');
-      this._scroll2.classList.add('hidden');
-      // push them up
-    }
-    if (direction === 'down') {
-      this._scroll0.classList.add('hidden');
-      this._scroll2.classList.remove('hidden');
-    }
-  }
+  // Rendering
   renderScrolls(data) {
     super.insertHTML(data, this._parentElement);
   }
@@ -67,107 +56,11 @@ class ScrollLogView extends View {
       }
     });
   }
-
-  scrollBackTo() {
-    // scrolls back to the active before "scroll--active" gets cleared by "scrollListener"
-    const activeScroll = document.querySelector('.scroll--active');
-    activeScroll.scrollIntoView();
-  }
-
-  _scrollStateListener() {
-    const scrolls = document.querySelectorAll('.scroll');
-
-    scrolls.forEach((el, i) => {
-      const rect = el.getBoundingClientRect();
-      if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
-        el.classList.add('scroll--active');
-        // Changes hash location
-        window.location.hash = `#${el.dataset.id}`;
-        // this._scrollStateLogScroll(`landscape`);
-      } else {
-        el.classList.remove('scroll--active');
-      }
-    });
-
-    this._scrollStateLogHighlight();
-    // this._scrollStateLogScroll(`landscape`);
-  }
-
-  _scrollStateLogHighlight() {
-    const logs = document.querySelectorAll('.log__logs');
-
-    // Based on window hash location
-    logs.forEach(el => {
-      const hash = window.location.hash.slice(1);
-
-      if (el.dataset.id === hash) {
-        el.classList.add('highlighted-text');
-      } else {
-        el.classList.remove('highlighted-text');
-      }
-    });
-
-    // Based on scroll's id
-    // const activeScroll = document.querySelector('.scroll--active');
-    // if (activeScroll) {
-    //   const activeID = activeScroll.dataset.id;
-    //   logs.forEach(log => {
-    //     if (log.dataset.id === activeID) {
-    //       log.classList.add('highlighted-text');
-    //     } else {
-    //       log.classList.remove('highlighted-text');
-    //     }
-    //   });
-    // }
-  }
-
-  _scrollStateLogScroll(orientation) {
-    // Web
-    if (orientation === 'landscape') {
-      const ref = document.querySelector('.highlighted-text');
-      const loc = document.querySelector('.log__results');
-      const x = ref.getBoundingClientRect().top;
-      const y = loc.clientHeight;
-      const z = loc.scrollTop;
-      const newPosition = x - y / 2 + z - 12;
-
-      loc.scrollTo({
-        top: newPosition,
-        behavior: 'smooth',
-      });
-    }
-
-    // Mobile
-    if (orientation === 'portrait') {
-      const ref = document.querySelector('highlighted-text--mobile');
-      ref.scrollIntoView({ behavior: 'smooth' });
-    }
-  }
-
-  moveToActiveScroll(id, type) {
-    const active = document.querySelector('.scroll--active');
-    const active2 = this._parentElement.querySelector(`[data-id='${id}']`);
-
-    if (!active && !active2) return;
-
-    if (type === 'shit') {
-      active2.scrollIntoView({ behavior: 'smooth' });
-      return;
-    }
-
-    active.scrollIntoView({ behavior: 'smooth' });
-  }
-
   renderActiveScroll(img) {
     const active = document.querySelector('.scroll--active .artwork-frame');
     if (!active) return;
     active.style.backgroundImage = `url(${img})`;
   }
-
-  getTotalNumber(totalNumber) {
-    return totalNumber;
-  }
-
   _generateMarkup(data) {
     const [resultProx, totalNumber] = data;
 

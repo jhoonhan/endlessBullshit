@@ -31,24 +31,10 @@ class LogView extends View {
   _form = document.querySelector('.artwork__form');
   _row1 = document.querySelector('.section--2 .row--1');
 
-  _view = '';
-  _node = '';
-
   constructor() {
     super();
     this.renderLogs();
-
-    // this._addHandlerSearchOption();
-    // this._addHandlerSearchByOption();
   }
-
-  // _addHandlerSearchOption() {
-  //   this._byName.addEventListener('click', this._searchByName.bind(this));
-
-  //   this._byOrder.addEventListener('click', this._searchByOrder.bind(this));
-
-  //   this._byID.addEventListener('click', this._searchByID.bind(this));
-  // }
 
   addHandlerToggleView(handler) {
     this._expandSearchBtn.addEventListener('click', handler);
@@ -56,7 +42,6 @@ class LogView extends View {
   addHandlerLogRender(handler) {
     window.addEventListener('hashchange', handler);
   }
-
   addHandlerSearch(handler) {
     this._searchForm.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -80,7 +65,7 @@ class LogView extends View {
 
   scrollIntoView(id, orientation) {
     // Web
-    if (location && orientation === 'landscape') {
+    if (orientation === 'landscape') {
       const loc = document.querySelector('.log__results');
       const ref = loc.querySelector(`[data-id='${id}']`);
       const x = ref.getBoundingClientRect().top;
@@ -94,17 +79,17 @@ class LogView extends View {
       });
       return;
     }
-
     // Mobile
     if (orientation === 'portrait') {
-      const ref = document.querySelector(reference);
+      const ref = document.querySelector(id);
       ref.scrollIntoView({ behavior: 'smooth' });
     }
   }
 
-  getLogPosition() {
+  getLogPosition(data) {
     const rect = this._row1.getBoundingClientRect();
-    return rect.x;
+    if (rect.x >= 300) return false;
+    if (rect.x < 300 && !data) return true;
   }
 
   highlightActiveLog(id) {
