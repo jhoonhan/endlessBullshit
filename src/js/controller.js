@@ -159,9 +159,9 @@ const controlLogRender = async () => {
 
 const controlLogRenderInfinity = async () => {
   try {
-    const state = infinityView.listenerSwitch();
-    console.log(state);
-    if (!state) return;
+    // const state = infinityView.listenerSwitch();
+    // console.log(state);
+    // if (!state) return;
 
     let direction;
     const listener = infinityView.scrollListener(isMobile());

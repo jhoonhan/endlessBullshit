@@ -1,8 +1,11 @@
+import { set } from 'core-js/core/dict';
 import View from './View.js';
 class InfinityView extends View {
   _logResultContainer = document.querySelector('.log__results');
   _logResultContainerMobile = document.querySelector('.log__results--mobile');
   _scrollContainer = document.querySelector('.scroll__container');
+
+  _orderedSearch = true;
 
   addHandlerLogRenderInfinity(handler) {
     this._logResultContainer.addEventListener('scroll', handler);
@@ -22,8 +25,8 @@ class InfinityView extends View {
     // if (x + y + 1 <= z) return null;
     if (x + y + 1 > z) return `bottom`;
   }
-  listenerSwitch(setValue) {
-    const state = setValue ? setValue : false;
+  isOrderedSearch(setValue) {
+    this._orderedSearch = setValue;
     return state;
   }
 
