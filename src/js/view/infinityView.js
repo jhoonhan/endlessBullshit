@@ -20,7 +20,9 @@ class InfinityView extends View {
     const y = location.scrollTop;
     const z = location.scrollHeight;
 
-    if (y === 0) return `top`;
+    if (y === 0) {
+      return `top`;
+    }
     // if (x + y + 1 <= z) return null;
     if (x + y + 1 > z) return `bottom`;
   }
@@ -60,16 +62,13 @@ class InfinityView extends View {
   catchInfinityLog(state, curLocation, isMobile) {
     if (!state) return;
     if (isMobile) return;
-    console.log(curLocation);
     const loc = document.querySelector('.log__results');
     const ref = loc.querySelector(`[data-id='${curLocation}']`);
-    console.log(ref);
     const x = ref.getBoundingClientRect().top;
     const y = loc.clientHeight;
     const z = loc.scrollTop;
     const w = loc.scrollHeight;
     const newPosition = x - y / 2 + z - 12;
-    console.log(x);
     // console.log(x, y, z, w);
 
     loc.scrollTo({
@@ -105,14 +104,12 @@ class InfinityView extends View {
   _generateMarkupScroll(data) {
     const [results, totalNumber, type] = data;
 
-    const generatedHTML = results
-      .map(
-        function (el, i) {
-          const year = el.date.slice(0, 4);
-          const date = el.date.slice(0, 10);
+    const queuedHTML = results.map(
+      function (el, i) {
+        const year = el.date.slice(0, 4);
+        const date = el.date.slice(0, 10);
 
-          return `
-          <div class="scroll" data-index="${el.order}" data-id="${el._id}">
+        `<div class="scroll" data-index="${el.order}" data-id="${el._id}">
           <div class="column column--4">
               <div class="artwork__container--outer shadow--outer">
               <div class="artwork__container">
@@ -150,11 +147,12 @@ class InfinityView extends View {
                   </div>
               </div>
           </div>
-          </div>
-          `;
-        }.bind(this)
-      )
-      .join(' ');
+          </div>`;
+      }.bind(this)
+    );
+    const generatedHTML = direction
+      ? queuedHTML.reverse().join(' ')
+      : queuedHTML.join(' ');
 
     if (results.length > 0) {
       return generatedHTML;

@@ -157,53 +157,21 @@ const controlLogRender = async () => {
   }
 };
 
-const controlLogRenderInfinity = async () => {
-  try {
-    // const state = infinityView.listenerSwitch();
-    // console.log(state);
-    // if (!state) return;
-
-    let direction;
-    const listener = infinityView.scrollListener(isMobile());
-    if (listener === 'top') {
-      direction = true;
-    }
-    if (listener === 'bottom') {
-      direction = false;
-    }
-    // Guard clause
-    if (direction === undefined) return;
-
-    const lastLogID = infinityView.getLastLogID(direction, isMobile());
-    const data = await api.searchInfinity(lastLogID, direction);
-
-    if (data.results.length <= 0) return;
-
-    infinityView.renderInfinity({
-      data: data.results,
-      totalNumber: model.state.current.order,
-      direction,
-      isMobile: isMobile(),
-      // lastScrollOrder,
-    });
-
-    // stop top infinity pushing active log
-    const curLocation = window.location.hash.slice(1);
-    infinityView.catchInfinityLog(direction, curLocation, isMobile());
-  } catch (err) {
-    console.log(err);
-  }
-};
 //
 
 const controlSearch = async () => {
   try {
     controlSpinner('add', 'controlSearch');
 
-    let searchPage;
-    if (!searchPage) searchPage = 1;
+    // Resets the page;
+    model.state.page = 1;
 
-    await model.search(logView.getSearchValue(isMobile()), searchPage);
+    const [keyword, type] = logView.getSearchValue(isMobile());
+    await model.search([keyword, type], [model.state.page, 40]);
+
+    // Side effects to change searchType'
+    logView.searchType = type;
+    logView.searchKeyword = keyword;
 
     logView.renderLogs(model.state.resultProximate, isMobile());
 
@@ -293,6 +261,62 @@ const controlSerachView = async () => {
   }
 };
 
+const controlInfinity = async () => {
+  try {
+    // if (logView.searchType === 'name') console.log(`cibal`);
+
+    let direction;
+    const listener = infinityView.scrollListener(isMobile());
+    if (listener === 'top') {
+      direction = true;
+    }
+    if (listener === 'bottom') {
+      direction = false;
+    }
+    // Guard clause
+    if (direction === undefined) return;
+
+    if (logView.searchType !== 'name') {
+      const lastLogID = infinityView.getLastLogID(direction, isMobile());
+      const data = await api.searchInfinity(lastLogID, direction);
+
+      if (data.results.length <= 0) return;
+
+      infinityView.renderInfinity({
+        data: data.results,
+        totalNumber: model.state.current.order,
+        direction,
+        isMobile: isMobile(),
+      });
+    }
+
+    if (logView.searchType === 'name') {
+      const keyword = logView.searchKeyword;
+      const data = await api.getSearchedPaginated(
+        keyword,
+        model.state.page + 1,
+        10
+      );
+      model.state.page = model.state.page + 1;
+
+      if (data.resultProx.length <= 0) return;
+
+      infinityView.renderInfinity({
+        data: data.resultProx,
+        totalNumber: data.resultAccu.order,
+        direction: false,
+        isMobile: isMobile(),
+      });
+    }
+
+    // stop top infinity pushing active log
+    // const curLocation = window.location.hash.slice(1);
+    // infinityView.catchInfinityLog(direction, curLocation, isMobile());
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const init = function () {
   titleView.addHandlerLatest(controlLatestArtwork);
   renderView.addHandlerGenerateArtwork(controlGenerateArtwork);
@@ -300,7 +324,7 @@ const init = function () {
   logView.addHandlerSearch(controlSearch);
   logView.addHandlerToggleView(controlSerachView);
   mobileView.addHandlerToggleView(controlSerachView);
-  infinityView.addHandlerLogRenderInfinity(controlLogRenderInfinity);
+  infinityView.addHandlerLogRenderInfinity(controlInfinity);
 
   // api.getSearchedPaginated('1', 2);
 };

@@ -19,6 +19,7 @@ export const state = {
   resultAccurate: '',
   resultProximate: '',
   searchedIMG: '',
+  page: '',
 };
 
 const validateInput = (text, hard) => {
@@ -82,21 +83,10 @@ export const loadLatest = async () => {
   }
 };
 
-// export const searchInfinity = async (id, type) => {
-//   try {
-//     const result = await api.searchInfinity(type, id);
-//     console.log(result);
-//     return result;
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
-
-export const search = async (data, page) => {
+export const search = async (data, paginateData) => {
   try {
     const [keyword, type] = data;
     const valKeyword = validateInput(keyword, false);
-    console.log(keyword, type, page);
 
     if (type === 'latest') {
       const { resultAccu, resultProx } = await api.getSearch(type, valKeyword);
@@ -112,20 +102,14 @@ export const search = async (data, page) => {
       state.resultProximate = resultProx;
     }
     if (type === 'name') {
-      const data = await api.getSearchedPaginated(valKeyword, page);
+      const [page, limit] = paginateData;
+      const data = await api.getSearchedPaginated(valKeyword, page, limit);
       const { resultAccu, resultProx } = data;
+      console.log(data);
       state.resultAccurate = resultAccu;
       state.resultProximate = resultProx;
+      state.page = +data.page.curPage;
     }
-
-    // if (!resultAccu || !resultProx) {
-    //   state.resultProximate = [];
-    //   return;
-    // } else {
-    //   // Side effect
-    //   // state.resultAccurate = resultAccu;
-    //   // state.resultProximate = resultProx;
-    // }
   } catch (err) {
     throw err;
   }

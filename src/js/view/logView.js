@@ -27,7 +27,8 @@ class LogView extends View {
   _form = document.querySelector('.artwork__form');
   _row1 = document.querySelector('.section--2 .row--1');
 
-  _searchPage = 1;
+  searchType = '';
+  searchKeyword = '';
 
   constructor() {
     super();
