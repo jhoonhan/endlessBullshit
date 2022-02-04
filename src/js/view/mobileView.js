@@ -25,9 +25,7 @@ class MobileView extends View {
       <div class="column column--m--1">
         <div class="artwork__container--outer shadow--outer">
           <div class="artwork__container">
-            <div class="artwork-frame artwork-frame--mobile" data-id="${
-              log._id
-            }" style="background-image: url(${img})"
+            <div class="artwork-frame artwork-frame--mobile" style="background-image: url(${img})"
             </div>
           </div>
         </div>

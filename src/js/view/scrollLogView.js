@@ -70,9 +70,9 @@ class ScrollLogView extends View {
           const year = el.date.slice(0, 4);
           const date = el.date.slice(0, 10);
           return `
-          <div class="scroll scroll--${i}" data-order="${i}" data-index="${
-            el.order
-          }" data-id="${el._id}">
+          <div class="scroll scroll--${i}" data-index="${el.order}" data-id="${
+            el._id
+          }">
           <div class="column column--4">
               <div class="artwork__container--outer shadow--outer">
               <div class="artwork__container">
@@ -99,7 +99,6 @@ class ScrollLogView extends View {
                       <label class="scroll__label">Statement :</label>
                       <li></li>
                       <li class="scroll__statement"><p>${el.statement}</p></li>
-                      
                       <label>Date :</label>
                       <li><p>${date}/${year}</p></li>
                       <label>Order :</label>

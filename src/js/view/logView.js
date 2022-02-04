@@ -49,80 +49,52 @@ class LogView extends View {
     });
   }
 
-  renderLogs(data, orientation) {
+  renderLogs(data, isMobile) {
     if (!data) return;
-    if (orientation === 'landscape') {
-      super.insertHTML(data, this._logResultContainer);
-    }
-    if (orientation === 'portrait') {
-      super.insertHTML(data, this._logResultContainerMobile);
-    }
+    const location = isMobile
+      ? this._logResultContainerMobile
+      : this._logResultContainer;
+
+    super.insertHTML(data, location);
   }
 
-  scrollIntoView(id, orientation) {
-    // Web
-    if (orientation === 'landscape') {
-      const loc = document.querySelector('.log__results');
-      const ref = loc.querySelector(`[data-id='${id}']`);
-      const x = ref.getBoundingClientRect().top;
-      const y = loc.clientHeight;
-      const z = loc.scrollTop;
-      const newPosition = x - y / 2 + z - 12;
+  scrollIntoView(id, isMobile) {
+    const location = isMobile
+      ? this._logResultContainerMobile
+      : this._logResultContainer;
+    const ref = location.querySelector(`[data-id='${id}']`);
 
-      loc.scrollTo({
+    const x = ref.getBoundingClientRect().top;
+    const y = location.clientHeight;
+    const z = location.scrollTop;
+    const newPosition = x - y / 2 + z - 12;
+
+    if (!isMobile) {
+      location.scrollTo({
         top: newPosition,
         behavior: 'smooth',
       });
-      return;
     }
-    // Mobile
-    if (orientation === 'portrait') {
-      const ref = document.querySelector(id);
+    if (isMobile) {
       ref.scrollIntoView({ behavior: 'smooth' });
     }
   }
-  catchInfinityLog(state, curLocation) {
-    if (!state) return;
-    console.log(curLocation);
-    const loc = document.querySelector('.log__results');
-    const ref = loc.querySelector(`[data-id='${curLocation}']`);
-    console.log(ref);
-    const x = ref.getBoundingClientRect().top;
-    const y = loc.clientHeight;
-    const z = loc.scrollTop;
-    const w = loc.scrollHeight;
-    const newPosition = x - y / 2 + z - 12;
-    console.log(x);
-    // console.log(x, y, z, w);
 
-    loc.scrollTo({
-      top: newPosition,
-      behavior: 'smooth',
-    });
-  }
+  highlightActiveLog(id, isMobile) {
+    const location = isMobile
+      ? this._logResultContainerMobile
+      : this._logResultContainer;
 
-  highlightActiveLog(id) {
-    const logs = document.querySelectorAll('.log__logs');
-    const activeScroll = this._parentElement.querySelector(`[data-id='${id}']`);
+    const logs = location.querySelectorAll('.log__logs');
+    const active = location.querySelector(`[data-id='${id}']`);
 
-    if (!activeScroll) return;
+    if (!active) return;
+
     logs.forEach(function (log) {
-      if (log.dataset.id === activeScroll.dataset.id) {
+      if (log.dataset.id === active.dataset.id) {
         log.classList.add('highlighted-text');
       } else {
         log.classList.remove('highlighted-text');
-      }
-    });
-  }
-
-  highlightActiveLogMobile() {
-    const logs = document.querySelectorAll('.log__results--mobile .log__logs');
-    const activeArtwork = document.querySelector('.artwork-frame--mobile');
-    logs.forEach(log => {
-      if (log.href.slice(-24) === activeArtwork.dataset.id) {
-        log.classList.add('highlighted-text--mobile');
-      } else {
-        log.classList.remove('highlighted-text--mobile');
       }
     });
   }
@@ -132,14 +104,11 @@ class LogView extends View {
     if (rect.x >= 300) return false;
     if (rect.x < 300) return true;
   }
-  getSearchValue() {
-    return [this._searchInput.value, this._searchDropdownOptions.value];
-  }
-  getSearchValueMobile() {
-    return [
-      this._searchInputMobile.value,
-      this._searchDropdownOptionsMobile.value,
-    ];
+
+  getSearchValue(isMobile) {
+    return isMobile
+      ? [this._searchInputMobile.value, this._searchDropdownOptionsMobile.value]
+      : [this._searchInput.value, this._searchDropdownOptions.value];
   }
 
   // convertName(name) {

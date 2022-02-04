@@ -126,18 +126,18 @@ const controlLogRender = async () => {
     const hashID = window.location.hash.slice(1);
     const selectedArtwork = await api.getArtwork(true, hashID);
 
+    logView.highlightActiveLog(selectedArtwork._id, isMobile());
+    logView.scrollIntoView(selectedArtwork._id, isMobile());
+
     // Web
     if (!isMobile()) {
       scrollLogView.highlightActiveScroll(selectedArtwork._id);
-
-      logView.highlightActiveLog(selectedArtwork._id);
 
       scrollLogView.renderActiveScroll(
         await api.getImage(selectedArtwork.imgURL)
       );
       controlSpinner('remove', 'controlLogRender');
 
-      logView.scrollIntoView(selectedArtwork._id, 'landscape');
       scrollLogView.moveToActiveScroll(selectedArtwork._id);
     }
     //
@@ -148,10 +148,8 @@ const controlLogRender = async () => {
         await api.getImage(selectedArtwork.imgURL),
         model.state.current.order,
       ]);
-
-      logView.highlightActiveLogMobile();
-      logView.scrollIntoView('.highlighted-text--mobile', 'portrait');
     }
+    // model.updateProperties(model.state.current, selectedArtwork);
   } catch (err) {
     popUpView.renderErrorPrompt(err.message.split(' (')[0]);
     console.error(err);
@@ -162,35 +160,33 @@ const controlLogRender = async () => {
 
 const controlLogRenderInfinity = async () => {
   try {
-    let state;
-    const listener = infinityView.scrollListener();
+    let direction;
+    const listener = infinityView.scrollListener(isMobile());
     if (listener === 'top') {
-      state = true;
+      direction = true;
     }
     if (listener === 'bottom') {
-      state = false;
+      direction = false;
     }
     // Guard clause
-    if (state === undefined) return;
+    if (direction === undefined) return;
 
-    const lastLogID = infinityView.getLastLogID(state);
-    const data = await api.searchInfinity(lastLogID, state);
+    const lastLogID = infinityView.getLastLogID(direction, isMobile());
+    const data = await api.searchInfinity(lastLogID, direction);
 
     if (data.results.length <= 0) return;
-
-    const lastScrollOrder = infinityView.getLastScrollOrder(state);
 
     infinityView.renderInfinity({
       data: data.results,
       totalNumber: model.state.current.order,
-      state,
-      orientation: 'landscape',
-      lastScrollOrder,
+      direction,
+      isMobile: isMobile(),
+      // lastScrollOrder,
     });
 
     // stop top infinity pushing active log
     const curLocation = window.location.hash.slice(1);
-    logView.catchInfinityLog(state, curLocation);
+    infinityView.catchInfinityLog(direction, curLocation, isMobile());
   } catch (err) {
     console.log(err);
   }
@@ -201,39 +197,22 @@ const controlSearch = async () => {
   try {
     controlSpinner('add', 'controlSearch');
 
+    await model.search(logView.getSearchValue(isMobile()));
+    logView.renderLogs(model.state.resultProximate, isMobile());
+
     // Web
     if (!isMobile()) {
-      await model.search(logView.getSearchValue());
-
-      // if (!model.state.resultAccurate) return;
       scrollLogView.renderScrolls([
         model.state.resultProximate,
         model.state.current.order,
       ]);
-
-      scrollLogView.highlightActiveScroll(model.state.resultAccurate.order);
-
       scrollLogView.renderActiveScroll(
         await api.getImage(model.state.resultAccurate.imgURL)
       );
-
-      logView.renderLogs(model.state.resultProximate, 'landscape');
-      logView.highlightActiveLog(model.state.resultAccurate._id);
-      window.location.hash = `#${model.state.resultAccurate._id}`;
-
-      controlSpinner('remove', 'controlSearch');
-
-      // model.updateProperties(model.state.current, model.state.resultAccurate);
     }
 
-    // Mobile
-    if (isMobile()) {
-      await model.search(logView.getSearchValueMobile());
-
-      logView.renderLogs(model.state.resultProximate, 'portrait');
-
-      window.location.hash = `#${model.state.resultAccurate._id}`;
-    }
+    controlSpinner('remove', 'controlSearch');
+    window.location.hash = `#${model.state.resultAccurate._id}`;
   } catch (err) {
     popUpView.renderErrorPrompt(err.message.split(' (')[0]);
     console.error(err);
@@ -265,12 +244,13 @@ const controlSerachView = async () => {
     }
     // Everything false...
     if (!model.state.resultAccurate)
-      throw new Error('Could not find accurate result');
+      throw new Error('Could not find the accurate result');
     //
 
     model.updateProperties(model.state.current, model.state.resultAccurate);
-    //
-    // Web
+    logView.renderLogs(model.state.resultProximate, isMobile());
+    logView.highlightActiveLog(model.state.current._id, isMobile());
+
     if (!isMobile()) {
       scrollLogView.renderScrolls([
         model.state.resultProximate,
@@ -279,30 +259,21 @@ const controlSerachView = async () => {
       scrollLogView.highlightActiveScroll(model.state.current._id);
       scrollLogView.renderActiveScroll(model.state.searchedIMG);
       scrollLogView.moveToActiveScroll(model.state.current._id);
-
-      logView.renderLogs(model.state.resultProximate, 'landscape');
-      logView.highlightActiveLog(model.state.current._id);
-
-      controlSpinner('remove', 'controlSerachView');
-
-      animationView.animateToggleSearchView();
     }
-
-    // Mobile
     if (isMobile()) {
-      // Mobile render option
-      logView.renderLogs(model.state.resultProximate, 'portrait');
       mobileView.renderDetail([
         model.state.current,
         model.state.searchedIMG,
         model.state.current.order,
       ]);
-
-      logView.highlightActiveLogMobile();
-      logView.scrollIntoView('.highlighted-text--mobile', 'portrait');
-
-      animationView.animateMobileArchive();
     }
+
+    // Removes spinner before animation
+    controlSpinner('remove', 'controlSerachView');
+
+    isMobile()
+      ? animationView.animateMobileArchive()
+      : animationView.animateToggleSearchView();
   } catch (err) {
     popUpView.renderErrorPrompt(err.message.split(' (')[0]);
     console.error(err);

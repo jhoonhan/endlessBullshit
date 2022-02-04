@@ -6,13 +6,17 @@ class InfinityView extends View {
 
   addHandlerLogRenderInfinity(handler) {
     this._logResultContainer.addEventListener('scroll', handler);
+    this._logResultContainerMobile.addEventListener('scroll', handler);
   }
 
   // Infinity
-  scrollListener() {
-    const x = this._logResultContainer.clientHeight;
-    const y = this._logResultContainer.scrollTop;
-    const z = this._logResultContainer.scrollHeight;
+  scrollListener(isMobile) {
+    const location = isMobile
+      ? this._logResultContainerMobile
+      : this._logResultContainer;
+    const x = location.clientHeight;
+    const y = location.scrollTop;
+    const z = location.scrollHeight;
 
     if (y === 0) return `top`;
     // if (x + y + 1 <= z) return null;
@@ -20,46 +24,62 @@ class InfinityView extends View {
   }
 
   renderInfinity(doc) {
-    const { data, totalNumber, state, orientation, lastScrollOrder } = doc;
+    const { data, totalNumber, direction, isMobile } = doc;
+    const location = isMobile
+      ? this._logResultContainerMobile
+      : this._logResultContainer;
 
     // logs
     const generatedHTMLLog = this._generateMarkupLog(data);
 
-    this._logResultContainer.insertAdjacentHTML(
-      `${state ? 'afterbegin' : 'beforeend'}`,
+    location.insertAdjacentHTML(
+      `${direction ? 'afterbegin' : 'beforeend'}`,
       generatedHTMLLog
     );
 
+    // Stops when Mobile
+    if (isMobile) return;
     // Scrolls
     const generatedHTMLScroll = this._generateMarkupScroll([
       data,
       totalNumber,
-      state,
-      lastScrollOrder,
+      direction,
     ]);
     this._scrollContainer.insertAdjacentHTML(
-      `${state ? 'afterbegin' : 'beforeend'}`,
+      `${direction ? 'afterbegin' : 'beforeend'}`,
       generatedHTMLScroll
     );
   }
 
-  getLastLogID(state, orientation) {
+  catchInfinityLog(state, curLocation, isMobile) {
+    if (!state) return;
+    if (isMobile) return;
+    console.log(curLocation);
+    const loc = document.querySelector('.log__results');
+    const ref = loc.querySelector(`[data-id='${curLocation}']`);
+    console.log(ref);
+    const x = ref.getBoundingClientRect().top;
+    const y = loc.clientHeight;
+    const z = loc.scrollTop;
+    const w = loc.scrollHeight;
+    const newPosition = x - y / 2 + z - 12;
+    console.log(x);
+    // console.log(x, y, z, w);
+
+    loc.scrollTo({
+      top: newPosition,
+      behavior: 'smooth',
+    });
+  }
+
+  getLastLogID(direction, isMobile) {
     const logs = document.querySelectorAll(
-      `${
-        orientation ? '.log__container--mobile' : '.log__container'
-      } .log__logs`
+      `${isMobile ? '.log__container--mobile' : '.log__container'} .log__logs`
     );
-    const lastLog = [...logs].at(state ? 0 : -1);
+    const lastLog = [...logs].at(direction ? 0 : -1);
     const lastLogID = lastLog.dataset.id;
 
     return lastLogID;
-  }
-  getLastScrollOrder(state) {
-    const scrolls = document.querySelectorAll('.scroll');
-    const lastScroll = [...scrolls].at(state ? 0 : -1);
-    console.log(lastScroll);
-    const lastScrollOrder = +lastScroll.dataset.order;
-    return lastScrollOrder;
   }
 
   // Generate
@@ -77,7 +97,7 @@ class InfinityView extends View {
   }
 
   _generateMarkupScroll(data) {
-    const [results, totalNumber, type, lastOrder] = data;
+    const [results, totalNumber, type] = data;
 
     const generatedHTML = results
       .map(
@@ -85,17 +105,8 @@ class InfinityView extends View {
           const year = el.date.slice(0, 4);
           const date = el.date.slice(0, 10);
 
-          // let newOrder;
-          const resultsCount = results.length;
-
-          let newOrder = type
-            ? +lastOrder + resultsCount - i
-            : +lastOrder - 1 - i;
-
           return `
-          <div class="scroll" data-order="${newOrder}" data-index="${
-            el.order
-          }" data-id="${el._id}">
+          <div class="scroll" data-index="${el.order}" data-id="${el._id}">
           <div class="column column--4">
               <div class="artwork__container--outer shadow--outer">
               <div class="artwork__container">
