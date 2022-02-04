@@ -149,7 +149,7 @@ const controlLogRender = async () => {
         model.state.current.order,
       ]);
     }
-    // model.updateProperties(model.state.current, selectedArtwork);
+    model.updateProperties(model.state.current, selectedArtwork);
   } catch (err) {
     popUpView.renderErrorPrompt(err.message.split(' (')[0]);
     console.error(err);
@@ -232,9 +232,19 @@ const controlSerachView = async () => {
     }
     // PERFORMANCE -- runs only on a fresh reload
     if (logView.getLogPosition() && !model.state.resultAccurate) {
-      await model.loadLatest();
+      // await model.loadLatest();
+      console.log(`first search fired`);
       await _updateRender(model.state.current);
       await model.search([model.state.current._id, 'id']);
+      model.updateProperties(model.state.current, model.state.resultAccurate);
+
+      logView.renderLogs(model.state.resultProximate, isMobile());
+      if (!isMobile()) {
+        scrollLogView.renderScrolls([
+          model.state.resultProximate,
+          model.state.current.order,
+        ]);
+      }
     }
     // If no image found, use the default
     if (!model.state.searchedIMG) {
@@ -247,15 +257,10 @@ const controlSerachView = async () => {
       throw new Error('Could not find the accurate result');
     //
 
-    model.updateProperties(model.state.current, model.state.resultAccurate);
-    logView.renderLogs(model.state.resultProximate, isMobile());
     logView.highlightActiveLog(model.state.current._id, isMobile());
+    logView.scrollIntoView(model.state.current._id, isMobile());
 
     if (!isMobile()) {
-      scrollLogView.renderScrolls([
-        model.state.resultProximate,
-        model.state.current.order,
-      ]);
       scrollLogView.highlightActiveScroll(model.state.current._id);
       scrollLogView.renderActiveScroll(model.state.searchedIMG);
       scrollLogView.moveToActiveScroll(model.state.current._id);
