@@ -20,13 +20,13 @@ class InfinityView extends View {
   }
 
   renderInfinity(doc) {
-    const { data, totalNumber, type, orientation, lastOrder } = doc;
+    const { data, totalNumber, state, orientation, lastScrollOrder } = doc;
 
     // logs
     const generatedHTMLLog = this._generateMarkupLog(data);
 
     this._logResultContainer.insertAdjacentHTML(
-      `${type ? 'afterbegin' : 'beforeend'}`,
+      `${state ? 'afterbegin' : 'beforeend'}`,
       generatedHTMLLog
     );
 
@@ -34,25 +34,25 @@ class InfinityView extends View {
     const generatedHTMLScroll = this._generateMarkupScroll([
       data,
       totalNumber,
-      type,
-      lastOrder,
+      state,
+      lastScrollOrder,
     ]);
     this._scrollContainer.insertAdjacentHTML(
-      `${type ? 'afterbegin' : 'beforeend'}`,
+      `${state ? 'afterbegin' : 'beforeend'}`,
       generatedHTMLScroll
     );
   }
 
-  getLastLogID(type) {
+  getLastLogID(state) {
     const logs = document.querySelectorAll('.log__container .log__logs');
-    const lastLog = [...logs].at(type ? 0 : -1);
+    const lastLog = [...logs].at(state ? 0 : -1);
     const lastLogID = lastLog.href.slice(-24);
 
     return lastLogID;
   }
-  getLastScrollOrder(type) {
+  getLastScrollOrder(state) {
     const scrolls = document.querySelectorAll('.scroll');
-    const lastScroll = [...scrolls].at(type ? 0 : -1);
+    const lastScroll = [...scrolls].at(state ? 0 : -1);
     console.log(lastScroll);
     const lastScrollOrder = +lastScroll.dataset.order;
     return lastScrollOrder;

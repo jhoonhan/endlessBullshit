@@ -183,10 +183,14 @@ const controlLogRenderInfinity = async () => {
     infinityView.renderInfinity({
       data: data.results,
       totalNumber: model.state.current.order,
-      type: state,
+      state,
       orientation: 'landscape',
-      lastOrder: lastScrollOrder,
+      lastScrollOrder,
     });
+    // stop top infinity pushing active log
+    const curLocation = window.location.hash.slice(1);
+    console.log(curLocation);
+    logView.catchInfinityLog(state, curLocation);
   } catch (err) {
     console.log(err);
   }

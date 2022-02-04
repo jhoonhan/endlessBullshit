@@ -85,11 +85,22 @@ class LogView extends View {
       ref.scrollIntoView({ behavior: 'smooth' });
     }
   }
+  catchInfinityLog(state, curLocation) {
+    if (!state) return;
+    console.log(curLocation);
+    const loc = document.querySelector('.log__results');
+    const ref = loc.querySelector(`[data-id='${curLocation}']`);
+    console.log(ref);
+    const x = ref.getBoundingClientRect().top;
+    const y = loc.clientHeight;
+    const z = loc.scrollTop;
+    const newPosition = x - y / 2 + z - 12;
+    console.log(x);
 
-  getLogPosition(data) {
-    const rect = this._row1.getBoundingClientRect();
-    if (rect.x >= 300) return false;
-    if (rect.x < 300 && !data) return true;
+    loc.scrollTo({
+      top: 500,
+      behavior: 'smooth',
+    });
   }
 
   highlightActiveLog(id) {
@@ -118,6 +129,11 @@ class LogView extends View {
     });
   }
 
+  getLogPosition() {
+    const rect = this._row1.getBoundingClientRect();
+    if (rect.x >= 300) return false;
+    if (rect.x < 300) return true;
+  }
   getSearchValue() {
     return [this._searchInput.value, this._searchDropdownOptions.value];
   }
