@@ -63,7 +63,7 @@ class ScrollLogView extends View {
       if (el.dataset.id === activeID) {
         el.classList.add('scroll--active');
       }
-      if (!el.dataset.id === activeID) {
+      if (el.dataset.id !== activeID) {
         el.classList.remove('scroll--active');
       }
     });
@@ -71,7 +71,6 @@ class ScrollLogView extends View {
 
   scrollBackTo() {
     // scrolls back to the active before "scroll--active" gets cleared by "scrollListener"
-    console.log(`fired`);
     const activeScroll = document.querySelector('.scroll--active');
     activeScroll.scrollIntoView();
   }
@@ -83,16 +82,17 @@ class ScrollLogView extends View {
 
   _scrollStateListener() {
     console.log(`scroll listening`);
+
     const scrolls = document.querySelectorAll('.scroll');
 
     scrolls.forEach((el, i) => {
       const rect = el.getBoundingClientRect();
       if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
-        el.classList.add('scroll--active');
+        el.classList.add('scroll--active2');
         // Changes hash location
         window.location.hash = `#${el.dataset.id}`;
       } else {
-        el.classList.remove('scroll--active');
+        el.classList.remove('scroll--active2');
       }
     });
 
@@ -144,7 +144,6 @@ class ScrollLogView extends View {
         top: newPosition,
         behavior: 'smooth',
       });
-      return;
     }
 
     // Mobile
@@ -157,11 +156,12 @@ class ScrollLogView extends View {
   moveToActiveScroll(id, type) {
     const active = document.querySelector('.scroll--active');
     const active2 = this._parentElement.querySelector(`[data-id='${id}']`);
+    console.log(active2);
 
     if (!active && !active2) return;
 
     if (type === 'shit') {
-      active2.scrollIntoView({ behavior: 'smooth' });
+      active2.scrollIntoView();
       return;
     }
 

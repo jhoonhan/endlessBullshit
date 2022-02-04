@@ -38,10 +38,6 @@ class LogView extends View {
     super();
     this.renderLogs();
 
-    document
-      .querySelector('.scroll__container')
-      .addEventListener('scroll', this.highlightActiveLog2);
-
     // this._addHandlerSearchOption();
     // this._addHandlerSearchByOption();
   }
@@ -114,6 +110,7 @@ class LogView extends View {
   highlightActiveLog() {
     const logs = document.querySelectorAll('.log__logs');
     const activeScroll = document.querySelector('.scroll--active');
+
     if (!activeScroll) return;
     logs.forEach(function (log) {
       if (log.dataset.id === activeScroll.dataset.id) {

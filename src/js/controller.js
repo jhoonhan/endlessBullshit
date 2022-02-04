@@ -127,11 +127,9 @@ const controlLogRender = async () => {
 
     // Web
     if (!isMobile()) {
-      // scrollLogView.highlightActiveScroll(selectedArtwork._id);
-      // scrollLogView.moveToActiveScroll(selectedArtwork._id, 'shit');
-      const fuck = document.querySelector('.scroll__container');
-      const ing = fuck.querySelector(`[data-id='${selectedArtwork._id}']`);
-      ing.scrollIntoView();
+      console.log(selectedArtwork.name);
+      scrollLogView.highlightActiveScroll(selectedArtwork._id);
+      scrollLogView.moveToActiveScroll(selectedArtwork._id, 'shit');
 
       // logView.highlightActiveLog();
 
@@ -247,22 +245,26 @@ const controlSerachView = async () => {
   try {
     controlSpinner('add', 'controlSerachView');
 
-    // Short cuircuit
+    // PERFORMANCE -- no api call when closed
     if (logView.getLogPosition() >= 300) {
       animationView.animateToggleSearchView();
       return;
     }
+    // PERFORMANCE -- runs only on fresh reload
     if (logView.getLogPosition() < 300 && !model.state.resultAccurate) {
       await model.loadLatest();
       await _update(model.state.current);
       await model.search([model.state.current._id, 'id']);
     }
+    // If no image found, used default
     if (!model.state.searchedIMG) {
       model.state.searchedIMG = await api.getImage(
         model.state.resultAccurate.imgURL
       );
     }
-    if (!model.state.resultAccurate) return;
+    // Everything false...
+    if (!model.state.resultAccurate)
+      throw new Error('Could not find accurate result');
     //
 
     model.updateProperties(model.state.current, model.state.resultAccurate);

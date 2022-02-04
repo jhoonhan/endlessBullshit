@@ -197,6 +197,7 @@ footer {
   align-self: flex-end;
 
   scroll-snap-type: y mandatory;
+  // scroll-snap-type: none;
 
   overflow-y: scroll;
 }
