@@ -43,10 +43,14 @@ class InfinityView extends View {
     );
   }
 
-  getLastLogID(state) {
-    const logs = document.querySelectorAll('.log__container .log__logs');
+  getLastLogID(state, orientation) {
+    const logs = document.querySelectorAll(
+      `${
+        orientation ? '.log__container--mobile' : '.log__container'
+      } .log__logs`
+    );
     const lastLog = [...logs].at(state ? 0 : -1);
-    const lastLogID = lastLog.href.slice(-24);
+    const lastLogID = lastLog.dataset.id;
 
     return lastLogID;
   }
