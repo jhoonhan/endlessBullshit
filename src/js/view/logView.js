@@ -78,11 +78,11 @@ class LogView extends View {
     }
   }
 
-  scrollIntoView(reference, orientation, location) {
+  scrollIntoView(id, orientation) {
     // Web
     if (location && orientation === 'landscape') {
-      const ref = document.querySelector(reference);
-      const loc = document.querySelector(location);
+      const loc = document.querySelector('.log__results');
+      const ref = loc.querySelector(`[data-id='${id}']`);
       const x = ref.getBoundingClientRect().top;
       const y = loc.clientHeight;
       const z = loc.scrollTop;
@@ -107,9 +107,9 @@ class LogView extends View {
     return rect.x;
   }
 
-  highlightActiveLog() {
+  highlightActiveLog(id) {
     const logs = document.querySelectorAll('.log__logs');
-    const activeScroll = document.querySelector('.scroll--active');
+    const activeScroll = this._parentElement.querySelector(`[data-id='${id}']`);
 
     if (!activeScroll) return;
     logs.forEach(function (log) {

@@ -129,16 +129,16 @@ const controlLogRender = async () => {
     if (!isMobile()) {
       console.log(selectedArtwork.name);
       scrollLogView.highlightActiveScroll(selectedArtwork._id);
-      scrollLogView.moveToActiveScroll(selectedArtwork._id, 'shit');
 
-      // logView.highlightActiveLog();
+      logView.highlightActiveLog(selectedArtwork._id);
 
       scrollLogView.renderActiveScroll(
         await api.getImage(selectedArtwork.imgURL)
       );
       controlSpinner('remove', 'controlLogRender');
 
-      // logView.scrollIntoView('.highlighted-text', 'landscape', '.log__results');
+      logView.scrollIntoView(selectedArtwork._id, 'landscape');
+      scrollLogView.moveToActiveScroll(selectedArtwork._id, 'shit');
       // scrollLogView.moveToActiveScroll();
     }
     //
@@ -216,7 +216,7 @@ const controlSearch = async () => {
       );
 
       logView.renderLogs(model.state.resultProximate, 'landscape');
-      logView.highlightActiveLog();
+      logView.highlightActiveLog(model.state.resultAccurate._id);
       window.location.hash = `#${model.state.resultAccurate._id}`;
 
       controlSpinner('remove', 'controlSearch');
@@ -280,7 +280,7 @@ const controlSerachView = async () => {
       scrollLogView.renderActiveScroll(model.state.searchedIMG);
 
       logView.renderLogs(model.state.resultProximate, 'landscape');
-      logView.highlightActiveLog();
+      logView.highlightActiveLog(model.state.resultAccurate._id);
 
       controlSpinner('remove', 'controlSerachView');
       // logView.scrollIntoView('.highlighted-text', '.log__results', 'landscape');

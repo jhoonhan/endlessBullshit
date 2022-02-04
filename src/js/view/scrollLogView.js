@@ -36,7 +36,6 @@ class ScrollLogView extends View {
       function (e) {
         if (!e.target.dataset.index) return;
         this._clickedLogIndex = e.target.dataset.index;
-        // console.log(this._clickedLog);
       }.bind(this)
     );
   }
@@ -75,33 +74,26 @@ class ScrollLogView extends View {
     activeScroll.scrollIntoView();
   }
 
-  switchScrollListener(type) {
-    this._scrollListenerSwitch = type;
-    console.log(`turned ${type ? 'on' : 'off'}`);
-  }
-
   _scrollStateListener() {
-    console.log(`scroll listening`);
-
     const scrolls = document.querySelectorAll('.scroll');
 
     scrolls.forEach((el, i) => {
       const rect = el.getBoundingClientRect();
       if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
-        el.classList.add('scroll--active2');
+        el.classList.add('scroll--active');
         // Changes hash location
         window.location.hash = `#${el.dataset.id}`;
+        // this._scrollStateLogScroll(`landscape`);
       } else {
-        el.classList.remove('scroll--active2');
+        el.classList.remove('scroll--active');
       }
     });
 
     this._scrollStateLogHighlight();
-    this._scrollStateLogScroll(`landscape`);
+    // this._scrollStateLogScroll(`landscape`);
   }
 
   _scrollStateLogHighlight() {
-    console.log(`_scrollStateLogHighlight`);
     const logs = document.querySelectorAll('.log__logs');
 
     // Based on window hash location
@@ -130,7 +122,6 @@ class ScrollLogView extends View {
   }
 
   _scrollStateLogScroll(orientation) {
-    console.log(`_scrollStateLogScroll`);
     // Web
     if (orientation === 'landscape') {
       const ref = document.querySelector('.highlighted-text');
@@ -156,12 +147,11 @@ class ScrollLogView extends View {
   moveToActiveScroll(id, type) {
     const active = document.querySelector('.scroll--active');
     const active2 = this._parentElement.querySelector(`[data-id='${id}']`);
-    console.log(active2);
 
     if (!active && !active2) return;
 
     if (type === 'shit') {
-      active2.scrollIntoView();
+      active2.scrollIntoView({ behavior: 'smooth' });
       return;
     }
 
