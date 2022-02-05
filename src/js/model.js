@@ -37,9 +37,10 @@ export const loadArtwork = async function (renderImage) {
     const img = await html2canvas(renderImage);
     state.current.img = img;
   } catch (err) {
-    throw new Error(
-      `${err}//Unable to render the request. Please try again later (${err})`
-    );
+    // throw new Error(
+    //   `${err}//Unable to render the request. Please try again later (${err})`
+    // );
+    throw err;
   }
 };
 
