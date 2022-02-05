@@ -100,7 +100,7 @@ class ScrollLogView extends View {
                       <li></li>
                       <li class="scroll__statement"><p>${el.statement}</p></li>
                       <label>Date :</label>
-                      <li><p>${date}/${year}</p></li>
+                      <li><p>${date}</p></li>
                       <label>Order :</label>
                       <li><p>${el.order} out of ${totalCount}</p></li>
                       <label>ID :</label>

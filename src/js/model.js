@@ -38,7 +38,7 @@ export const loadArtwork = async function (renderImage) {
     state.current.img = img;
   } catch (err) {
     throw new Error(
-      `Unable to render the request. Please try again later (${err})`
+      `${err}//Unable to render the request. Please try again later (${err})`
     );
   }
 };

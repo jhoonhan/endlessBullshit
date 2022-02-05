@@ -66,10 +66,10 @@ class LogView extends View {
       ? this._logResultContainerMobile
       : this._logResultContainer;
     const ref = location.querySelector(`[data-id='${id}']`);
-    console.log(ref);
     if (!ref) return;
 
     const x = ref.getBoundingClientRect().top;
+    if (!x) return;
     const y = location.clientHeight;
     const z = location.scrollTop;
     const newPosition = x - y / 2 + z - 12;

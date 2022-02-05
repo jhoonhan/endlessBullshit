@@ -64,10 +64,9 @@ export const getSearchedPaginated = async (keyword, page, inf) => {
       `${APIAPIURL}/searchedPaginated/name/?inf=${inf}&keyword=${keyword}&page=${page}`
     );
     const data = await res.json();
-    console.log(data);
     return data;
   } catch (err) {
-    console.log(`err`);
+    throw err;
   }
 };
 
@@ -79,7 +78,7 @@ export const searchInfinity = async (id, state) => {
     const data = await res.json();
     return data;
   } catch (err) {
-    console.log(err);
+    throw err;
   }
 };
 
@@ -112,94 +111,9 @@ export const post = async (type, data) => {
       console.log(`posted`);
     }
     if (res.data.status !== 'success') {
-      // console.log(`you fucked up`);
+      throw err;
     }
   } catch (err) {
     throw err;
   }
 };
-
-// export const postImage = async img => {
-//   try {
-//     const res = await axios({
-//       method: 'POST',
-//       url: `${APIAPIURL}/upload`,
-//       data: img,
-//     });
-
-//     if (res.data.status === 'success') {
-//       console.log(`posted`);
-//     }
-//     if (res.data.status !== 'success') {
-//     }
-//   } catch (err) {
-//     throw err;
-//   }
-// };
-// export const postLog = async data => {
-//   try {
-//     const res = await axios({
-//       method: 'POST',
-//       url: `${APIAPIURL}/log`,
-//       data,
-//     });
-//     if (res.data.status === 'success') {
-//       console.log(`posted`);
-//     }
-//   } catch (err) {
-//     throw err;
-//   }
-// };
-
-// export const api = async (fnType, param, param2) => {
-//   try {
-//     // Fetch Image and return
-//     if (fnType === 'getImage') {
-//       const res = await fetch(`http://127.0.0.1:3000/archive/${param}`);
-//       const imgBlob = await res.blob();
-//       const img = URL.createObjectURL(imgBlob);
-//       return img;
-//     }
-//     // Search by type and blah
-//     if (fnType === 'getSearch') {
-//       const res = await fetch(`${APIAPIURL}/search/${param2}/${param}`);
-//       const data = await res.json();
-//       return data;
-//     }
-//     // Search and get one
-//     if (fnType === 'getOne') {
-//       const res = await fetch(`${APIAPIURL}/${param}`);
-//       const data = await res.json();
-//       return data.data;
-//     }
-//     // Get the latest artwork
-//     if (fnType === 'getLatest') {
-//       const res = await fetch(`${APIAPIURL}/latest`);
-//       const data = await res.json();
-//       return data.data;
-//     }
-
-//     if (fnType === 'postImage') {
-//       const res = await axios({
-//         method: 'POST',
-//         url: `${APIAPIURL}/upload`,
-//         data: param,
-//       });
-//       if (res.data.status === 'success') {
-//         console.log(`posted`);
-//       }
-//     }
-//     if (fnType === 'postLog') {
-//       const res = await axios({
-//         method: 'POST',
-//         url: `${APIAPIURL}/log`,
-//         data: param,
-//       });
-//       if (res.data.status === 'success') {
-//         console.log(`posted`);
-//       }
-//     }
-//   } catch (err) {
-//     console.error(err.response.data);
-//   }
-// };
