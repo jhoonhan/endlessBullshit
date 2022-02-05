@@ -50,14 +50,14 @@ export const logArtwork = async (inputData, imgBlob) => {
 
     // save new log
     // get the order of the latest artwork from database
-    const latestArtwork = await api.getArtwork(false, 'latest');
+    const index = await api.getTotalCount();
 
-    let imageID = `${Date.now()}-${+latestArtwork.order + 1}`;
+    let imageID = `${Date.now()}-${+index + 1}`;
 
     const data = {
       name: cleanedName.toLowerCase(),
       statement: inputData.statement,
-      order: +latestArtwork.order + 1,
+      order: +index + 1,
       imgURL: `${imageID}.png`,
       timestamp: Date.now(),
     };
