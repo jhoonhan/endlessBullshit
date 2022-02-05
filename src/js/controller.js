@@ -277,9 +277,7 @@ const controlInfinity = async () => {
     if (direction === undefined) return;
 
     if (logView.searchType !== 'name') {
-      const lastLogID = infinityView.getLastLogID(direction, isMobile());
-      const data = await api.searchInfinity(lastLogID, direction);
-      console.log(data);
+      const data = await api.searchInfinity(logView.searchKeyword, direction);
 
       if (data.results.length <= 0) return;
 
@@ -292,12 +290,13 @@ const controlInfinity = async () => {
     }
 
     if (logView.searchType === 'name') {
-      const keyword = logView.searchKeyword;
+      const keyword = infinityView.getLastLogID(direction, isMobile());
       const data = await api.getSearchedPaginated(
         keyword,
         model.state.page + 1,
         10
       );
+      console.log(data);
       model.state.page = model.state.page + 1;
 
       if (data.resultProx.length <= 0) return;

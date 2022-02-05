@@ -86,6 +86,7 @@ export const loadLatest = async () => {
 export const search = async (data, paginateData) => {
   try {
     const [keyword, type] = data;
+
     const valKeyword = validateInput(keyword, false);
 
     if (type === 'latest') {
@@ -105,9 +106,8 @@ export const search = async (data, paginateData) => {
       const [page, limit] = paginateData;
       const data = await api.getSearchedPaginated(valKeyword, page, limit);
       const { resultAccu, resultProx } = data;
-      console.log(data);
       state.resultAccurate = resultAccu;
-      state.resultProximate = resultProx;
+      state.resultProximate = resultProx.reverse();
       state.page = +data.page.curPage;
     }
   } catch (err) {
