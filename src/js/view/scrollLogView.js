@@ -62,7 +62,7 @@ class ScrollLogView extends View {
     active.style.backgroundImage = `url(${img})`;
   }
   _generateMarkup(data) {
-    const [resultProx, totalNumber] = data;
+    const [resultProx, totalCount] = data;
 
     const generatedHTML = resultProx
       .map(
@@ -102,7 +102,7 @@ class ScrollLogView extends View {
                       <label>Date :</label>
                       <li><p>${date}/${year}</p></li>
                       <label>Order :</label>
-                      <li><p>${el.order} out of ${totalNumber}</p></li>
+                      <li><p>${el.order} out of ${totalCount}</p></li>
                       <label>ID :</label>
                       <li><p>${el._id}</p></li>
                     </ul>

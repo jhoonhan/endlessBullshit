@@ -18,7 +18,7 @@ class MobileView extends View {
     artworkFrame.style.backgroundImage = `url(${img})`;
   }
   _generateMarkup(data) {
-    const [log, img, totalNumber] = data;
+    const [log, img, totalCount] = data;
     const year = log.date.slice(0, 4);
     const date = log.date.slice(0, 10);
     return `
@@ -47,7 +47,7 @@ class MobileView extends View {
               <label>Date :</label>
               <li><p>${date}</p></li>
               <label>Order :</label>
-              <li><p>${log.order} out of ${totalNumber}</p></li>
+              <li><p>${log.order} out of ${totalCount}</p></li>
               <label>ID :</label>
               <li><p>${log._id}</p></li>
             </ul>

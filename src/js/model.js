@@ -20,6 +20,7 @@ export const state = {
   resultProximate: '',
   searchedIMG: '',
   page: '',
+  totalCount: '',
 };
 
 const validateInput = (text, hard) => {

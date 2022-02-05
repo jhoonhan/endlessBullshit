@@ -39,6 +39,35 @@ const _updateRender = async function (log, location = 'artwork') {
   }
 };
 
+const controlLatestArtwork = async () => {
+  try {
+    controlSpinner('add', 'controlLatestArtwork');
+
+    // Sets "STATE.CURRENT" with latest data from API calls
+    await model.loadLatest();
+    await _updateRender(model.state.current);
+
+    // set has location
+    window.location.hash = `#${model.state.current._id}`;
+
+    // load latest log data to description
+    descriptionView.addDescription(model.state.current);
+
+    // Refresh state
+    model.state.totalCount = await api.getTotalCount();
+    model.state.resultAccurate = '';
+    model.state.resultProximate = '';
+    // PERFORMANCE = does NOT get API call for an image
+    model.state.searchedIMG = '';
+    //
+  } catch (err) {
+    popUpView.renderErrorPrompt(err.message.split(' (')[0]);
+    console.error(err);
+  } finally {
+    controlSpinner('remove', 'controlLatestArtwork');
+  }
+};
+
 const controlGenerateArtwork = async function (renderImage) {
   // @renderImage = html node to be converted to image
   try {
@@ -86,32 +115,6 @@ const controlGenerateArtwork = async function (renderImage) {
   }
 };
 
-const controlLatestArtwork = async () => {
-  try {
-    controlSpinner('add', 'controlLatestArtwork');
-
-    await model.loadLatest();
-    await _updateRender(model.state.current);
-
-    // set has location
-    window.location.hash = `#${model.state.current._id}`;
-
-    // load latest log data to description
-    descriptionView.addDescription(model.state.current);
-
-    // Refresh state
-    model.state.resultAccurate = '';
-    model.state.resultProximate = '';
-    model.state.searchedIMG = '';
-    //
-  } catch (err) {
-    popUpView.renderErrorPrompt(err.message.split(' (')[0]);
-    console.error(err);
-  } finally {
-    controlSpinner('remove', 'controlLatestArtwork');
-  }
-};
-
 const controlLogRender = async () => {
   // event: HASH CHANGE
   try {
@@ -124,6 +127,7 @@ const controlLogRender = async () => {
 
     const hashID = window.location.hash.slice(1);
     const selectedArtwork = await api.getArtwork(true, hashID);
+    const selectedIMG = await api.getImage(selectedArtwork.imgURL);
 
     logView.highlightActiveLog(selectedArtwork._id, isMobile());
     logView.scrollIntoView(selectedArtwork._id, isMobile());
@@ -132,9 +136,8 @@ const controlLogRender = async () => {
     if (!isMobile()) {
       scrollLogView.highlightActiveScroll(selectedArtwork._id);
 
-      scrollLogView.renderActiveScroll(
-        await api.getImage(selectedArtwork.imgURL)
-      );
+      scrollLogView.renderActiveScroll(selectedIMG);
+
       controlSpinner('remove', 'controlLogRender');
 
       scrollLogView.moveToActiveScroll(selectedArtwork._id);
@@ -144,8 +147,8 @@ const controlLogRender = async () => {
     if (isMobile()) {
       mobileView.renderDetail([
         selectedArtwork,
-        await api.getImage(selectedArtwork.imgURL),
-        model.state.current.order,
+        selectedIMG,
+        model.state.totalCount,
       ]);
     }
     model.updateProperties(model.state.current, selectedArtwork);
@@ -166,28 +169,37 @@ const controlSearch = async () => {
     // Resets the page;
     model.state.page = 1;
 
+    // Sets new "RESULTS" thourgh "SEARCH"
     const [keyword, type] = logView.getSearchValue(isMobile());
     await model.search([keyword, type], [model.state.page, false]);
+    // Get new image from new "RESULTACCURATE"
+    const searchedIMG = await api.getImage(model.state.resultAccurate.imgURL);
 
     // Side effects to change searchType'
     logView.searchType = type;
     logView.searchKeyword = keyword;
 
     logView.renderLogs(model.state.resultProximate, isMobile());
+    logView.highlightActiveLog(model.state.resultAccurate._id, isMobile());
+
+    window.location.hash = `#${model.state.resultAccurate._id}`;
+
+    controlSpinner('remove', 'controlSearch');
 
     // Web
     if (!isMobile()) {
       scrollLogView.renderScrolls([
         model.state.resultProximate,
-        model.state.current.order,
+        model.state.totalCount,
       ]);
-      scrollLogView.renderActiveScroll(
-        await api.getImage(model.state.resultAccurate.imgURL)
-      );
+      // Render image with searched image
+      scrollLogView.highlightActiveScroll(model.state.resultAccurate._id);
+      scrollLogView.moveToActiveScroll(model.state.resultAccurate._id);
+      scrollLogView.renderActiveScroll(searchedIMG);
     }
-
-    controlSpinner('remove', 'controlSearch');
-    window.location.hash = `#${model.state.resultAccurate._id}`;
+    // Mobile
+    if (isMobile()) return;
+    //
   } catch (err) {
     popUpView.renderErrorPrompt(err.message.split(' (')[0]);
     console.error(err);
@@ -210,22 +222,22 @@ const controlSerachView = async () => {
       // await model.loadLatest();
       await _updateRender(model.state.current);
       await model.search([model.state.current._id, 'id']);
-      model.updateProperties(model.state.current, model.state.resultAccurate);
-
-      logView.renderLogs(model.state.resultProximate, isMobile());
-      if (!isMobile()) {
-        scrollLogView.renderScrolls([
-          model.state.resultProximate,
-          model.state.current.order,
-        ]);
-      }
-    }
-    // If no image found, use the default
-    if (!model.state.searchedIMG) {
       model.state.searchedIMG = await api.getImage(
         model.state.resultAccurate.imgURL
       );
+      model.updateProperties(model.state.current, model.state.resultAccurate);
+
+      logView.renderLogs(model.state.resultProximate, isMobile());
+
+      // Web
+      if (!isMobile()) {
+        scrollLogView.renderScrolls([
+          model.state.resultProximate,
+          model.state.totalCount,
+        ]);
+      }
     }
+
     // Everything false...
     if (!model.state.resultAccurate)
       throw new Error('Could not find the accurate result');
@@ -243,7 +255,7 @@ const controlSerachView = async () => {
       mobileView.renderDetail([
         model.state.current,
         model.state.searchedIMG,
-        model.state.current.order,
+        model.state.totalCount,
       ]);
     }
 
@@ -284,7 +296,7 @@ const controlInfinity = async () => {
 
       infinityView.renderInfinity({
         data: data.results,
-        totalNumber: model.state.current.order,
+        totalCount: model.state.totalCount,
         direction,
         isMobile: isMobile(),
       });
@@ -303,7 +315,7 @@ const controlInfinity = async () => {
 
       infinityView.renderInfinity({
         data: data.resultProx,
-        totalNumber: data.resultAccu.order,
+        totalCount: data.resultAccu.order,
         direction: false,
         isMobile: isMobile(),
       });

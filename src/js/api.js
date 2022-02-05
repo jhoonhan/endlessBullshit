@@ -29,6 +29,13 @@ export const getImage = async imgURL => {
   }
 };
 
+export const getTotalCount = async () => {
+  const res = await fetch(`${APIBASEURL}/totalCount`);
+  const data = await res.json();
+  const totalCount = data.totalCount - 1;
+  return totalCount;
+};
+
 export const getSearch = async (type, keyword) => {
   try {
     let data;
@@ -53,7 +60,7 @@ export const getSearch = async (type, keyword) => {
 export const getSearchedPaginated = async (keyword, page, inf) => {
   try {
     const res = await fetch(
-      `${APIBASEURL}/searchedPaginated/name/${inf}/${keyword}?page=${page}`
+      `${APIBASEURL}/searchedPaginated/name/?inf=${inf}&keyword=${keyword}&page=${page}`
     );
     const data = await res.json();
     console.log(data);

@@ -32,7 +32,7 @@ class InfinityView extends View {
   }
 
   renderInfinity(doc) {
-    const { data, totalNumber, direction, isMobile } = doc;
+    const { data, totalCount, direction, isMobile } = doc;
     const location = isMobile
       ? this._logResultContainerMobile
       : this._logResultContainer;
@@ -50,7 +50,7 @@ class InfinityView extends View {
     // Scrolls
     const generatedHTMLScroll = this._generateMarkupScroll([
       data,
-      totalNumber,
+      totalCount,
       direction,
     ]);
     this._scrollContainer.insertAdjacentHTML(
@@ -102,7 +102,7 @@ class InfinityView extends View {
   }
 
   _generateMarkupScroll(data) {
-    const [results, totalNumber, type] = data;
+    const [results, totalCount, type] = data;
 
     const generatedHTML = results
       .map(
@@ -142,7 +142,7 @@ class InfinityView extends View {
                       <label>Date :</label>
                       <li><p>${date}/${year}</p></li>
                       <label>Order :</label>
-                      <li><p>${el.order} out of ${totalNumber}</p></li>
+                      <li><p>${el.order} out of ${totalCount}</p></li>
                       <label>ID :</label>
                       <li><p>${el._id}</p></li>
                     </ul>
