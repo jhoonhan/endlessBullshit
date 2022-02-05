@@ -5,7 +5,7 @@ import { APIBASEURL } from './config.js';
 export const getImage = async imgURL => {
   try {
     let img;
-    const res = await fetch(`http://127.0.0.1:3000/archive/${imgURL}`);
+    const res = await fetch(`${APIARCHIVEURL}/${imgURL}`);
 
     if (res.ok === true) {
       const imgBlob = await res.blob();
@@ -14,7 +14,7 @@ export const getImage = async imgURL => {
 
     /// FIX IT!
     if (res.ok === false) {
-      const altRes = await fetch(`http://127.0.0.1:3000/archive/test.png`);
+      const altRes = await fetch(`${APIARCHIVEURL}/test.png`);
       const imgBlob = await altRes.blob();
       img = URL.createObjectURL(imgBlob);
 
