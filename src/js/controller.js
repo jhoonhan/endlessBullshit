@@ -167,7 +167,7 @@ const controlSearch = async () => {
     model.state.page = 1;
 
     const [keyword, type] = logView.getSearchValue(isMobile());
-    await model.search([keyword, type], [model.state.page, 40]);
+    await model.search([keyword, type], [model.state.page, false]);
 
     // Side effects to change searchType'
     logView.searchType = type;
@@ -277,7 +277,8 @@ const controlInfinity = async () => {
     if (direction === undefined) return;
 
     if (logView.searchType !== 'name') {
-      const data = await api.searchInfinity(logView.searchKeyword, direction);
+      const lastLogID = infinityView.getLastLogID(direction, isMobile());
+      const data = await api.searchInfinity(lastLogID, direction);
 
       if (data.results.length <= 0) return;
 
@@ -290,13 +291,12 @@ const controlInfinity = async () => {
     }
 
     if (logView.searchType === 'name') {
-      const keyword = infinityView.getLastLogID(direction, isMobile());
+      const keyword = logView.searchKeyword;
       const data = await api.getSearchedPaginated(
         keyword,
-        model.state.page + 1,
-        10
+        model.state.page,
+        true
       );
-      console.log(data);
       model.state.page = model.state.page + 1;
 
       if (data.resultProx.length <= 0) return;

@@ -103,8 +103,8 @@ export const search = async (data, paginateData) => {
       state.resultProximate = resultProx;
     }
     if (type === 'name') {
-      const [page, limit] = paginateData;
-      const data = await api.getSearchedPaginated(valKeyword, page, limit);
+      const [page, inf] = paginateData;
+      const data = await api.getSearchedPaginated(valKeyword, page, inf);
       const { resultAccu, resultProx } = data;
       state.resultAccurate = resultAccu;
       state.resultProximate = resultProx.reverse();
