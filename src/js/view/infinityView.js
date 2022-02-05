@@ -104,12 +104,14 @@ class InfinityView extends View {
   _generateMarkupScroll(data) {
     const [results, totalNumber, type] = data;
 
-    const queuedHTML = results.map(
-      function (el, i) {
-        const year = el.date.slice(0, 4);
-        const date = el.date.slice(0, 10);
+    const generatedHTML = results
+      .map(
+        function (el, i) {
+          const year = el.date.slice(0, 4);
+          const date = el.date.slice(0, 10);
 
-        `<div class="scroll" data-index="${el.order}" data-id="${el._id}">
+          return `
+          <div class="scroll" data-index="${el.order}" data-id="${el._id}">
           <div class="column column--4">
               <div class="artwork__container--outer shadow--outer">
               <div class="artwork__container">
@@ -147,12 +149,11 @@ class InfinityView extends View {
                   </div>
               </div>
           </div>
-          </div>`;
-      }.bind(this)
-    );
-    const generatedHTML = direction
-      ? queuedHTML.reverse().join(' ')
-      : queuedHTML.join(' ');
+          </div>
+          `;
+        }.bind(this)
+      )
+      .join(' ');
 
     if (results.length > 0) {
       return generatedHTML;

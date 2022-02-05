@@ -279,6 +279,7 @@ const controlInfinity = async () => {
     if (logView.searchType !== 'name') {
       const lastLogID = infinityView.getLastLogID(direction, isMobile());
       const data = await api.searchInfinity(lastLogID, direction);
+      console.log(data);
 
       if (data.results.length <= 0) return;
 
