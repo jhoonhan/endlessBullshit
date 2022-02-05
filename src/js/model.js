@@ -40,6 +40,7 @@ export const loadArtwork = async function (renderImage) {
     // throw new Error(
     //   `${err}//Unable to render the request. Please try again later (${err})`
     // );
+    console.error(err);
     throw err;
   }
 };
