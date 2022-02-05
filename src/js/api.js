@@ -1,6 +1,7 @@
 /* eslint-disable */
 import axios from 'axios';
-import { APIBASEURL } from './config.js';
+import { APIAPIURL } from './config.js';
+import { APIARCHIVEURL } from './config.js';
 
 export const getImage = async imgURL => {
   try {
@@ -30,7 +31,7 @@ export const getImage = async imgURL => {
 };
 
 export const getTotalCount = async () => {
-  const res = await fetch(`${APIBASEURL}/totalCount`);
+  const res = await fetch(`${APIAPIURL}/totalCount`);
   const data = await res.json();
   const totalCount = data.totalCount - 1;
   return totalCount;
@@ -40,11 +41,11 @@ export const getSearch = async (type, keyword) => {
   try {
     let data;
     if (type !== 'latest') {
-      const res = await fetch(`${APIBASEURL}/search/${type}/${keyword}`);
+      const res = await fetch(`${APIAPIURL}/search/${type}/${keyword}`);
       data = await res.json();
     }
     if (type === 'latest') {
-      const res = await fetch(`${APIBASEURL}/search/${type}/latest`);
+      const res = await fetch(`${APIAPIURL}/search/${type}/latest`);
       data = await res.json();
     }
 
@@ -60,7 +61,7 @@ export const getSearch = async (type, keyword) => {
 export const getSearchedPaginated = async (keyword, page, inf) => {
   try {
     const res = await fetch(
-      `${APIBASEURL}/searchedPaginated/name/?inf=${inf}&keyword=${keyword}&page=${page}`
+      `${APIAPIURL}/searchedPaginated/name/?inf=${inf}&keyword=${keyword}&page=${page}`
     );
     const data = await res.json();
     console.log(data);
@@ -73,7 +74,7 @@ export const getSearchedPaginated = async (keyword, page, inf) => {
 export const searchInfinity = async (id, state) => {
   try {
     const res = await fetch(
-      `${APIBASEURL}/infinity/${state ? 'top' : 'bottom'}/${id}`
+      `${APIAPIURL}/infinity/${state ? 'top' : 'bottom'}/${id}`
     );
     const data = await res.json();
     return data;
@@ -84,7 +85,7 @@ export const searchInfinity = async (id, state) => {
 
 export const getArtwork = async (type, id) => {
   try {
-    const res = await fetch(`${APIBASEURL}/${type ? id : 'latest'}`);
+    const res = await fetch(`${APIAPIURL}/${type ? id : 'latest'}`);
     const data = await res.json();
 
     if (data.status !== 'success') {
@@ -103,7 +104,7 @@ export const post = async (type, data) => {
     // false : image
     const res = await axios({
       method: 'POST',
-      url: `${APIBASEURL}/${type ? 'log' : 'upload'}`,
+      url: `${APIAPIURL}/${type ? 'log' : 'upload'}`,
       data,
     });
 
@@ -122,7 +123,7 @@ export const post = async (type, data) => {
 //   try {
 //     const res = await axios({
 //       method: 'POST',
-//       url: `${APIBASEURL}/upload`,
+//       url: `${APIAPIURL}/upload`,
 //       data: img,
 //     });
 
@@ -139,7 +140,7 @@ export const post = async (type, data) => {
 //   try {
 //     const res = await axios({
 //       method: 'POST',
-//       url: `${APIBASEURL}/log`,
+//       url: `${APIAPIURL}/log`,
 //       data,
 //     });
 //     if (res.data.status === 'success') {
@@ -161,19 +162,19 @@ export const post = async (type, data) => {
 //     }
 //     // Search by type and blah
 //     if (fnType === 'getSearch') {
-//       const res = await fetch(`${APIBASEURL}/search/${param2}/${param}`);
+//       const res = await fetch(`${APIAPIURL}/search/${param2}/${param}`);
 //       const data = await res.json();
 //       return data;
 //     }
 //     // Search and get one
 //     if (fnType === 'getOne') {
-//       const res = await fetch(`${APIBASEURL}/${param}`);
+//       const res = await fetch(`${APIAPIURL}/${param}`);
 //       const data = await res.json();
 //       return data.data;
 //     }
 //     // Get the latest artwork
 //     if (fnType === 'getLatest') {
-//       const res = await fetch(`${APIBASEURL}/latest`);
+//       const res = await fetch(`${APIAPIURL}/latest`);
 //       const data = await res.json();
 //       return data.data;
 //     }
@@ -181,7 +182,7 @@ export const post = async (type, data) => {
 //     if (fnType === 'postImage') {
 //       const res = await axios({
 //         method: 'POST',
-//         url: `${APIBASEURL}/upload`,
+//         url: `${APIAPIURL}/upload`,
 //         data: param,
 //       });
 //       if (res.data.status === 'success') {
@@ -191,7 +192,7 @@ export const post = async (type, data) => {
 //     if (fnType === 'postLog') {
 //       const res = await axios({
 //         method: 'POST',
-//         url: `${APIBASEURL}/log`,
+//         url: `${APIAPIURL}/log`,
 //         data: param,
 //       });
 //       if (res.data.status === 'success') {
