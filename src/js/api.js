@@ -107,9 +107,9 @@ export const post = async (type, data) => {
       data,
     });
 
-    // if (res.data.status === 'success') {
-    //   console.log(`posted`);
-    // }
+    if (res.data.status === 'success') {
+      console.log(`posted`);
+    }
     // if (res.data.status !== 'success') {
     //   throw err;
     // }
