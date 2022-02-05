@@ -1,5 +1,4 @@
-import * as config from '../config.js';
-import View from './View.js';
+import View from './view.js';
 
 class TitleView extends View {
   _renderTitle = document.querySelector('.render__text--title');

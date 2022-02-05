@@ -1,5 +1,5 @@
 import * as config from '../config.js';
-import View from './View.js';
+import View from './view.js';
 
 class BetweenView extends View {
   _parentElement = document.querySelector('.top-level');

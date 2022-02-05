@@ -1,4 +1,4 @@
-import View from './View.js';
+import View from './view.js';
 class InfinityView extends View {
   _logResultContainer = document.querySelector('.log__results');
   _logResultContainerMobile = document.querySelector('.log__results--mobile');

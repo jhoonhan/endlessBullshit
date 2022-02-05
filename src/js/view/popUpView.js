@@ -1,4 +1,4 @@
-import View from './View.js';
+import View from './view.js';
 
 class PopUpView extends View {
   _loadingContainer = document.querySelector('.loading__container');

@@ -1,4 +1,4 @@
-import View from './View.js';
+import View from './view.js';
 
 class MobileView extends View {
   _parentElement = document.querySelector('.section--m');
