@@ -7,7 +7,7 @@ export const NAMEMIN = 2;
 export const NAMEMAX = 30;
 export const NAMESHORTEN = 15;
 export const MAXSEARCHRESULT = 100;
-export const APIBASEURL = 'https://afternoon-hollows-22909.herokuapp.com';
+export const APIBASEURL = 'https://hanstudio-this-is-bullshit.herokuapp.com';
 export const APIARCHIVEURL = `${APIBASEURL}/archive`;
 export const APIAPIURL = `${APIBASEURL}/api/v1/artworks`;
 
