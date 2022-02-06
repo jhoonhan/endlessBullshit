@@ -1,3 +1,6 @@
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
+
 import titleView from './view/titleView.js';
 import * as model from './model.js';
 import * as api from './api.js';

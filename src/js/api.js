@@ -48,7 +48,6 @@ export const getSearch = async (type, keyword) => {
       const res = await fetch(`${APIAPIURL}/search/${type}/latest`);
       data = await res.json();
     }
-
     if (data.status !== 'success') {
       throw new Error('No result found. Please try again.');
     }
@@ -64,6 +63,10 @@ export const getSearchedPaginated = async (keyword, page, inf) => {
       `${APIAPIURL}/searchedPaginated/name/?inf=${inf}&keyword=${keyword}&page=${page}`
     );
     const data = await res.json();
+
+    if (data.status !== 'success') {
+      throw new Error('No result found. Please try again.');
+    }
     return data;
   } catch (err) {
     throw err;
