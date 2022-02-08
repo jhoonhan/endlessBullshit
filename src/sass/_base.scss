@@ -147,10 +147,16 @@ footer {
   transition: $transition--default;
 }
 .column--1 {
-  text-align: right;
+  // text-align: right;
+  justify-items: flex-end;
+  & .artwork__container--outer {
+    min-width: min(50vw, 90vh);
+  }
 }
 .column--2 {
-  max-width: 30vw;
+  width: 100%;
+  // max-width: 30vw;
+  min-width: 30vw;
 }
 .column--5 {
   max-width: 30vw;
@@ -170,10 +176,14 @@ footer {
   position: relative;
 
   width: auto;
+  min-width: calc(min(100vw, 100vh) - 1rem);
   left: 0;
 
+  padding: 0px 1rem;
+  box-sizing: border-box;
+
   display: grid;
-  grid-template-columns: minmax(90vh, 1fr) 0.8fr;
+  grid-template-columns: 1fr 0.7fr;
   justify-content: center;
   column-gap: 5%;
 }
