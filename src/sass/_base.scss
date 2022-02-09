@@ -147,13 +147,24 @@ footer {
   transition: $transition--default;
 }
 .column--1 {
-  text-align: right;
+  min-width: min(50vw, 85vh);
+  // max-width: 90vh;
+  // width: 100%;
 }
 .column--2 {
-  max-width: 30vw;
+  min-width: min(30vw, 85vh);
+  // max-width: 30vw;
+}
+
+.column--4 {
+  width: min(calc(100vw - 23rem - 30vw), 80vh);
+  justify-self: flex-end;
 }
 .column--5 {
+  // width: 30vw;
+  // min-width: 30vw;
   max-width: 30vw;
+  // padding-right: 30px;
 }
 
 .row {
@@ -172,8 +183,11 @@ footer {
   width: auto;
   left: 0;
 
+  padding: 0 2rem;
+  box-sizing: border-box;
+
   display: grid;
-  grid-template-columns: minmax(70vh, 1fr) 0.8fr;
+  grid-template-columns: 1fr 0.7fr;
   justify-content: center;
   column-gap: 5%;
 }
@@ -184,7 +198,7 @@ footer {
 .row--2 {
   @extend .row;
   position: fixed;
-  width: calc(100vw - 25rem);
+  width: calc(100vw - 23rem);
   max-height: 100vh;
   top: 100vh;
   // left: calc((100vw - 100vh) / 10);
@@ -351,14 +365,17 @@ footer {
 
 .scroll {
   position: relative;
-  width: auto;
-  left: 0;
+  width: 100%;
   min-height: 100vh;
 
   display: grid;
-  grid-template-columns: minmax(45vw, 1fr) 0.8fr;
+  grid-template-columns: auto auto;
   justify-content: center;
   column-gap: 5%;
+
+  padding: 0 2% 0 2%;
+  // padding-right: 1rem;
+  box-sizing: border-box;
 
   // background-image: url(../img/spaceHolder.jpg);
 
@@ -372,15 +389,6 @@ footer {
   //   min-width: 30vw;
   //   max-width: 30vw;
   // }
-}
-.column--4 {
-  min-width: 30vw;
-}
-.column--5 {
-  width: 30vw;
-  min-width: 30vw;
-  max-width: 30vw;
-  padding-right: 30px;
 }
 
 .scroll__label {
