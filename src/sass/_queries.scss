@@ -37,8 +37,8 @@ $font-size--m--h3: 1em;
     column-gap: 3%;
   }
   .row--2 {
-    right: 0px;
-    align-self: flex-end;
+    // right: 0px;
+    // align-self: flex-end;
   }
   .column {
     padding-right: 0;
@@ -72,11 +72,6 @@ $font-size--m--h3: 1em;
   .scroll {
     // width: calc(100vw - 230px);
     column-gap: 3%;
-  }
-  .scroll .artwork__container--outer {
-    // height: min(70vh, 50vw);
-    // width: min(70vh, 50vw);
-    // padding: 7vh;
   }
 
   .input-form--textarea {

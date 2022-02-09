@@ -11,6 +11,11 @@ $font-size--h3: 1.3rem;
 
 $transition--default: all 0.5s;
 
+// layout variables
+:root {
+  --section--1--width: 20rem;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -89,7 +94,7 @@ footer {
 
 .section--1 {
   position: fixed;
-  width: 200px;
+  width: var(--section--1--width);
   right: 100%;
 
   display: block;
@@ -153,17 +158,19 @@ footer {
 }
 .column--2 {
   min-width: min(30vw, 85vh);
-  // max-width: 30vw;
+  max-width: min(30vw, 85vh);
 }
 
 .column--4 {
-  width: min(calc(100vw - 23rem - 30vw), 80vh);
+  // width: min(calc(100vw - 30vw - 3rem - var(--section--1--width)), 80vh);
+  width: min(50vw, 85vh);
   justify-self: flex-end;
 }
 .column--5 {
   // width: 30vw;
   // min-width: 30vw;
   max-width: 30vw;
+  min-width: 20vw;
   // padding-right: 30px;
 }
 
@@ -364,17 +371,27 @@ footer {
   }
 }
 
+// .scroll__container {
+//   position: relative;
+//   width: 100%;
+
+//   display: flex;
+//   flex-direction: column;
+
+//   box-sizing: border-box;
+// }
 .scroll {
   position: relative;
-  width: 100%;
+  width: auto;
   min-height: 100vh;
+
+  padding: 0 4% 0 1rem;
 
   display: grid;
   grid-template-columns: auto auto;
   justify-content: center;
   column-gap: 5%;
 
-  padding: 0 2% 0 2%;
   // padding-right: 1rem;
   box-sizing: border-box;
 
