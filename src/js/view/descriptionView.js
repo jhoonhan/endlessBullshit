@@ -1,4 +1,5 @@
 import * as config from '../config.js';
+import * as model from '../model.js';
 import View from './view.js';
 
 class DescriptionView extends View {
@@ -9,10 +10,17 @@ class DescriptionView extends View {
   _errorMessageStatement = document.querySelector('.error-message--statement');
   _btnFormHide = document.querySelector('.btn__form--hide');
 
+  _testButton = document.querySelector('.test-button');
+
   constructor() {
     super();
     this._characterCount();
     this._closeForm();
+
+    this._testButton.addEventListener('click', e => {
+      e.preventDefault();
+      model.testS3();
+    });
   }
 
   artworkInputData() {

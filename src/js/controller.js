@@ -29,8 +29,11 @@ const _updateRender = async function (log, location = 'artwork') {
     // Renders artwork
     if (!log) return;
 
-    // renderView.artworkRender(await api.api('getImage', log.imgURL));
-    const imgURL = await api.getImage(log.imgURL);
+    // const imgURL = await api.getImage(log.imgURL);
+    const { imgURL } = await api.getImage2(log.imgURL);
+
+    console.log(imgURL);
+
     renderView.artworkRender(imgURL);
 
     // Insert ID to artwork on view
@@ -130,7 +133,8 @@ const controlLogRender = async () => {
 
     const hashID = window.location.hash.slice(1);
     const selectedArtwork = await api.getArtwork(true, hashID);
-    const selectedIMG = await api.getImage(selectedArtwork.imgURL);
+    // const selectedIMG = await api.getImage(selectedArtwork.imgURL);
+    const { imgURL: selectedIMG } = await api.getImage2(selectedArtwork.imgURL);
 
     logView.highlightActiveLog(selectedArtwork._id, isMobile());
     logView.scrollIntoView(selectedArtwork._id, isMobile());
@@ -176,7 +180,10 @@ const controlSearch = async () => {
     const [keyword, type] = logView.getSearchValue(isMobile());
     await model.search([keyword, type], [model.state.page, false]);
     // Get new image from new "RESULTACCURATE"
-    const searchedIMG = await api.getImage(model.state.resultAccurate.imgURL);
+    // const searchedIMG = await api.getImage(model.state.resultAccurate.imgURL);
+    const { imgURL: searchedIMG } = await api.getImage2(
+      model.state.resultAccurate.imgURL
+    );
 
     // Side effects to change searchType'
     logView.searchType = type;
@@ -225,9 +232,15 @@ const controlSerachView = async () => {
       // await model.loadLatest();
       await _updateRender(model.state.current);
       await model.search([model.state.current._id, 'id']);
-      model.state.searchedIMG = await api.getImage(
+      // model.state.searchedIMG = await api.getImage(
+      //   model.state.resultAccurate.imgURL
+      // );
+
+      const { imgURL: searchedIMG } = await api.getImage2(
         model.state.resultAccurate.imgURL
       );
+      model.state.searchedIMG = searchedIMG;
+
       model.updateProperties(model.state.current, model.state.resultAccurate);
 
       logView.renderLogs(model.state.resultProximate, isMobile());

@@ -1,7 +1,7 @@
 /* eslint-disable */
 import axios from 'axios';
 import { APIAPIURL } from './config.js';
-import { APIARCHIVEURL } from './config.js';
+import { APIARCHIVEURL, APIBASEURL } from './config.js';
 
 export const getImage = async imgURL => {
   try {
@@ -28,6 +28,35 @@ export const getImage = async imgURL => {
   } catch (err) {
     throw err;
   }
+};
+
+export const getImage2 = async imageID => {
+  try {
+    const res = await fetch(`${APIBASEURL}/s3Url/${imageID}`);
+    const data = await res.json();
+    const imgURL = data.url.split('?')[0];
+
+    const urls = {
+      url: data.url,
+      imgURL,
+    };
+
+    return urls;
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const putImg2 = async (url, image) => {
+  await fetch(url, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+    body: image,
+  });
+  const imageUrl = url.split('?')[0];
+  // console.log(imageUrl);
 };
 
 export const getTotalCount = async () => {
