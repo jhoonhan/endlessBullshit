@@ -120,9 +120,9 @@ class InfinityView extends View {
               </div>
               </div>
               <div class="cell cell--2 artwork__tag log-tag">
-              <span><i>This Is Bullshit</i>, ${this.capitalizeName(
+              <span>, ${this.capitalizeName(
                 el.name
-              )}, ${year}</span>
+              )}, <i>This Is Bullshit</i>, ${year}</span>
               </div>
           </div>
           <div class="column column--5">

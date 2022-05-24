@@ -3,39 +3,25 @@ import axios from 'axios';
 import { APIAPIURL } from './config.js';
 import { APIARCHIVEURL, APIBASEURL } from './config.js';
 
-export const getImage = async imgURL => {
+export const getS3URL = async imageID => {
   try {
-    let img;
-    const res = await fetch(`${APIARCHIVEURL}/${imgURL}`);
+    const res = await fetch(`${APIBASEURL}/s3Url/${imageID}.png`);
+    const data = res.json();
 
-    if (res.ok === true) {
-      const imgBlob = await res.blob();
-      img = URL.createObjectURL(imgBlob);
-    }
-
-    /// FIX IT!
-    if (res.ok === false) {
-      const altRes = await fetch(`${APIARCHIVEURL}/test.png`);
-      const imgBlob = await altRes.blob();
-      img = URL.createObjectURL(imgBlob);
-    }
-
-    return img;
+    return data;
   } catch (err) {
     throw err;
   }
 };
 
-export const getImage2 = async imageID => {
+export const getImage = async imageID => {
   try {
-    console.log(imageID);
-    const res = await fetch(`${APIBASEURL}/s3Url/${imageID}.png`);
+    const data = await getS3URL(imageID);
 
-    console.log(res);
-    const data = await res.json();
     const imgURL = data.url.split('?')[0];
 
     const imgData = await fetch(imgURL);
+
     const imgBlob = await imgData.blob();
 
     const img = URL.createObjectURL(imgBlob);
@@ -52,7 +38,7 @@ export const getImage2 = async imageID => {
   }
 };
 
-export const putImg2 = async (url, image) => {
+export const uploadImg = async (url, image) => {
   await fetch(url, {
     method: 'PUT',
     headers: {
@@ -143,7 +129,7 @@ export const post = async (type, data) => {
     });
 
     if (res.data.status === 'success') {
-      console.log(`posted`);
+      // console.log(`posted`);
     }
     // if (res.data.status !== 'success') {
     //   throw err;

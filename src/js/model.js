@@ -66,18 +66,11 @@ export const logArtwork = async (inputData, imgBlob) => {
       timestamp: Date.now(),
     };
 
-    const image = new FormData();
-    image.append('imgURL', imgBlob, `${imageID}`);
-
-    // state.current.imgCache = imgCache;
-    // await submitArtwork(data);
-
     // get secure url from our server
-    const { url } = await api.getImage2(data.imgID);
+    const { url } = await api.getS3URL(data.imgID);
 
     // post the image directly to the s3 bucket
-    await api.post(false, image);
-    await api.putImg2(url, imgBlob);
+    await api.uploadImg(url, imgBlob);
 
     // post data to server
     await api.post(true, data);
@@ -85,20 +78,6 @@ export const logArtwork = async (inputData, imgBlob) => {
     throw err;
   }
 };
-
-// export const testS3 = async () => {
-//   try {
-//     const { url } = await api.getImage2();
-//     console.log(url);
-
-//     await api.putImg2(url);
-//   } catch (err) {
-//     throw err;
-//   }
-
-// const { url } = fetch('/s3Url').then(res => res.json());
-// console.log(url);
-// };
 
 export const loadLatest = async () => {
   try {

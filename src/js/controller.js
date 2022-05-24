@@ -29,11 +29,7 @@ const _updateRender = async function (log, location = 'artwork') {
     // Renders artwork
     if (!log) return;
 
-    // const imgURL = await api.getImage(log.imgURL);
-    console.log(log);
-    const { img: imgURL2 } = await api.getImage2(log.imgID);
-    // console.log(imgURL);
-    // console.log(imgURL2);
+    const { img: imgURL2 } = await api.getImage(log.imgID);
 
     renderView.artworkRender(imgURL2);
 
@@ -134,8 +130,8 @@ const controlLogRender = async () => {
 
     const hashID = window.location.hash.slice(1);
     const selectedArtwork = await api.getArtwork(true, hashID);
-    // const selectedIMG = await api.getImage(selectedArtwork.imgURL);
-    const { img: selectedIMG } = await api.getImage2(selectedArtwork.imgID);
+
+    const { img: selectedIMG } = await api.getImage(selectedArtwork.imgID);
 
     logView.highlightActiveLog(selectedArtwork._id, isMobile());
     logView.scrollIntoView(selectedArtwork._id, isMobile());
@@ -181,8 +177,7 @@ const controlSearch = async () => {
     const [keyword, type] = logView.getSearchValue(isMobile());
     await model.search([keyword, type], [model.state.page, false]);
     // Get new image from new "RESULTACCURATE"
-    // const searchedIMG = await api.getImage(model.state.resultAccurate.imgURL);
-    const { img: searchedIMG } = await api.getImage2(
+    const { img: searchedIMG } = await api.getImage(
       model.state.resultAccurate.imgID
     );
 
@@ -233,11 +228,8 @@ const controlSerachView = async () => {
       // await model.loadLatest();
       await _updateRender(model.state.current);
       await model.search([model.state.current._id, 'id']);
-      // model.state.searchedIMG = await api.getImage(
-      //   model.state.resultAccurate.imgURL
-      // );
 
-      const { img: searchedIMG } = await api.getImage2(
+      const { img: searchedIMG } = await api.getImage(
         model.state.resultAccurate.imgID
       );
       model.state.searchedIMG = searchedIMG;
