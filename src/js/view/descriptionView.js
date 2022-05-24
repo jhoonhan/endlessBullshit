@@ -16,11 +16,6 @@ class DescriptionView extends View {
     super();
     this._characterCount();
     this._closeForm();
-
-    this._testButton.addEventListener('click', e => {
-      e.preventDefault();
-      model.testS3();
-    });
   }
 
   artworkInputData() {
