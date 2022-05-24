@@ -93,6 +93,8 @@
 .render__origial-image {
   @extend .artwork-frame;
   box-sizing: border-box;
+  // width: 80%;
+  // height: 80%;
 }
 .render__text--title {
   position: absolute;

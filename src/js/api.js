@@ -18,10 +18,6 @@ export const getImage = async imgURL => {
       const altRes = await fetch(`${APIARCHIVEURL}/test.png`);
       const imgBlob = await altRes.blob();
       img = URL.createObjectURL(imgBlob);
-
-      // newError(
-      //   'Unable to load the image. You may close this window and continue to use the website.'
-      // );
     }
 
     return img;
@@ -32,13 +28,22 @@ export const getImage = async imgURL => {
 
 export const getImage2 = async imageID => {
   try {
-    const res = await fetch(`${APIBASEURL}/s3Url/${imageID}`);
+    console.log(imageID);
+    const res = await fetch(`${APIBASEURL}/s3Url/${imageID}.png`);
+
+    console.log(res);
     const data = await res.json();
     const imgURL = data.url.split('?')[0];
+
+    const imgData = await fetch(imgURL);
+    const imgBlob = await imgData.blob();
+
+    const img = URL.createObjectURL(imgBlob);
 
     const urls = {
       url: data.url,
       imgURL,
+      img,
     };
 
     return urls;
@@ -55,8 +60,6 @@ export const putImg2 = async (url, image) => {
     },
     body: image,
   });
-  const imageUrl = url.split('?')[0];
-  // console.log(imageUrl);
 };
 
 export const getTotalCount = async () => {

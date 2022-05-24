@@ -57,11 +57,12 @@ class RenderView extends View {
     if (location === 'artworkInfo') this._locationHTML = this._artworkInfo;
   }
 
-  artworkRender(img) {
-    this._locationHTML.style.backgroundImage = `url(${img})`;
+  artworkRender(imgURL) {
+    // console.log(imgURL);
+    this._locationHTML.style.backgroundImage = `url(${imgURL})`;
     // only fireds when location is set to artwork
     if (this._locationHTML === this._artwork)
-      this._renderOriginalImage.style.backgroundImage = `url(${img})`;
+      this._renderOriginalImage.style.backgroundImage = `url(${imgURL})`;
   }
 
   artworkID(id) {

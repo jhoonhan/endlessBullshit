@@ -15,6 +15,7 @@ export const state = {
     _id: '',
     order: '',
     imgURL: '',
+    imgID: '',
   },
   resultAccurate: '',
   resultProximate: '',
@@ -61,6 +62,7 @@ export const logArtwork = async (inputData, imgBlob) => {
       statement: inputData.statement,
       order: +index + 1,
       imgURL: `${imageID}.png`,
+      imgID: imageID,
       timestamp: Date.now(),
     };
 
@@ -71,7 +73,7 @@ export const logArtwork = async (inputData, imgBlob) => {
     // await submitArtwork(data);
 
     // get secure url from our server
-    const { url } = await api.getImage2(data.imgURL);
+    const { url } = await api.getImage2(data.imgID);
 
     // post the image directly to the s3 bucket
     await api.post(false, image);
