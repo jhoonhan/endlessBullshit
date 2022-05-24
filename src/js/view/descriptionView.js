@@ -1,3 +1,4 @@
+import mobile from 'is-mobile';
 import * as config from '../config.js';
 import * as model from '../model.js';
 import View from './view.js';
@@ -106,7 +107,10 @@ class DescriptionView extends View {
     const btnHideDescription = document.querySelector(
       '.btn__description--hide'
     );
-    btnHideDescription.addEventListener('click', this.toggleWindow.bind(this));
+    const fn = () => {
+      this.toggleWindow();
+    };
+    btnHideDescription.addEventListener('click', fn.bind(this));
   }
 
   _generateMarkup(data) {

@@ -70,10 +70,11 @@ export const logArtwork = async (inputData, imgBlob) => {
     const { url } = await api.getS3URL(data.imgID);
 
     // post the image directly to the s3 bucket
-    await api.uploadImg(url, imgBlob);
-
-    // post data to server
-    await api.post(true, data);
+    const uploadImg = await api.uploadImg(url, imgBlob);
+    if (uploadImg) {
+      // post data to server
+      await api.post(true, data);
+    }
   } catch (err) {
     throw err;
   }

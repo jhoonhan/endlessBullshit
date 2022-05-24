@@ -39,13 +39,20 @@ export const getImage = async imageID => {
 };
 
 export const uploadImg = async (url, image) => {
-  await fetch(url, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-    body: image,
-  });
+  try {
+    const res = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      body: image,
+    });
+    if (res.ok) {
+      return true;
+    }
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 export const getTotalCount = async () => {

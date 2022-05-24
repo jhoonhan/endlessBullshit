@@ -1,5 +1,6 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
+import mobile from 'is-mobile';
 
 import titleView from './view/titleView.js';
 import * as model from './model.js';
@@ -74,6 +75,9 @@ const controlLatestArtwork = async () => {
 const controlGenerateArtwork = async function (renderImage) {
   // @renderImage = html node to be converted to image
   try {
+    if (mobile()) {
+      throw new Error('Mobile Support Coming Soon...');
+    }
     controlSpinner('add', 'GenerateArtwork');
 
     // get and checks input data
