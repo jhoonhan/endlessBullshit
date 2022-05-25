@@ -1,11 +1,11 @@
 .introduction {
-  // display: flex;
   position: fixed;
   height: 100vh;
   width: 100%;
   top: 0;
   left: 0;
 
+  display: flex;
   display: none;
   justify-content: center;
   align-content: center;
@@ -52,7 +52,8 @@
 .intro__tag {
   position: absolute;
   right: 2%;
-  margin-top: 5rem;
+  margin-bottom: -1.5rem;
+  bottom: 0;
 
   text-align: right;
 }
