@@ -136,6 +136,7 @@ const controlLogRender = async () => {
     const selectedArtwork = await api.getArtwork(true, hashID);
 
     const { img: selectedIMG } = await api.getImage(selectedArtwork.imgID);
+    console.log(selectedArtwork.imgID);
 
     logView.highlightActiveLog(selectedArtwork._id, isMobile());
     logView.scrollIntoView(selectedArtwork._id, isMobile());
@@ -159,7 +160,8 @@ const controlLogRender = async () => {
         model.state.totalCount,
       ]);
     }
-    model.updateProperties(model.state.current, selectedArtwork);
+    /////// Turned on/off : When Log closed, go back to latest work?
+    // model.updateProperties(model.state.current, selectedArtwork);
   } catch (err) {
     popUpView.renderErrorPrompt(err.message.split(' (')[0]);
     console.error(err);
