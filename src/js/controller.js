@@ -136,7 +136,6 @@ const controlLogRender = async () => {
     const selectedArtwork = await api.getArtwork(true, hashID);
 
     const { img: selectedIMG } = await api.getImage(selectedArtwork.imgID);
-    console.log(selectedArtwork.imgID);
 
     logView.highlightActiveLog(selectedArtwork._id, isMobile());
     logView.scrollIntoView(selectedArtwork._id, isMobile());
@@ -340,7 +339,7 @@ const controlInfinity = async () => {
     // const curLocation = window.location.hash.slice(1);
     // infinityView.catchInfinityLog(direction, curLocation, isMobile());
   } catch (err) {
-    console.log(err);
+    console.error(err);
   }
 };
 
