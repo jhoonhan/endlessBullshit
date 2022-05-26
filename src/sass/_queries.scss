@@ -162,6 +162,9 @@ $font-size--m--h3: 1em;
 
     row-gap: 1em;
   }
+  .latest-tag {
+    margin-top: 0;
+  }
 
   .scroll {
     grid-template-columns: auto;
@@ -192,11 +195,25 @@ $font-size--m--h3: 1em;
       font-size: $font-size--m--s;
     }
   }
+
   .information {
     max-width: none;
   }
 
   .label--checkbox {
     font-size: $font-size--m--s;
+  }
+  .intro__container--center {
+    width: 100vw;
+    display: grid;
+    grid-template-rows: auto auto;
+    grid-template-columns: 1fr;
+    align-content: center;
+    row-gap: calc(3vh + 2em);
+
+    padding: 2em;
+  }
+  .btn--close--intro {
+    margin-top: 2em;
   }
 }
