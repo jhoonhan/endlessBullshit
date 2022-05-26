@@ -60,6 +60,9 @@ class RenderView extends View {
   artworkRender(imgURL) {
     // console.log(imgURL);
     this._locationHTML.style.backgroundImage = `url(${imgURL})`;
+    document.querySelector(
+      '.intro__artwork'
+    ).style.backgroundImage = `url(${imgURL})`;
     // only fireds when location is set to artwork
     if (this._locationHTML === this._artwork)
       this._renderOriginalImage.style.backgroundImage = `url(${imgURL})`;

@@ -5,17 +5,19 @@ import * as config from './config.js';
 import { OGARTWORK } from './config.js';
 import { text } from 'body-parser';
 
+import OGARTWORK from './config';
+
 import * as api from './api.js';
 
 export const state = {
   current: {
-    name: '',
+    name: 'Maurizio Cattelan',
     statement: '',
-    date: '',
-    _id: '',
-    order: '',
-    imgURL: '',
-    imgID: '',
+    date: '2019',
+    _id: '0',
+    order: '0',
+    imgURL: OGARTWORK,
+    imgID: OGARTWORK,
   },
   resultAccurate: '',
   resultProximate: '',
@@ -83,8 +85,12 @@ export const logArtwork = async (inputData, imgBlob) => {
 export const loadLatest = async () => {
   try {
     const latestArtwork = await api.getArtwork(false, 'latest');
-    if (!latestArtwork) return;
-    updateProperties(state.current, latestArtwork);
+    if (!latestArtwork) {
+      return false;
+    } else {
+      updateProperties(state.current, latestArtwork);
+      return true;
+    }
   } catch (err) {
     throw err;
   }

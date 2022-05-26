@@ -30,9 +30,8 @@ const _updateRender = async function (log, location = 'artwork') {
     // Renders artwork
     if (!log) return;
 
-    const { img: imgURL2 } = await api.getImage(log.imgID);
-
-    renderView.artworkRender(imgURL2);
+    const { img: imgURL } = await api.getImage(log.imgID);
+    renderView.artworkRender(imgURL);
 
     // Insert ID to artwork on view
     renderView.artworkID(log._id);
@@ -45,10 +44,13 @@ const _updateRender = async function (log, location = 'artwork') {
 
 const controlLatestArtwork = async () => {
   try {
+    console.log(`controlLatestArtwork fired`);
     controlSpinner('add', 'controlLatestArtwork');
 
     // Sets "STATE.CURRENT" with latest data from API calls
     await model.loadLatest();
+    // if (!hasData) return;
+
     await _updateRender(model.state.current);
 
     // set has location
@@ -75,6 +77,8 @@ const controlLatestArtwork = async () => {
 const controlGenerateArtwork = async function (renderImage) {
   // @renderImage = html node to be converted to image
   try {
+    console.log(`controlGenerateArtwork fired`);
+
     if (mobile()) {
       throw new Error('Mobile Support Coming Soon...');
     }
@@ -125,6 +129,8 @@ const controlGenerateArtwork = async function (renderImage) {
 const controlLogRender = async () => {
   // event: HASH CHANGE
   try {
+    console.log(`controlLogRender fired`);
+
     controlSpinner('add', 'controlLogRender');
 
     // Guard clause

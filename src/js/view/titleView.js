@@ -4,6 +4,7 @@ class TitleView extends View {
   _renderTitle = document.querySelector('.render__text--title');
   _latestTag = document.querySelector('.latest-tag');
   _logTag = document.querySelector('.scroll--1 .log-tag');
+  _introTag = document.querySelector('.intro__tag');
 
   addHandlerLatest(handler) {
     window.addEventListener('load', function () {
@@ -17,9 +18,11 @@ class TitleView extends View {
   //   this._renderOriginalImage.style.backgroundImage = `url(${imgURL})`;
   // }
   addTitles(data, type) {
+    console.log(data);
     if (type === 'artwork') {
       super.insertHTML(data, this._latestTag);
       super.insertHTML(data, this._renderTitle);
+      super.insertHTML(data, this._introTag);
     }
     if (type === 'artworkInfo') {
       super.insertHTML(data, this._logTag);

@@ -116,10 +116,14 @@ export const getArtwork = async (type, id) => {
     const data = await res.json();
 
     if (data.status !== 'success') {
-      throw new Error('No result found. Please try again.');
+      // throw new Error('No result found. Please try again.');
+      return null;
     }
 
-    return data.data;
+    if (data.status === 'success') {
+      // throw new Error('No result found. Please try again.');
+      return data.data;
+    }
   } catch (err) {
     throw err;
   }
