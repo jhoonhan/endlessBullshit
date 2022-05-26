@@ -112,11 +112,12 @@ $font-size--m--h3: 1em;
     padding-bottom: 4em;
   }
   .row--1 {
-    margin-top: 5vw;
+    // margin-top: 5vw;
 
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;
-    align-content: flex-start;
+    align-content: center;
+    row-gap: 3vh;
   }
   .row--2 {
     grid-template-columns: 1fr;
