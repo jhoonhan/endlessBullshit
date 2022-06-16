@@ -5,8 +5,6 @@ import * as config from './config.js';
 import { OGARTWORK } from './config.js';
 import { text } from 'body-parser';
 
-import OGARTWORK from './config';
-
 import * as api from './api.js';
 
 export const state = {
